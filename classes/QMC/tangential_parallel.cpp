@@ -185,6 +185,41 @@ class Tangential{
 	}
 
 
+	TTTensor builtTTTensor(const std::vector<Tensor>& y){
+		time_t begin_time = time (NULL);
+		TTTensor Y(uvP.xbase.first.dimensions);
+
+			for (size_t pos=0;pos<d;pos++){
+				Tensor ycomp=y[pos];
+				auto dims=ycomp.dimensions;
+				auto tmpxl=uvP.xbase.second.get_component(pos);
+				auto tmpxr=uvP.xbase.first.get_component(pos);
+				if(pos==0){
+						ycomp.resize_mode(2,dims[2]*2,0);
+
+						tmpxl.resize_mode(2,dims[2]*2,dims[2]);
+						ycomp+=tmpxl;
+				}else if(pos==d-1){
+						ycomp.resize_mode(0,dims[0]*2,dims[0]);
+
+						tmpxr.resize_mode(0,dims[0]*2,0);
+						ycomp+=tmpxr;
+				}else{
+						ycomp.resize_mode(2,dims[2]*2,0);
+
+						tmpxl.resize_mode(2,dims[2]*2,dims[2]);
+						ycomp+=tmpxl;
+						ycomp.resize_mode(0,dims[0]*2,dims[0]);
+						tmpxr.resize_mode(2,dims[2]*2,0);
+						tmpxr.resize_mode(0,dims[0]*2,0);
+						ycomp+=tmpxr;
+
+				}
+				Y.set_component(pos,ycomp);
+			}
+			return Y;
+		}
+
 
 	private:
 
