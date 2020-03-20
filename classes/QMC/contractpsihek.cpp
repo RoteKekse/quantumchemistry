@@ -6,7 +6,7 @@
 #include <boost/regex.hpp>
 #include <boost/algorithm/string_regex.hpp>
 #include <unordered_map>
-#include "../classes/containerhash.cpp"
+#include "../../classes/containerhash.cpp"
 
 #include <memory>
 

@@ -2,7 +2,7 @@
 #include "probabilityfunctions.cpp"
 #include <stdlib.h>
 #include <unordered_map>
-#include "../classes/containerhash.cpp"
+#include "../../classes/containerhash.cpp"
 
 using namespace xerus;
 using xerus::misc::operator<<;
