@@ -9,13 +9,15 @@ TTTensor buildStartVector(std::vector<size_t> sample, size_t p, size_t d);
 
 int main(){
 	size_t nob = 60,num_elec = 14,iterations = 1e5;
-	value_t ev, shift = 0.0, ev_app;
+	value_t ev, shift = 135.0, ev_app;
 	std::string molecule = "N2";
 	std::vector<size_t> hf = { 0, 1,2,3,4,5,6,7,8,9,10,11,12,13 };
+	value_t nuc = 23.5724393955273;
 
 	XERUS_LOG(info,"---- Simulation for " << molecule << " molecule with shift " << shift << " ----");
 	XERUS_LOG(info,"Number of iterations " << iterations );
 	XERUS_LOG(info,"Number of electrons " << num_elec << " and orbitals " << 2*nob  );
+	XERUS_LOG(info,"Nuclear potential " << nuc  );
 
 	xerus::TTTensor phi,res,res_last;
 	XERUS_LOG(info,"-- Building Initial Vector"  );
@@ -35,7 +37,7 @@ int main(){
 
 	XERUS_LOG(info,"-- Calculate Eigenvalue"  );
 	ev_app = tang.get_eigenvalue();
-	XERUS_LOG(info, "Eigenvalue approx. " << ev_app);
+	XERUS_LOG(info, "Eigenvalue approx. " << ev_app - nuc);
 
 	XERUS_LOG(info,"-- Calculate direction"  );
 	auto tang_app = tang.get_tangential_components(ev_app,0.005);
