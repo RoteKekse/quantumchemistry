@@ -4,13 +4,7 @@ using xerus::misc::operator<<;
 
 #pragma once
 
-void project(TTTensor &phi, size_t p, size_t d);
-TTOperator particleNumberOperator(size_t k, size_t d);
-TTOperator particleNumberOperator(size_t d);
 
-value_t contract_TT(const TTOperator& A, const TTTensor& x, const TTTensor& y);
-value_t contract_TT2(const TTOperator& A,const TTOperator& B, const TTTensor& x, const TTTensor& y);
-TTTensor makeUnitVector(std::vector<size_t> sample, size_t d);
 
 value_t contract_TT(const TTOperator& A, const TTTensor& x, const TTTensor& y){
 	Tensor stack = Tensor::ones({1,1,1});
@@ -75,7 +69,7 @@ TTOperator particleNumberOperator(size_t k, size_t d){
 		tmp.offset_add(n-kkk,{0,0,0,1});
 		op.set_component(i,tmp);
 	}
-  tmp = Tensor({2,2,2,1});
+    tmp = Tensor({2,2,2,1});
 	tmp.offset_add(n-kkk,{0,0,0,0});
 	tmp.offset_add(id,{1,0,0,0});
 	op.set_component(d-1,tmp);
