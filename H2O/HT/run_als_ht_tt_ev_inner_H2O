@@ -1,0 +1,5 @@
+clear
+rm als_ht_tt_ev_inner_H2O.out
+g++ -g -std=c++11 -fext-numeric-literals -DARPACK_LIBRARIES -o als_ht_tt_ev_inner_H2O.out als_ht_tt_ev_inner_H2O.cpp   -lxerus -lxerus_misc -lboost_regex
+
+./als_ht_tt_ev_inner_H2O.out
