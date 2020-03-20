@@ -18,8 +18,8 @@ int main(){
 	phi /= phi.frob_norm(); //normalize
 	project(phi,num_elec,2*nob);
 
-	std::string path_T = "../data/T_N2_120_bench.tensor";
-	std::string path_V= "../data/V_N2_120_bench.tensor";
+	std::string path_T = "../data/T_N2_120.tensor";
+	std::string path_V= "../data/V_N2_120.tensor";
 	Tangential tang(2*nob,num_elec,iterations,path_T,path_V,shift,hf,phi);
 	phi.move_core(0,true);
 	tang.uvP.xbase.first = phi;
