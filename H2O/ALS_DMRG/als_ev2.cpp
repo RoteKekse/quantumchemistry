@@ -10,6 +10,8 @@
 #include <boost/regex.hpp>
 #include <boost/algorithm/string_regex.hpp>
 
+#include "../../classes/loading_tensors.cpp"
+#include "../../classes/helpers.cpp"
 
 
 using namespace xerus;
@@ -20,14 +22,6 @@ class InternalSolver;
 class InternalSolver2;
 double simpleALS(const TTOperator& _A, TTTensor& _x, const TTOperator& _P, size_t _nosw);
 double simpleMALS(const TTOperator& _A, TTTensor& _x, double _eps, size_t _maxRank, size_t _nosw);
-void write_to_disc(std::string name, TTTensor &x);
-void write_to_disc(std::string name, Tensor &x);
-void write_to_disc(std::string name, TTOperator &op);
-void read_from_disc(std::string name, TTOperator &op);
-void read_from_disc(std::string name, TTTensor &x);
-void project(TTTensor &phi, size_t p, size_t d);
-TTOperator particleNumberOperator(size_t k, size_t d);
-TTOperator particleNumberOperator(size_t d);
 /*
  * Main!!
  */
@@ -501,110 +495,5 @@ double simpleMALS(const TTOperator& _A, TTTensor& _x, double _eps, size_t _maxRa
 }
 
 
-void write_to_disc(std::string name, Tensor &x){
-	std::ofstream write(name.c_str() );
-	xerus::misc::stream_writer(write,x,xerus::misc::FileFormat::BINARY);
-	write.close();
-}
-
-void write_to_disc(std::string name, TTTensor &x){
-	std::ofstream write(name.c_str() );
-	xerus::misc::stream_writer(write,x,xerus::misc::FileFormat::BINARY);
-	write.close();
-}
-
-void write_to_disc(std::string name, TTOperator &op){
-	std::ofstream write(name.c_str() );
-	xerus::misc::stream_writer(write,op,xerus::misc::FileFormat::BINARY);
-	write.close();
-}
-
-void read_from_disc(std::string name, TTOperator &op){
-	std::ifstream read(name.c_str() );
-	xerus::misc::stream_reader(read,op,xerus::misc::FileFormat::BINARY);
-	read.close();
-
-}
-
-void read_from_disc(std::string name, TTTensor &x){
-	std::ifstream read(name.c_str() );
-	xerus::misc::stream_reader(read,x,xerus::misc::FileFormat::BINARY);
-	read.close();
-
-}
-
-void project(TTTensor &phi, size_t p, size_t d){
-	Index i1,i2,j1,j2,k1,k2;
-	for (size_t k = 0; k <= d; ++k){
-
-		if (p != k){
-			auto PNk = particleNumberOperator(k,d);
-			PNk.move_core(0);
-			phi(i1&0) = PNk(i1/2,k1/2) * phi (k1&0);
-			value_t f = (value_t) p - (value_t) k;
-			phi /=  f;
-			//phi.round(1e-12);
-			phi /= phi.frob_norm();
-
-		}
-	}
-	phi /= phi.frob_norm();
-}
 
 
-
-TTOperator particleNumberOperator(size_t k, size_t d){
-	TTOperator op(std::vector<size_t>(2*d,2));
-	Tensor id = Tensor::identity({2,2});
-	id.reinterpret_dimensions({1,2,2,1});
-	auto n = id;
-	n[{0,0,0,0}] = 0;
-
-	value_t kk = (value_t) k;
-	auto kkk = kk/(value_t) d * id;
-	Tensor tmp({1,2,2,2});
-	tmp.offset_add(id,{0,0,0,0});
-	tmp.offset_add(n-kkk,{0,0,0,1});
-	op.set_component(0,tmp);
-
-	for (size_t i = 1; i < d-1; ++i){
-		tmp = Tensor({2,2,2,2});
-		tmp.offset_add(id,{0,0,0,0});
-		tmp.offset_add(id,{1,0,0,1});
-		tmp.offset_add(n-kkk,{0,0,0,1});
-		op.set_component(i,tmp);
-	}
-  tmp = Tensor({2,2,2,1});
-	tmp.offset_add(n-kkk,{0,0,0,0});
-	tmp.offset_add(id,{1,0,0,0});
-	op.set_component(d-1,tmp);
-
-
-	return op;
-}
-
-TTOperator particleNumberOperator(size_t d){
-	TTOperator op(std::vector<size_t>(2*d,2));
-	Tensor id = Tensor::identity({2,2});
-	id.reinterpret_dimensions({1,2,2,1});
-	auto n = id;
-	n[{0,0,0,0}] = 0;
-	Tensor tmp({1,2,2,2});
-	tmp.offset_add(id,{0,0,0,0});
-	tmp.offset_add(n,{0,0,0,1});
-	op.set_component(0,tmp);
-	for (size_t i = 1; i < d-1; ++i){
-		tmp = Tensor({2,2,2,2});
-		tmp.offset_add(id,{0,0,0,0});
-		tmp.offset_add(id,{1,0,0,1});
-		tmp.offset_add(n,{0,0,0,1});
-		op.set_component(i,tmp);
-	}
-  tmp = Tensor({2,2,2,1});
-	tmp.offset_add(n,{0,0,0,0});
-	tmp.offset_add(id,{1,0,0,0});
-	op.set_component(d-1,tmp);
-
-
-	return op;
-}
