@@ -8,7 +8,7 @@
 #include "trialfunctions.cpp"
 #include "probabilityfunctions.cpp"
 #include "unitvectorprojection.cpp"
-#include "../../loading_tensors.cpp"
+#include "../../classes/loading_tensors.cpp"
 
 
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "contractpsihek.cpp"
 #include "unitvectorprojection.cpp"
-#include "../containerhash.cpp"
+#include "../classes/containerhash.cpp"
 #include <unordered_map>
 
 
