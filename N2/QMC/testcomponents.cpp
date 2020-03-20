@@ -14,7 +14,7 @@ int main(){
 	std::vector<size_t> hf = { 0, 1,2,3,4,5,6,7,8,9,10,11,12,13 };
 
 	xerus::TTTensor phi,res,res_last;
-	phi = buildStartVector(hf,num_elec,nob);
+	phi = buildStartVector(hf,num_elec,2*nob);
 	phi /= phi.frob_norm(); //normalize
 	project(phi,num_elec,2*nob);
 
