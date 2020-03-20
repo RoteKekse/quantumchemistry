@@ -80,7 +80,6 @@ TTOperator particleNumberOperator(size_t k, size_t d){
 
 void project(TTTensor &phi, size_t p, size_t d, value_t eps = 1e-4){
 	Index i1,i2,j1,j2,k1,k2;
-	XERUS_LOG(info, "Phi norm           " << phi.frob_norm());
 	for (size_t k = 0; k <= d; ++k){
 		if (p != k){
 			auto PNk = particleNumberOperator(k,d);
