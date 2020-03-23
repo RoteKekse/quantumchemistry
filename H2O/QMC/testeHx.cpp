@@ -54,8 +54,8 @@ int main(){
 	XERUS_LOG(info,	builder.returnVValue(qq,rr,ss,pp) << " " << V[{qq,rr,ss,pp}]);
 	XERUS_LOG(info,	builder.returnVValue(ss,rr,qq,pp) << " " << V[{ss,rr,qq,pp}]);
 
-	XERUS_LOG(info,	builder.returnTValue(pp,qq) << " " << T[{pp,qq}]);
-	XERUS_LOG(info,	builder.returnTValue(qq,pp) << " " << T[{qq,pp}]);
+	XERUS_LOG(info,	builder.returnTValue(pp,rr) << " " << T[{pp,rr}]);
+	XERUS_LOG(info,	builder.returnTValue(rr,pp) << " " << T[{qq,rr}]);
 
 
 
