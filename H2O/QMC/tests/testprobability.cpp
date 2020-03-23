@@ -1,6 +1,7 @@
 #include <xerus.h>
 #include <ctime>
-#include "tangential.cpp"
+
+#include "../classes_old/tangential.cpp"
 
 std::vector<size_t> makeRandomSample(size_t p,size_t d);
 

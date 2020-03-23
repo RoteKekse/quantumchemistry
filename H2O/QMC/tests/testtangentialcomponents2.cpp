@@ -2,13 +2,13 @@
 #include <unordered_map>
 #include <boost/functional/hash.hpp>
 
+#include "../classes_old/contractpsihek.cpp"
+#include "../classes_old/metropolis.cpp"
+#include "../classes_old/probabilityfunctions.cpp"
+#include "../classes_old/trialfunctions.cpp"
 #include "../GradientMethods/tangentialOperation.cpp"
 #include "../GradientMethods/basic.cpp"
 #include "../loading_tensors.cpp"
-#include "metropolis.cpp"
-#include "contractpsihek.cpp"
-#include "trialfunctions.cpp"
-#include "probabilityfunctions.cpp"
 
 
 using namespace xerus;

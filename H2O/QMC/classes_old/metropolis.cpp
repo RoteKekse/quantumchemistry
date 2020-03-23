@@ -1,7 +1,8 @@
 #include <xerus.h>
-#include "probabilityfunctions.cpp"
 #include <stdlib.h>
 #include <unordered_map>
+
+#include "../classes_old/probabilityfunctions.cpp"
 #include "../containerhash.cpp"
 
 using namespace xerus;

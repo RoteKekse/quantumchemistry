@@ -3,9 +3,9 @@
 #include <boost/functional/hash.hpp>
 #include <stdlib.h>
 
+#include "../classes_old/probabilityfunctions.cpp"
+#include "../classes_old/unitvectorprojection.cpp"
 #include "../loading_tensors.cpp"
-#include "probabilityfunctions.cpp"
-#include "unitvectorprojection.cpp"
 
 std::vector<size_t> makeRandomSample(size_t p,size_t d);
 

@@ -1,8 +1,7 @@
 #include <xerus.h>
 
-#include "classes/tangentialOperation.cpp"
-#include "classes/unitvectorprojection.cpp"
-
+#include "../classes_old/tangentialOperation.cpp"
+#include "../classes_old/unitvectorprojection.cpp"
 #include "../loading_tensors.cpp"
 
 TTOperator particleNumberOperator(size_t k, size_t d);

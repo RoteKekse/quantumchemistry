@@ -145,7 +145,9 @@ class ContractPsiHek{
 				return T[p / 2, q / 2];
 			return T[q / 2, p / 2];
 		}
-		value_t returnVValue(size_t p, size_t q, size_t r, size_t s);
+		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
+			return 0;
+		}
 
 		/*
 		 * Contraction, does psi ek for current sample, NOTE: use reset first

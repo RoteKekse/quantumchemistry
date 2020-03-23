@@ -1,10 +1,10 @@
 #include <xerus.h>
-#include "metropolis.cpp"
-#include "trialfunctions.cpp"
-#include "probabilityfunctions.cpp"
 #include "../loading_tensors.cpp"
 #include <unordered_map>
 #include <boost/functional/hash.hpp>
+#include "../classes_old/metropolis.cpp"
+#include "../classes_old/probabilityfunctions.cpp"
+#include "../classes_old/trialfunctions.cpp"
 
 using namespace xerus;
 using xerus::misc::operator<<;

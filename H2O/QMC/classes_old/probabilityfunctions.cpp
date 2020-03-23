@@ -1,9 +1,9 @@
 #include <xerus.h>
 #include <stdlib.h>
-#include "contractpsihek.cpp"
-#include "unitvectorprojection.cpp"
 #include "../containerhash.cpp"
 #include <unordered_map>
+#include "../classes_old/contractpsihek.cpp"
+#include "../classes_old/unitvectorprojection.cpp"
 
 
 using namespace xerus;

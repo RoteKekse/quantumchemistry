@@ -6,11 +6,11 @@
 #include "../GradientMethods/tangentialOperation.cpp"
 #include "../GradientMethods/basic.cpp"
 #include "../loading_tensors.cpp"
-#include "metropolis.cpp"
-#include "contractpsihek.cpp"
-#include "trialfunctions.cpp"
-#include "probabilityfunctions.cpp"
 #include <ctime>
+#include "../classes_old/contractpsihek.cpp"
+#include "../classes_old/metropolis.cpp"
+#include "../classes_old/probabilityfunctions.cpp"
+#include "../classes_old/trialfunctions.cpp"
 
 using namespace xerus;
 using xerus::misc::operator<<;

@@ -1,8 +1,7 @@
 #include <xerus.h>
-#include "classes/tangentialOperation.cpp"
-#include "classes/trialfunctions.cpp"
-
-#include "../loading_tensors.cpp"
+#include "../../classes/loading_tensors.cpp"
+#include "../../classes/QMC/tangentialOperation.cpp"
+#include "../../classes/QMC/trialfunctions.cpp"
 
 void project(TTTensor &phi, size_t p, size_t d);
 TTOperator particleNumberOperator(size_t k, size_t d);

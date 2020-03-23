@@ -1,5 +1,6 @@
 #include <xerus.h>
-#include "contractpsihek.cpp"
+
+#include "../classes_old/contractpsihek.cpp"
 #include "../loading_tensors.cpp"
 
 

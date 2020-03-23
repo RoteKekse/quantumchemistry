@@ -2,13 +2,14 @@
 #include <unordered_map>
 #include <boost/functional/hash.hpp>
 #include <stdlib.h>
+#include <omp.h>
 
-#include "metropolis.cpp"
-#include "contractpsihek.cpp"
-#include "trialfunctions.cpp"
-#include "probabilityfunctions.cpp"
-#include "unitvectorprojection.cpp"
 #include "../../loading_tensors.cpp"
+#include "../classes_old/contractpsihek.cpp"
+#include "../classes_old/metropolis.cpp"
+#include "../classes_old/probabilityfunctions.cpp"
+#include "../classes_old/trialfunctions.cpp"
+#include "../classes_old/unitvectorprojection.cpp"
 
 
 
@@ -38,17 +39,24 @@ class Tangential{
 			size_t iter_factor = 10;
 			PsiProbabilityFunction PsiPF(phi);
 			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample, start_sample, d);
-			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> umap1;
-			runMetropolis<PsiProbabilityFunction>(&markow1,umap1,iter_factor*iterations);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
 
-			value_t ev = 0;
-			XERUS_LOG(info, "Number of samples for Eigenvalue " << umap1.size());
-			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: umap1) {
-				auto itr = eHxValues.find(pair.first);
+			auto samples_keys = extract_keys(samples,0.0);
+#pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
+			for (size_t i = 0; i < samples_keys.size(); ++i){
+				auto itr = eHxValues.find(samples_keys[i]);
 				if (itr == eHxValues.end()){
-					builder.reset(pair.first); //setting builder to newest sample!! Important
-					eHxValues[pair.first] = builder.contract();
+					 //setting builder to newest sample!! Important
+					builder.reset(samples_keys[i]);
+					value_t tmp = builder.contract();
+#pragma omp critical
+								eHxValues[samples_keys[i]] = tmp;
+					}
 				}
+			value_t ev = 0;
+			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
+			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
 				psi_ek = PsiPF.values[pair.first];
 				factor = eHxValues[pair.first]* (value_t) pair.second.first/psi_ek;
 				ev += factor;
@@ -58,47 +66,68 @@ class Tangential{
 		}
 
 
-		std::vector<Tensor> get_tangential_components(value_t ev, value_t accuracy=0.0001){
-					value_t ev_exact,res,psi_ek,factor,dk;
-					std::vector<Tensor> results; // Vector of Tangential space components
+	std::vector<Tensor> get_tangential_components(value_t ev, value_t accuracy=0.0001){
+		value_t ev_exact,res,psi_ek,factor,dk;
+		std::vector<Tensor> results; // Vector of Tangential space components
 
+		// Loop for projection of each component
+		for (size_t pos = 0; pos < d; ++pos){
+			XERUS_LOG(info,"Pos = " << pos);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+			XERUS_LOG(info,"Start metropolis");
+#pragma omp parallel shared(samples,iterations)
+			{
+			ProjectorProbabilityFunction2 PPF(phi,pos, true,builder);
+			Metropolis<ProjectorProbabilityFunction2> markow2(&PPF, /*TODO check*/ TrialSample2, start_sample, d);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> private_samples;
+			runMetropolis<ProjectorProbabilityFunction2>(&markow2,private_samples,(size_t) (iterations/3));
+#pragma omp critical
+			{
+			for(std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: private_samples){
+				auto itr = samples.find(pair.first);
+				if (itr == samples.end()){
+					samples[pair.first].first = pair.second.first;
+					samples[pair.first].second = pair.second.second;
+				} else
+					samples[pair.first].first += pair.second.first;
+			}
+			}
 
-					for (size_t pos = 0; pos < d; ++pos){
-						value_t prob = 0, prob2  = 0;
-						ProjectorProbabilityFunction2 PPF(phi,pos, true,builder);
-						Metropolis<ProjectorProbabilityFunction2> markow2(&PPF, /*TODO check*/ TrialSample2, start_sample, d);
+			}
 
-						std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
-						runMetropolis<ProjectorProbabilityFunction2>(&markow2,samples,iterations);
+			XERUS_LOG(info,"Start eHx");
 
-						size_t count = 0;
-						Tensor result(phi.component(pos).dimensions);
-						for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
-							prob +=pair.second.second; //TODO check this
-							if ((value_t) pair.second.first > accuracy * (value_t) iterations){
-								prob2 +=pair.second.second; //TODO check this
-								count++;
-								auto itr = eHxValues.find(pair.first);
-								if (itr == eHxValues.end()){
-									 //setting builder to newest sample!! Important
-									builder.reset(pair.first);
-									eHxValues[pair.first] = builder.contract();
-								}
-
-								auto loc_grad = uvP.localProduct(pair.first,pos,true);
-								auto idx = makeIndex(pair.first);
-
-								builder.reset(pair.first);
-								dk = builder.diagionalEntry();
-								factor = (eHxValues[pair.first] - ev*phi[idx])/dk;
-								result += factor * loc_grad;
-							}
-						}
-						XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples " << samples.size());
-						results.emplace_back(result);
-					}
-				return results;
+			auto samples_keys = extract_keys(samples,accuracy);
+			//Calculate eHx for relevant samples
+#pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
+						for (size_t i = 0; i < samples_keys.size(); ++i){
+							auto itr = eHxValues.find(samples_keys[i]);
+							if (itr == eHxValues.end()){
+								 //setting builder to newest sample!! Important
+								builder.reset(samples_keys[i]);
+							  value_t tmp = builder.contract();
+#pragma omp critical
+					eHxValues[samples_keys[i]] = tmp;
+				}
+			}
+			XERUS_LOG(info,"Start component computation");
+			//Calculate tangential component
+			Tensor result(phi.component(pos).dimensions);
+			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
+				if ((value_t) pair.second.first > accuracy * (value_t) iterations){
+					auto loc_grad = uvP.localProduct(pair.first,pos,true);
+					auto idx = makeIndex(pair.first);
+					builder.reset(pair.first);
+					dk = builder.diagionalEntry();
+					factor = (eHxValues[pair.first] - ev*phi[idx])/dk;
+					result += factor * loc_grad;
+				}
+			}
+			XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples " << samples.size());
+			results.emplace_back(result);
 		}
+	return results;
+	}
 
 		std::vector<Tensor> get_2_tangential_components(value_t ev, size_t start_pos, value_t accuracy=0.0001){
 			value_t ev_exact,res,psi_ek,factor,dk;
@@ -163,7 +192,7 @@ class Tangential{
 		template<class ProbabilityFunction>
 		void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> &umap, size_t iterations){
 			std::vector<size_t> next_sample;
-			for (size_t i = 0; i < iterations/10; ++i)
+			for (size_t i = 0; i <  (size_t) (iterations/10); ++i)
 				next_sample = markow->getNextSample();
 
 			for (size_t i = 0; i < iterations; ++i){
@@ -178,7 +207,14 @@ class Tangential{
 			}
 		}
 
-
+		std::vector<std::vector<size_t>>  extract_keys(std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> const & input_map, value_t accuracy) {
+		  std::vector<std::vector<size_t>> retval;
+		  for (auto const& element : input_map) {
+		  	if ((value_t) element.second.first > accuracy * (value_t) iterations)
+		  		retval.push_back(element.first);
+		  }
+		  return retval;
+		}
 
 
 		std::vector<size_t> makeIndex(std::vector<size_t> sample){
