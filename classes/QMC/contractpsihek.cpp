@@ -130,10 +130,6 @@ class ContractPsiHek{
 							val1 = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
 							val2 = ((p%2 != s%2) || (q%2!=r%2)) ? 0 : returnVValue(q/2,p/2,r/2,s/2);
 							val = signp*(val1 - val2);
-							if (std::abs(val - signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}])) > 1e-14)
-								XERUS_LOG(info,p << " " << q << " " << r << " " << s << " " << val << " " << signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}]));
-
-
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
 								auto itr = umap_psi.find(idx);
@@ -163,23 +159,44 @@ class ContractPsiHek{
 
 		value_t returnVValue(size_t i, size_t k, size_t j, size_t l){
 		//	XERUS_LOG(info, i<<j<<k<<l);
-			if (j <= i && k<= i && l <= (i==k ? j : k)) //2011 ijkl
-				return V[{i,j,k ,l}];
-			if (i <= j && k<= j && l <= (j==k ? i : k))
-				return V[{j,i,k,l}];
-			if (j <= i && l<= i && k <= (i==l ? j : l))
-				return V[{i,j,l ,k}];
-			if (i <= j && l<= j && k <= (j==l ? i : l))
-				return V[{j,i,l,k}];
-			if (l <= k && i<= k && j <= (k==i ? l : i))
-				return V[{k,l,i ,j}];
-			if (k <= l && i<= l && j <= (l==i ? k : i))
-				return V[{l,k,i ,j}];
-			if (l <= k && j<= k && i <= (k==j ? l : j))
-				return V[{k,l,j ,i}];
-			if (k <= l && j<= l && i <= (l==j ? k : j))
-				return V[{l,k,j ,i}];
-			return 1.0;
+			if (j <= i)
+				if (k<= i && l <= (i==k ? j : k))
+					return V[{i,j,k ,l}];
+				if (l<= i && k <= (i==l ? j : l))
+					return V[{i,j,l ,k}];
+			else
+				if (k<= j && l <= (j==k ? i : k))
+					return V[{j,i,k,l}];
+				if (l<= j && k <= (j==l ? i : l))
+
+			if (l <= k)
+				if (i<= k && j <= (k==i ? l : i))
+					return V[{k,l,i ,j}];
+				if (j<= k && i <= (k==j ? l : j))
+					return V[{k,l,j ,i}];
+			else
+				if (i<= l && j <= (l==i ? k : i))
+					return V[{l,k,i ,j}];
+				if (j<= l && i <= (l==j ? k : j))
+					return V[{l,k,j ,i}];
+
+//			if (j <= i && k<= i && l <= (i==k ? j : k))
+//				return V[{i,j,k ,l}];
+//			if (i <= j && k<= j && l <= (j==k ? i : k))
+//				return V[{j,i,k,l}];
+//			if (j <= i && l<= i && k <= (i==l ? j : l))
+//				return V[{i,j,l ,k}];
+//			if (i <= j && l<= j && k <= (j==l ? i : l))
+//				return V[{j,i,l,k}];
+//			if (l <= k && i<= k && j <= (k==i ? l : i))
+//				return V[{k,l,i ,j}];
+//			if (k <= l && i<= l && j <= (l==i ? k : i))
+//				return V[{l,k,i ,j}];
+//			if (l <= k && j<= k && i <= (k==j ? l : j))
+//				return V[{k,l,j ,i}];
+//			if (k <= l && j<= l && i <= (l==j ? k : j))
+//				return V[{l,k,j ,i}];
+//			return 1.0;
 		}
 
 		/*

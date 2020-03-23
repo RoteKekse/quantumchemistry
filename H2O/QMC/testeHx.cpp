@@ -42,23 +42,6 @@ int main(){
 
 
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift);
-
-	size_t pp = 2, qq =4, rr = 2, ss = 0;
-	std::vector<size_t> idx = {pp,qq,rr,ss};
-	XERUS_LOG(info,	builder.returnVValue(pp/2,qq/2,rr/2,ss/2) << " " << V[{pp,qq,rr,ss}]); //2030
-	XERUS_LOG(info,	builder.returnVValue(rr/2,qq/2,pp/2,ss/2) << " " << V[{rr,qq,pp,ss}]); //3020
-	XERUS_LOG(info,	builder.returnVValue(pp/2,ss/2,rr/2,qq/2) << " " << V[{pp,ss,rr,qq}]);
-	XERUS_LOG(info,	builder.returnVValue(rr/2,ss/2,pp/2,qq/2) << " " << V[{rr,ss,pp,qq}]);
-	XERUS_LOG(info,	builder.returnVValue(qq/2,pp/2,ss/2,rr/2) << " " << V[{qq,pp,ss,rr}]);
-	XERUS_LOG(info,	builder.returnVValue(ss/2,pp/2,qq/2,rr/2) << " " << V[{ss,pp,qq,rr}]);
-	XERUS_LOG(info,	builder.returnVValue(qq/2,rr/2,ss/2,pp/2) << " " << V[{qq,rr,ss,pp}]);
-	XERUS_LOG(info,	builder.returnVValue(ss/2,rr/2,qq/2,pp/2) << " " << V[{ss,rr,qq,pp}]);
-
-	XERUS_LOG(info,	builder.returnTValue(pp,rr) << " " << T[{pp,rr}]);
-	XERUS_LOG(info,	builder.returnTValue(rr,pp) << " " << T[{rr,pp}]);
-
-
-
 	for (size_t i = 0; i< test_number; ++i){
 		builder.reset(sample);
 		value_t val1 = builder.contract();
