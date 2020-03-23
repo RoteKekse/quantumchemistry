@@ -45,7 +45,14 @@ int main(){
 
 	size_t pp = 4, qq = 1, rr = 2, ss = 3;
 	std::vector<size_t> idx = {pp,qq,rr,ss};
-	XERUS_LOG(info,	builder.returnVValue(pp,qq,rr,ss) << " " << V[idx]);
+	XERUS_LOG(info,	builder.returnVValue(pp,qq,rr,ss) << " " << V[{pp,qq,rr,ss}]);
+	XERUS_LOG(info,	builder.returnVValue(rr,qq,pp,ss) << " " << V[{rr,qq,pp,ss}]);
+	XERUS_LOG(info,	builder.returnVValue(pp,ss,rr,qq) << " " << V[{pp,ss,rr,qq}]);
+	XERUS_LOG(info,	builder.returnVValue(rr,ss,pp,qq) << " " << V[{rr,ss,pp,qq}]);
+	XERUS_LOG(info,	builder.returnVValue(qq,pp,ss,rr) << " " << V[{qq,pp,ss,rr}]);
+	XERUS_LOG(info,	builder.returnVValue(ss,pp,qq,rr) << " " << V[{ss,pp,qq,rr}]);
+	XERUS_LOG(info,	builder.returnVValue(qq,rr,ss,pp) << " " << V[{qq,rr,ss,pp}]);
+	XERUS_LOG(info,	builder.returnVValue(ss,rr,qq,pp) << " " << V[{ss,rr,qq,pp}]);
 
 
 
