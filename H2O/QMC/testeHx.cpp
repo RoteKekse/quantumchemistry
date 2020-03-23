@@ -22,7 +22,7 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 1;
+	size_t test_number = 0;
 	size_t test_number2 = 0;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
@@ -45,8 +45,8 @@ int main(){
 
 	size_t pp = 5, qq = 6, rr = 1, ss = 0;
 	std::vector<size_t> idx = {pp,qq,rr,ss};
-	XERUS_LOG(info,	builder.returnVValue(pp/2,qq/2,rr/2,ss/2) << " " << V[{pp,qq,rr,ss}]);
-	XERUS_LOG(info,	builder.returnVValue(rr/2,qq/2,pp/2,ss/2) << " " << V[{rr,qq,pp,ss}]);
+	XERUS_LOG(info,	builder.returnVValue(pp/2,qq/2,rr/2,ss/2) << " " << V[{pp,qq,rr,ss}]); //2030
+	XERUS_LOG(info,	builder.returnVValue(rr/2,qq/2,pp/2,ss/2) << " " << V[{rr,qq,pp,ss}]); //3020
 	XERUS_LOG(info,	builder.returnVValue(pp/2,ss/2,rr/2,qq/2) << " " << V[{pp,ss,rr,qq}]);
 	XERUS_LOG(info,	builder.returnVValue(rr/2,ss/2,pp/2,qq/2) << " " << V[{rr,ss,pp,qq}]);
 	XERUS_LOG(info,	builder.returnVValue(qq/2,pp/2,ss/2,rr/2) << " " << V[{qq,pp,ss,rr}]);
