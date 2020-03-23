@@ -14,9 +14,13 @@ using xerus::misc::operator<<;
 
 int main(){
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
+	std::string path_T2 = "../data/T_H2O_48_bench.tensor";
 	std::string path_V = "../data/V_H2O_48_bench_single.tensor";
+	std::string path_V2 = "../data/V_H2O_48_bench.tensor";
 	size_t shift = 25.0,d = 48, p = 8;
-	Tensor T;
+	Tensor T,V;
+	read_from_disc(path_T2,T);
+	read_from_disc(path_V2,V);
 
 	size_t test_number = 1;
 	size_t test_number2 = 0;
@@ -34,15 +38,18 @@ int main(){
 	project(phi,p,d,1e-4);
 
 
-	TensorNetwork phitmp = phi;
-	phitmp.fix_mode(46,0);
-	phitmp.fix_mode(45,1);
-	phitmp.fix_mode(44,0);
-	phitmp.fix_mode(22,0);
-	XERUS_LOG(info,phitmp.frob_norm());
+
 
 
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift);
+
+	size_t p = 4, q = 3, r = 2, s = 1;
+	std::vector<size_t> idx = {p,q,r,s};
+	XERUS_LOG(info,	builder.returnVValue(p,q,r,s) << " " << V[idx]);
+)
+
+
+
 	for (size_t i = 0; i< test_number; ++i){
 		builder.reset(sample);
 		value_t val1 = builder.contract();
