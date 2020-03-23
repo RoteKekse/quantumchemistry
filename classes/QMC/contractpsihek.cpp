@@ -159,19 +159,19 @@ class ContractPsiHek{
 		}
 
 		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
-			if (p>= q && p>=r && r>= s)
+			if (q<=p && r <= p && s <= (p==r ? q : r))
 				return V[{p,q,r,s}];
-			if (r>= q && r>=p && p>= s)
+			if (q<=r && p <= r && s <= (p==r ? q : p))
 				return V[{r,q,p,s}];
-			if (p>= s && p>=r && r>= q)
+			if (s<=p && r <= p && q <= (p==r ? s : r))
 				return V[{p,s,r,q}];
-			if (r>= s && r>=p && p>= q)
+			if (s<=r && p <= r && q <= (p==r ? s : p))
 				return V[{r,s,p,q}];
-			if (q>= p && q>=s && s>= r)
+			if (p<=q && s <= q && r <= (q==s ? p : s))
 				return V[{q,p,s,r}];
-			if (s>= p && s>=q && q>= r)
+			if (p<=s && q <= s && r <= (q==s ? p : q))
 				return V[{s,p,q,r}];
-			if (q>= r && q>=s && s>= p)
+			if (r<=q && s <= q && p <= (q==s ? r : s))
 				return V[{q,r,s,p}];
 			return V[{s,r,q,p}];
 		}
