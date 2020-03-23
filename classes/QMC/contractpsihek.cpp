@@ -168,14 +168,14 @@ class ContractPsiHek{
 				return V[{i,j,l ,k}];
 			if (i <= j && l<= j && k <= (i==j ? l : i))
 				return V[{j,i,l,k}];
-//			if (j <= i && k<= i && l <= (i==j ? k : j))
-//				return V[{i,j,k ,l}];
-//			if (i <= j && k<= j && l <= (i==j ? k : i))
-//				return V[{j,i,k,l}];
-//			if (j <= i && k<= i && l <= (i==j ? k : j))
-//				return V[{i,j,k ,l}];
-//			if (i <= j && k<= j && l <= (i==j ? k : i))
-//				return V[{j,i,k,l}];
+			if (l <= k && i<= k && j <= (k==l ? i : l))
+				return V[{k,l,i ,j}];
+			if (k <= l && i<= l && j <= (k==l ? i : k))
+				return V[{l,k,i ,j}];
+			if (l <= k && j<= k && i <= (k==l ? j : l))
+				return V[{k,l,j ,i}];
+			if (k <= l && j<= l && i <= (k==l ? j : k))
+				return V[{l,k,j ,i}];
 			return 1.0;
 		}
 
