@@ -158,22 +158,23 @@ class ContractPsiHek{
 			return T[{q / 2, p / 2}];
 		}
 
-		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
-			if (q<=p && r <= p && s <= (p==q ? r : q))
-				return V[{p,r,q,s}];
-			if (q<=r && p <= r && s <= (r==q ? p : q))
-				return V[{q,r,p,s}];
-			if (s<=p && r <= p && q <= (p==s ? r : s))
-				return V[{p,s,q,r}];
-			if (s<=r && p <= r && q <= (r==s ? p : s))
-				return V[{q,s,p,r}];
-			if (p<=q && s <= q && r <= (q==p ? s : p))
-				return V[{r,p,s,q}];
-			if (p<=s && q <= s && r <= (s==p ? q : p))
-				return V[{s,p,r,q}];
-			if (r<=q && s <= q && p <= (q==r ? s : r))
-				return V[{r,q,s,p}];
-			return V[{s,q,r,p}];
+		value_t returnVValue(size_t i, size_t k, size_t j, size_t l){
+			if (j <= i && k<= i && l <= (i==k ? j : k))
+				return V[{i,j,k,l}];
+			if (j <= k && i<= k && l <= (i==k ? j : i))
+				return V[{k,j,i,l}];
+			if (l <= i && k<= i && j <= (i==k ? l : k))
+				return V[{i,l,k,j}];
+			if (l <= k && i<= k && j <= (i==k ? l : i))
+				return V[{k,l,i,j}];
+			if (i <= j && l<= j && k <= (j==l ? i : l))
+				return V[{j,i,l,k}];
+			if (i <= l && j<= l && k <= (j==l ? i : j))
+				return V[{l,i,j,k}];
+			if (k <= j && l<= j && i <= (j==l ? k : l))
+				return V[{j,k,l,i}];
+			return V[{l,k,j,i}];
+
 		}
 
 		/*
