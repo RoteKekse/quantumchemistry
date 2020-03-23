@@ -10,9 +10,7 @@
 using namespace xerus;
 using xerus::misc::operator<<;
 
-TTOperator particleNumberOperator(size_t k, size_t d);
-void project(TTTensor &phi, size_t p, size_t d);
-TTTensor makeUnitVector(std::vector<size_t> sample, size_t d);
+
 
 int main(){
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
@@ -34,7 +32,7 @@ int main(){
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
 	//read_from_disc("../data/residual_app_" + std::to_string(2*nob)  +"_benchmark_diag_one_step.tttensor",phi);
 	phi /= phi.frob_norm(); //normalize
-	project(phi,p,d);
+	project(phi,p,d,1e-4);
 
 
 	TensorNetwork phitmp = phi;
@@ -70,62 +68,6 @@ int main(){
 
 
 
-TTTensor makeUnitVector(std::vector<size_t> sample, size_t d){
-	std::vector<size_t> index(d, 0);
-	for (size_t i : sample)
-		if (i < d)
-			index[i] = 1;
-	auto unit = TTTensor::dirac(std::vector<size_t>(d,2),index);
-	return unit;
-}
-
-void project(TTTensor &phi, size_t p, size_t d){
-	Index i1,i2,j1,j2,k1,k2;
-	XERUS_LOG(info, "Phi norm           " << phi.frob_norm());
-	for (size_t k = 0; k <= d; ++k){
-		if (p != k){
-			auto PNk = particleNumberOperator(k,d);
-			PNk.move_core(0);
-			phi(i1&0) = PNk(i1/2,k1/2) * phi (k1&0);
-			value_t f = (value_t)p - (value_t) k;
-			phi /=  f;
-			phi.round(1e-12);
-		}
-	}
-	phi.round(1e-4);
-	XERUS_LOG(info, "Phi norm           " << phi.frob_norm());
-	phi /= phi.frob_norm();
-	XERUS_LOG(info,phi.ranks());
-}
 
 
 
-TTOperator particleNumberOperator(size_t k, size_t d){
-	TTOperator op(std::vector<size_t>(2*d,2));
-	Tensor id = Tensor::identity({2,2});
-	id.reinterpret_dimensions({1,2,2,1});
-	auto n = id;
-	n[{0,0,0,0}] = 0;
-
-	value_t kk = (value_t) k;
-	auto kkk = kk/(value_t) d * id;
-	Tensor tmp({1,2,2,2});
-	tmp.offset_add(id,{0,0,0,0});
-	tmp.offset_add(n-kkk,{0,0,0,1});
-	op.set_component(0,tmp);
-
-	for (size_t i = 1; i < d-1; ++i){
-		tmp = Tensor({2,2,2,2});
-		tmp.offset_add(id,{0,0,0,0});
-		tmp.offset_add(id,{1,0,0,1});
-		tmp.offset_add(n-kkk,{0,0,0,1});
-		op.set_component(i,tmp);
-	}
-  tmp = Tensor({2,2,2,1});
-	tmp.offset_add(n-kkk,{0,0,0,0});
-	tmp.offset_add(id,{1,0,0,0});
-	op.set_component(d-1,tmp);
-
-
-	return op;
-}
