@@ -88,6 +88,7 @@ class ContractPsiHek{
 				idx[q] = 0; // annil operator a_q
 				for (size_t p = 0; p < d; ++p){
 					if (idx[p] == 1) {signp *= -1; continue;}
+					if (p%2 != q%2) {continue;}
 					val = returnTValue(p,q);
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
