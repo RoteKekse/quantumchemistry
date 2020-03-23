@@ -159,7 +159,7 @@ class ContractPsiHek{
 		}
 
 		value_t returnVValue(size_t i, size_t j, size_t k, size_t l){
-			if (j <= i && k<= i && l <= (i==k ? j : k))
+			if (j <= i && j<= i && l <= (i==j ? k : j))
 				return V[{i,k,j,l}];
 			if (j <= k && i<= k && l <= (i==k ? j : i))
 				return V[{k,i,j,l}];
