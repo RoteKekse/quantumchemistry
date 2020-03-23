@@ -158,7 +158,7 @@ class ContractPsiHek{
 			return T[{q / 2, p / 2}];
 		}
 
-		value_t returnVValue(size_t i, size_t k, size_t j, size_t l){
+		value_t returnVValue(size_t i, size_t j, size_t k, size_t l){
 			XERUS_LOG(info, i<<j<<k<<l);
 			if (j <= i && k<= i && l <= (i==k ? j : k))
 				return V[{i,j,k,l}];
