@@ -128,7 +128,7 @@ class ContractPsiHek{
 							if (idx[p] == 1) { signp *= -1;  continue;}
 							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
 
-							val = signp*(returnVValue(p,q,r,s) - returnVValue(q,p,r,s));
+							val = signp*(returnVValue(p/2,q/2,r/2,s/2) - returnVValue(q/2,p/2,r/2,s/2));
 							if (std::abs(val - signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}])) > 1e-14)
 								XERUS_LOG(info,p << " " << q << " " << r << " " << s << " " << val << " " << signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}]));
 							if (std::abs(val) > 10e-12){
@@ -160,20 +160,20 @@ class ContractPsiHek{
 
 		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
 			if (p>= q && p>=r && r>= s)
-				return V[{p/2,q/2,r/2,s/2}];
+				return V[{p,q,r,s}];
 			if (r>= q && r>=p && p>= s)
-				return V[{r/2,q/2,p/2,s/2}];
+				return V[{r,q,p,s}];
 			if (p>= s && p>=r && r>= q)
-				return V[{p/2,s/2,r/2,q/2}];
+				return V[{p,s,r,q}];
 			if (r>= s && r>=p && p>= q)
-				return V[{r/2,s/2,p/2,q/2}];
+				return V[{r,s,p,q}];
 			if (q>= p && q>=s && s>= r)
-				return V[{q/2,p/2,s/2,r/2}];
+				return V[{q,p,s,r}];
 			if (s>= p && s>=q && q>= r)
-				return V[{s/2,p/2,q/2,r/2}];
+				return V[{s,p,q,r}];
 			if (q>= r && q>=s && s>= p)
-				return V[{q/2,r/2,s/2,p/2}];
-			return V[{s/2,r/2,q/2,p/2}];
+				return V[{q,r,s,p}];
+			return V[{s,r,q,p}];
 		}
 
 		/*
