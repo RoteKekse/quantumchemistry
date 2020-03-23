@@ -153,9 +153,11 @@ int main(){
 	std::string path = "../FCIDUMP.h2o_24";
 	Tensor T  = load_1e_int_single(d,path),V=load_2e_int_single(d,path);
 
-	XERUS_LOG(info, T.representation);
-	XERUS_LOG(info, V.representation);
+	if ( T.representation)
+		XERUS_LOG(info, "Sparse");
 
+	if ( V.representation)
+			XERUS_LOG(info, "Sparse");
 	std::string name = "../data/T_H2O_48_bench_single.tensor";
 	write_to_disc(name,T);
 
