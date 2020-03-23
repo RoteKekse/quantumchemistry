@@ -1,5 +1,7 @@
 #include <xerus.h>
 
+#include "../../classes/loading_tensors.cpp"
+
 #include <queue>
 
 #include <boost/regex.hpp>
@@ -39,6 +41,28 @@ xerus::Tensor load_1e_int(size_t d, std::string path){
 				H[{2*j+1,2*i+1}] = val;
 			}
 		}
+		return H;
+	}
+
+xerus::Tensor load_1e_int_single(size_t d, std::string path){
+		auto nob = d/2;
+		auto H = xerus::Tensor({nob,nob});
+		std::string line;
+		std::ifstream input;
+		input.open (path);
+		size_t count = 0;
+		while ( std::getline (input,line) )
+		{
+			count++;
+			if (count > 4){
+				std::vector<std::string> l;
+				boost::algorithm::split_regex( l, line, boost::regex( "  " ) ) ;
+				if (std::stoi(l[1]) != 0 && std::stoi(l[3]) == 0){
+					H[{static_cast<size_t>(std::stoi(l[1]))-1,static_cast<size_t>(std::stoi(l[2]))-1}] = stod(l[0]);
+				}
+			}
+		}
+		input.close();
 		return H;
 	}
 
@@ -100,26 +124,44 @@ xerus::Tensor load_2e_int(size_t d, std::string path){
 	return V;
 }
 
+xerus::Tensor load_2e_int_single(size_t d, std::string path){
+	auto nob = d/2;
+	auto V = xerus::Tensor({nob,nob,nob,nob});
+	std::string line;
+	std::ifstream input;
+	input.open (path);
+	size_t count = 0;
+	while ( std::getline (input,line) )
+	{
+		count++;
+		if (count > 4){
+			std::vector<std::string> l;
+			boost::algorithm::split_regex( l, line, boost::regex( "  " ) ) ;
+			if (std::stoi(l[1]) != 0 && std::stoi(l[3]) != 0){
+				V[{static_cast<size_t>(std::stoi(l[1]))-1,static_cast<size_t>(std::stoi(l[2]))-1,static_cast<size_t>(std::stoi(l[3]))-1,static_cast<size_t>(std::stoi(l[4]))-1}] = stod(l[0]);
+			}
+		}
+	}
+	input.close();
+	return V;
+}
+
 
 int main(){
 
 	size_t d = 48;
 	std::string path = "../FCIDUMP.h2o_24";
-	Tensor T  = load_1e_int(d,path),V=load_2e_int(d,path);
+	Tensor T  = load_1e_int_single(d,path),V=load_2e_int_single(d,path);
+
+	XERUS_LOG(info, T.representation);
+	XERUS_LOG(info, V.representation);
+
+	std::string name = "../data/T_H2O_48_bench_single.tensor";
+	write_to_disc(name,T);
 
 
-
-
-
-	std::string name = "../data/T_H2O_48_bench.tensor";
-	std::ofstream write(name.c_str());
-	misc::stream_writer(write,T,xerus::misc::FileFormat::BINARY);
-	write.close();
-
-	name = "../data/V_H2O_48_bench.tensor";
-	std::ofstream write2(name.c_str());
-	misc::stream_writer(write2,V,xerus::misc::FileFormat::BINARY);
-	write2.close();
+	name = "../data/V_H2O_48_bench_single.tensor";
+	write_to_disc(name,V);
 
 	return 0;
 }
