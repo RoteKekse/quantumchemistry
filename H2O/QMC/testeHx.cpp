@@ -22,8 +22,8 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 3;
-	size_t test_number2 = 1000;
+	size_t test_number = 10;
+	size_t test_number2 = 100;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
 	XERUS_LOG(info, "--- Loading shifted and preconditioned Hamiltonian ---");
