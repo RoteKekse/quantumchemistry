@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 #include "../../classes/containerhash.cpp"
+#include "../../classes/loading_tensors.cpp"
 
 #include <memory>
 
@@ -25,7 +26,9 @@ class ContractPsiHek{
 		const size_t d;
 		const size_t particle;
 		Tensor V;
+		Tensor V2;
 		Tensor T;
+		Tensor T2;
 		Tensor N;
 		std::string path_T;
 		std::string path_V;
@@ -50,6 +53,8 @@ class ContractPsiHek{
 			T = load1eIntegrals();
 			V = load2eIntegrals();
 			N = loadNuclear();
+			read_from_disc("../data/T_H2O_48_bench.tensor",T2);
+			read_from_disc("../data/V_H2O_48_bench.tensor",V2);
 			XERUS_LOG(info, "T sparse? " << T.is_sparse());
 			XERUS_LOG(info, "V sparse? " << V.is_sparse());
 		}
@@ -79,7 +84,7 @@ class ContractPsiHek{
 		value_t contract(){
 			Index i1,i2;
 			result = 0;
-			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0;
+			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val2;
 			size_t nextp = 0,nextq = 0;
 
 			// 1 e contraction
@@ -90,6 +95,8 @@ class ContractPsiHek{
 					if (idx[p] == 1) {signp *= -1; continue;}
 					if (p%2 != q%2) {continue;}
 					val = returnTValue(p,q);
+					if (std::abs(val - T2[{p,q}]) > 1e-14)
+						XERUS_LOG(info,p << " " << q << " " << val);
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
 						auto itr = umap_psi.find(idx);
@@ -120,7 +127,10 @@ class ContractPsiHek{
 						for (size_t p = 0; p < q; ++p){
 							if (idx[p] == 1) { signp *= -1;  continue;}
 							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
+
 							val = signp*(returnVValue(p,q,r,s) - returnVValue(q,p,r,s));
+							if (std::abs(val - signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}])) > 1e-14)
+								XERUS_LOG(info,p << " " << q << " " << r << " " << s << " " << val);
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
 								auto itr = umap_psi.find(idx);
@@ -147,6 +157,7 @@ class ContractPsiHek{
 				return T[{p / 2, q / 2}];
 			return T[{q / 2, p / 2}];
 		}
+
 		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
 			if (p>= q && p>=r && r>= s)
 				return V[{p/2,q/2,r/2,s/2}];
