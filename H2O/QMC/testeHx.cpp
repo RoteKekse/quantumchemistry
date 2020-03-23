@@ -1,10 +1,10 @@
 #include <xerus.h>
 #include <chrono>
 
-#include "classes/contractpsihek.cpp"
-#include "classes/trialfunctions.cpp"
+#include "../../classes/QMC/contractpsihek.cpp"
+#include "../../classes/QMC/trialfunctions.cpp"
 
-#include "../loading_tensors.cpp"
+#include "../../classes/loading_tensors.cpp"
 
 using namespace xerus;
 using xerus::misc::operator<<;
@@ -15,10 +15,10 @@ TTTensor makeUnitVector(std::vector<size_t> sample, size_t d);
 
 int main(){
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
-	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
+	std::string path_V = "../data/V_H2O_48_bench_single.tensor";
 	size_t shift = 25.0,d = 48, p = 8;
-
-	XERUS_LOG(info, (size_t) 5 / (size_t) 3 );
+	Tensor T;
+	read_from_disc(path_T,T);
 
 	size_t test_number = 1;
 	size_t test_number2 = 0;
