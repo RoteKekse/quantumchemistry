@@ -46,7 +46,7 @@ int main(){
 	size_t pp = 4, qq = 3, rr = 2, ss = 1;
 	std::vector<size_t> idx = {pp,qq,rr,ss};
 	XERUS_LOG(info,	builder.returnVValue(pp,qq,rr,ss) << " " << V[idx]);
-)
+
 
 
 
