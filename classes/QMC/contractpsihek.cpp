@@ -163,7 +163,7 @@ class ContractPsiHek{
 		}
 
 		value_t returnVValue(size_t i, size_t k, size_t j, size_t l){
-			XERUS_LOG(info, i<<j<<k<<l);
+			XERUS_LOG(info, i<<j<<k<<l << " "<< V[{j,i,k,l}]);
 			if (j <= i)
 				if (k<= i && l <= (i==k ? j : k))
 					return V[{i,j,k ,l}];
@@ -186,7 +186,7 @@ class ContractPsiHek{
 				if (j<= l && i <= (l==j ? k : j))
 					return V[{l,k,j ,i}];
 
-//			if (j <= i && k<= i && l <= (i==k ? j : k))
+//			if (j <= i && k<= i && l <= (i==k ? j : k)) //ijkl = 0110
 //				return V[{i,j,k ,l}];
 //			if (i <= j && k<= j && l <= (j==k ? i : k))
 //				return V[{j,i,k,l}];
