@@ -6,6 +6,7 @@
 #include <boost/regex.hpp>
 #include <boost/algorithm/string_regex.hpp>
 #include <unordered_map>
+
 #include "../../classes/containerhash.cpp"
 
 #include <memory>
@@ -147,20 +148,20 @@ class ContractPsiHek{
 		}
 		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
 			if (p>= q && p>=r && r>= s)
-				return V[{p,q,r,s}];
+				return V[{p/2,q/2,r/2,s/2}];
 			if (r>= q && r>=p && p>= s)
-				return V[{r,q,p,s}];
+				return V[{r/2,q/2,p/2,s/2}];
 			if (p>= s && p>=r && r>= q)
-				return V[{p,s,r,q}];
+				return V[{p/2,s/2,r/2,q/2}];
 			if (r>= s && r>=p && p>= q)
-				return V[{r,s,p,q}];
+				return V[{r/2,s/2,p/2,q/2}];
 			if (q>= p && q>=s && s>= r)
-				return V[{q,p,s,r}];
+				return V[{q/2,p/2,s/2,r/2}];
 			if (s>= p && s>=q && q>= r)
-				return V[{s,p,q,r}];
+				return V[{s/2,p/2,q/2,r/2}];
 			if (q>= r && q>=s && s>= p)
-				return V[{q,r,s,p}];
-			return V[{s,r,q,p}];
+				return V[{q/2,r/2,s/2,p/2}];
+			return V[{s/2,r/2,q/2,p/2}];
 		}
 
 		/*
