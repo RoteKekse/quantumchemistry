@@ -142,11 +142,25 @@ class ContractPsiHek{
 		value_t returnTValue(size_t p, size_t q)
 		{
 			if (p > q)
-				return T[p / 2, q / 2];
-			return T[q / 2, p / 2];
+				return T[{p / 2, q / 2}];
+			return T[{q / 2, p / 2}];
 		}
 		value_t returnVValue(size_t p, size_t q, size_t r, size_t s){
-			return 0;
+			if (p>= q && p>=r && r>= s)
+				return V[{p,q,r,s}];
+			if (r>= q && r>=p && p>= s)
+				return V[{r,q,p,s}];
+			if (p>= s && p>=r && r>= q)
+				return V[{p,s,r,q}];
+			if (r>= s && r>=p && p>= q)
+				return V[{r,s,p,q}];
+			if (q>= p && q>=s && s>= r)
+				return V[{q,p,s,r}];
+			if (s>= p && s>=q && q>= r)
+				return V[{s,p,q,r}];
+			if (q>= r && q>=s && s>= p)
+				return V[{q,r,s,p}];
+			return V[{s,r,q,p}];
 		}
 
 		/*
