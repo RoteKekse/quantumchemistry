@@ -165,7 +165,7 @@ class ContractPsiHek{
 			XERUS_LOG(info, i<<j<<k<<l);
 			if (j <= i && k<= i && l <= (i==k ? j : k)) //2011 ijkl
 				return V[{i,j,k ,l}];
-			if (i <= j && k<= j && l <= (i==j ? k : i))
+			if (i <= j && k<= j && l <= (j==k ? i : k))
 				return V[{j,i,k,l}];
 			if (j <= i && l<= i && k <= (i==j ? l : j))
 				return V[{i,j,l ,k}];
