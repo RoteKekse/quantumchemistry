@@ -18,7 +18,7 @@ int main(){
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	size_t shift = 25.0,d = 48, p = 8;
 
-	XERUS_LOG(info, (size_t) 5 / (size_t) 2 );
+	XERUS_LOG(info, (size_t) 5 / (size_t) 3 );
 
 	size_t test_number = 1;
 	size_t test_number2 = 0;
