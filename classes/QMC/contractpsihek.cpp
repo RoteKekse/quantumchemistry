@@ -49,6 +49,8 @@ class ContractPsiHek{
 			T = load1eIntegrals();
 			V = load2eIntegrals();
 			N = loadNuclear();
+			XERUS_LOG(info, "T sparse? " << T.is_sparse());
+			XERUS_LOG(info, "V sparse? " << V.is_sparse());
 		}
 
 		ContractPsiHek( const ContractPsiHek&  _other ) = default;
@@ -85,7 +87,7 @@ class ContractPsiHek{
 				idx[q] = 0; // annil operator a_q
 				for (size_t p = 0; p < d; ++p){
 					if (idx[p] == 1) {signp *= -1; continue;}
-					val = T[{p,q}];
+					val = returnTValue(p,q);
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
 						auto itr = umap_psi.find(idx);
@@ -116,7 +118,7 @@ class ContractPsiHek{
 						for (size_t p = 0; p < q; ++p){
 							if (idx[p] == 1) { signp *= -1;  continue;}
 							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
-							val = signp*(V[{p,q,r,s}] - V[{q,p,r,s}]);
+							val = signp*(returnVValue(p,q,r,s) - returnVValue(q,p,r,s));
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
 								auto itr = umap_psi.find(idx);
@@ -136,6 +138,14 @@ class ContractPsiHek{
 			}
 			return result + shift * psiEntry();
 		}
+
+		value_t returnTValue(size_t p, size_t q)
+		{
+			if (p > q)
+				return T[p / 2, q / 2];
+			return T[q / 2, p / 2];
+		}
+		value_t returnVValue(size_t p, size_t q, size_t r, size_t s);
 
 		/*
 		 * Contraction, does psi ek for current sample, NOTE: use reset first

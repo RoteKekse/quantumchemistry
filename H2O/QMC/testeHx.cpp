@@ -14,9 +14,11 @@ void project(TTTensor &phi, size_t p, size_t d);
 TTTensor makeUnitVector(std::vector<size_t> sample, size_t d);
 
 int main(){
-	std::string path_T = "../data/T_H2O_48_bench.tensor";
-	std::string path_V= "../data/V_H2O_48_bench.tensor";
+	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
+	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	size_t shift = 25.0,d = 48, p = 8;
+
+	XERUS_LOG(info, (size_t) 5 / (size_t) 2 );
 
 	size_t test_number = 1;
 	size_t test_number2 = 0;
