@@ -43,7 +43,7 @@ int main(){
 
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift);
 
-	size_t pp = 6, qq = 5, rr = 1, ss = 0;
+	size_t pp = 5, qq = 6, rr = 1, ss = 0;
 	std::vector<size_t> idx = {pp,qq,rr,ss};
 	XERUS_LOG(info,	builder.returnVValue(pp,qq,rr,ss) << " " << V[{pp,qq,rr,ss}]);
 	XERUS_LOG(info,	builder.returnVValue(rr,qq,pp,ss) << " " << V[{rr,qq,pp,ss}]);
