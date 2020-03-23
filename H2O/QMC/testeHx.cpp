@@ -5,6 +5,7 @@
 #include "../../classes/QMC/trialfunctions.cpp"
 
 #include "../../classes/loading_tensors.cpp"
+#include "../../classes/helpers.cpp"
 
 using namespace xerus;
 using xerus::misc::operator<<;
