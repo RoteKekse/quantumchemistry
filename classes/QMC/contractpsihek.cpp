@@ -26,9 +26,9 @@ class ContractPsiHek{
 		const size_t d;
 		const size_t particle;
 		Tensor V;
-		Tensor V2;
+//		Tensor V2;
 		Tensor T;
-		Tensor T2;
+//		Tensor T2;
 		Tensor N;
 		std::string path_T;
 		std::string path_V;
@@ -53,8 +53,8 @@ class ContractPsiHek{
 			T = load1eIntegrals();
 			V = load2eIntegrals();
 			N = loadNuclear();
-			read_from_disc("../data/T_H2O_48_bench.tensor",T2);
-			read_from_disc("../data/V_H2O_48_bench.tensor",V2);
+//			read_from_disc("../data/T_H2O_48_bench.tensor",T2);
+//			read_from_disc("../data/V_H2O_48_bench.tensor",V2);
 			XERUS_LOG(info, "T sparse? " << T.is_sparse());
 			XERUS_LOG(info, "V sparse? " << V.is_sparse());
 		}
