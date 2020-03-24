@@ -38,7 +38,7 @@ int main() {
 	TangentialOperation tang(eHF);
 	auto res = tang.localProduct(es);
 	for (auto comp : res)
-		XERUS_LOG(info,res.frob_norm());
+		XERUS_LOG(info,comp.frob_norm());
 
 
 
