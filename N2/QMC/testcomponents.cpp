@@ -26,8 +26,8 @@ int main(){
 	XERUS_LOG(info,"-- Project on tangential space"  );
 	project(phi,num_elec,2*nob);
 
-	std::string path_T = "../data/T_N2_120.tensor";
-	std::string path_V= "../data/V_N2_120.tensor";
+	std::string path_T = "../data/T_N2_60_single_small.tensor";
+	std::string path_V= "../data/V_N2_60_single_small.tensor";
 	XERUS_LOG(info,"-- Initializing QMC class"  );
 	Tangential tang(2*nob,num_elec,iterations,path_T,path_V,shift,hf,phi);
 	phi.move_core(0,true);
