@@ -29,11 +29,20 @@ int main() {
 	value_t ev, shift = 135.0, ev_app;
 	std::string molecule = "N2";
 	std::vector<size_t> hf = { 0, 1,2,3,4,5,6,7,8,9,10,11,12,13 };
+	std::vector<size_t> sample = { 0, 1,2,4,5,6,7,8,9,10,11,12,13 };
 	value_t nuc = 23.5724393955273;
 	size_t pos = 10;
 
 	auto eHF = makeUnitVector(hf,2*nob);
+	auto es = makeUnitVector(sample,2*nob);
 	TangentialOperation tang(eHF);
+	auto res = tang.localProduct(es);
+	for (auto comp : res)
+		XERUS_LOG(info,res.frob_norm());
+
+
+
+
 	auto Pop = tang_proj(eHF,pos);
 	XERUS_LOG(info, Pop.frob_norm());
 
