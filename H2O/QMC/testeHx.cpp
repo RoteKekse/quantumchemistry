@@ -47,9 +47,10 @@ int main(){
 	for (size_t i = 0; i< test_number3; ++i){
 		builder.reset(sample);
 		value_t val1 = builder.diagionalEntry();
+		value_t val3 = builder.diagionalEntry2();
 		auto ek = makeUnitVector(sample,d);
 		value_t val2 = contract_TT(Hs,ek,ek);
-		XERUS_LOG(info, "Sample = " << sample << std::setprecision(5) << "\t"<< std::abs(val1 - val2)<< "\t"<<val1 << "\t"<< val2);
+		XERUS_LOG(info, "Sample = " << sample << std::setprecision(5) << "\t"<< std::abs(val1 - val2)<< "\t"<<val1 << "\t"<< val2<< "\t"<< val3 );
 		sample = TrialSample(sample,d);
 	}
 
