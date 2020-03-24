@@ -24,7 +24,7 @@ int main(){
 
 	size_t test_number = 0;
 	size_t test_number2 = 0;
-	size_t test_number3 = 10;
+	size_t test_number3 = 30;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
 	XERUS_LOG(info, "--- Loading shifted and preconditioned Hamiltonian ---");
@@ -50,7 +50,7 @@ int main(){
 		value_t val3 = builder.diagionalEntry2();
 		auto ek = makeUnitVector(sample,d);
 		value_t val2 = contract_TT(Hs,ek,ek);
-		XERUS_LOG(info, "Sample = " << sample << std::setprecision(5) << "\t"<< std::abs(val1 - val2)<< "\t"<<val1 << "\t"<< val2<< "\t"<< val3 );
+		XERUS_LOG(info, "Sample = " << sample << std::setprecision(5) << "\t"<< std::abs(val1 - val2) );
 		sample = TrialSample(sample,d);
 	}
 
