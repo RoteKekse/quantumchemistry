@@ -238,13 +238,13 @@ class ContractPsiHek{
 			result = 0;
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
-					result += T[{q,q}];
+					result += T2[{q,q}];
 			}
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
 				for (size_t p = 0; p < d; ++p){
 					if (idx[p] != 1 || p == q) continue;
-						result += 0.5*(V[{p,q,p,q}]-V[{p,q,q,p}]);
+						result += 0.5*(V2[{p,q,p,q}]-V2[{p,q,q,p}]);
 				}
 			}
 			return result + shift;
