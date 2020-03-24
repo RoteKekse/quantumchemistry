@@ -24,6 +24,7 @@ int main(){
 
 	size_t test_number = 10;
 	size_t test_number2 = 100;
+	size_t test_number3 = 10;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
 	XERUS_LOG(info, "--- Loading shifted and preconditioned Hamiltonian ---");
@@ -42,6 +43,17 @@ int main(){
 
 
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift);
+	//Test Diagonal
+	for (size_t i = 0; i< test_number3; ++i){
+		builder.reset(sample);
+		value_t val1 = builder.diagionalEntry();
+		auto ek = makeUnitVector(sample,d);
+		value_t val2 = contract_TT(Hs,ek,ek);
+		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12) << " \t"<< std::abs(val1 - val2));
+		sample = TrialSample(sample,d);
+	}
+
+
 	for (size_t i = 0; i< test_number; ++i){
 		builder.reset(sample);
 		value_t val1 = builder.contract();

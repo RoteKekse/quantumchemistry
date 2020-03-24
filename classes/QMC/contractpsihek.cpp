@@ -222,17 +222,19 @@ class ContractPsiHek{
 			result = 0;
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
-					result += T[{q,q}];
+					result += returnTValue(q/2,q/2);
 			}
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
 				for (size_t p = 0; p < d; ++p){
 					if (idx[p] != 1 || p == q) continue;
-						result += 0.5*(V[{p,q,p,q}]-V[{p,q,q,p}]);
+						result += 0.5*(returnVValue(p/2,q/2,p/2,q/2)-returnVValue(p/2,q/2,q/2,p/2));
 				}
 			}
 			return result + shift;
 		}
+
+
 
 		void makeInvSampleAndIndex(){
 			for (size_t i = 0; i < d; ++i){
