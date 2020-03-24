@@ -60,7 +60,7 @@ int main(){
 		value_t val1 = builder.contract();
 		auto ek = makeUnitVector(sample,d);
 		value_t val2 = contract_TT(Hs,phi,ek);
-		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12) << " \t"<< std::abs(val1 - val2));
+		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12) << "     \t"<< std::abs(val1 - val2));
 		sample = TrialSample(sample,d);
 	}
 	auto start = std::chrono::steady_clock::now();
