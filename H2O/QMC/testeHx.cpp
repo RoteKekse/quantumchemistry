@@ -22,8 +22,8 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 10;
-	size_t test_number2 = 100;
+	size_t test_number = 0;
+	size_t test_number2 = 0;
 	size_t test_number3 = 10;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
@@ -49,7 +49,7 @@ int main(){
 		value_t val1 = builder.diagionalEntry();
 		auto ek = makeUnitVector(sample,d);
 		value_t val2 = contract_TT(Hs,ek,ek);
-		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12) << " \t"<< std::abs(val1 - val2)<< " \t"<<val1 << " \t"<< val2);
+		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(6) << " \t"<< std::abs(val1 - val2)<< " \t"<<val1 << " \t"<< val2);
 		sample = TrialSample(sample,d);
 	}
 
