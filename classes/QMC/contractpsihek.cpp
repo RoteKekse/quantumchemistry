@@ -220,6 +220,7 @@ class ContractPsiHek{
 		 */
 		value_t diagionalEntry(){
 			result = 0;
+			value_t val1, val2;
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
 					result += returnTValue(q/2,q/2);
@@ -228,7 +229,9 @@ class ContractPsiHek{
 				if (idx[q] != 1) continue;
 				for (size_t p = 0; p < d; ++p){
 					if (idx[p] != 1 || p == q) continue;
-						result += 0.5*(returnVValue(p/2,q/2,p/2,q/2)-returnVValue(p/2,q/2,q/2,p/2));
+					val1 = returnVValue(p/2,q/2,p/2,q/2);
+					val2 = (p%2 != q%2) ? 0 : returnVValue(p/2,q/2,q/2,p/2);
+					result += 0.5*(val1-val2);
 				}
 			}
 			return result + shift;
