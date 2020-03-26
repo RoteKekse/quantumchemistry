@@ -47,6 +47,11 @@ int main(){
 	auto step2 = ehf - 0.5 *grad_test;
 	auto step3 = ehf - 0.1 *grad_test;
 	auto step4 = ehf - 0.01 *grad_test;
+	step1 /= step1.frob_norm();
+	step2 /= step2.frob_norm();
+	step3 /= step3.frob_norm();
+	step4 /= step4.frob_norm();
+	XERUS_LOG(info,lambda);
 	XERUS_LOG(info,contract_TT(Hs,step1,step1));
 	XERUS_LOG(info,contract_TT(Hs,step2,step2));
 	XERUS_LOG(info,contract_TT(Hs,step3,step3));
