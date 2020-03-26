@@ -37,7 +37,7 @@ int main(){
 	XERUS_LOG(info,"With Hamiltonian");
 	XERUS_LOG(info,grad.frob_norm());
 	XERUS_LOG(info,grad.ranks());
-	grad.round(1e-12);
+	grad.round(1e-10);
 	XERUS_LOG(info,grad.ranks());
 
 	builder.reset(hf_sample);
@@ -47,7 +47,7 @@ int main(){
 	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad_test.frob_norm());
 	XERUS_LOG(info,grad.ranks());
-	grad_test.round(1e-12);
+	grad_test.round(1e-10);
 	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
 	return 0;
