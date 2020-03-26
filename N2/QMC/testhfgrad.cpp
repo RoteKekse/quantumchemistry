@@ -14,7 +14,7 @@ int main(){
 
 	std::vector<size_t> hf_sample = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 	std::string path_T = "../data/T_N2_60_single.tensor";
-	std::string path_V= "../data/T_N2_60_single.tensor";
+	std::string path_V= "../data/V_N2_60_single.tensor";
 
 	auto ehf = makeUnitVector(hf_sample,d);
 
