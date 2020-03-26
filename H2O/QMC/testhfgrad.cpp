@@ -50,5 +50,15 @@ int main(){
 	grad_test.round(1e-10);
 	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
+
+	auto step1 = ehf - 1.0 *grad_test;
+	auto step2 = ehf - 0.5 *grad_test;
+	auto step3 = ehf - 0.1 *grad_test;
+	auto step4 = ehf - 0.01 *grad_test;
+	XERUS_LOG(info,contract_TT(Hs,step1,step1));
+	XERUS_LOG(info,contract_TT(Hs,step2,step2));
+	XERUS_LOG(info,contract_TT(Hs,step3,step3));
+	XERUS_LOG(info,contract_TT(Hs,step4,step4));
+
 	return 0;
 }
