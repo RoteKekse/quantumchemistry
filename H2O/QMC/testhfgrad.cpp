@@ -26,14 +26,14 @@ int main(){
 	TTTensor grad;
 	grad(i1&0) = Hs(i1/2,j1/2)*ehf(j1&0);
 	grad -= lambda * ehf;
-	XERUS_LOG(info,"With Hamiltonian")
+	XERUS_LOG(info,"With Hamiltonian");
 	XERUS_LOG(info,grad.frob_norm());
 	XERUS_LOG(info,grad.ranks());
 
 
 	builder.reset(hf_sample);
 	auto grad_test = builder.getGrad();
-	XERUS_LOG(info,"Without Hamiltonian")
+	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad_test.frob_norm());
 	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
