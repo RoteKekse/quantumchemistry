@@ -25,6 +25,8 @@ int main(){
 
 	auto grad = builder.getGrad();
 	auto lambda = tang.get_eigenvalue();
+	XERUS_LOG(info,"Start ev " << lambda);
+
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,"Without Hamiltonian");
