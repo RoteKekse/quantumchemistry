@@ -23,6 +23,7 @@ int main(){
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,grad.frob_norm());
+	XERUS_LOG(info,grad.ranks());
 
 	return 0;
 }
