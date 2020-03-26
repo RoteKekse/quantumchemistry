@@ -19,7 +19,7 @@ int main(){
 
 	auto lambda = contract_TT(Hs,ehf,ehf);
 	TTTensor grad;
-	grad(i1&0) = Hs(i1&0,j1&0)*ehf(j1&0);
+	grad(i1&0) = Hs(i1/2,j1/2)*ehf(j1&0);
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,grad.frob_norm());
