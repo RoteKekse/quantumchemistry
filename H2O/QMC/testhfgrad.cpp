@@ -43,10 +43,10 @@ int main(){
 	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
 
-	auto step1 = ehf - 1.0 *grad_test;
-	auto step2 = ehf - 0.5 *grad_test;
+	auto step1 = ehf - 0.3 *grad_test;
+	auto step2 = ehf - 0.2 *grad_test;
 	auto step3 = ehf - 0.1 *grad_test;
-	auto step4 = ehf - 0.01 *grad_test;
+	auto step4 = ehf - 0.05 *grad_test;
 	step1 /= step1.frob_norm();
 	step2 /= step2.frob_norm();
 	step3 /= step3.frob_norm();
