@@ -212,6 +212,7 @@ class ContractPsiHek{
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
 			TTTensor ek;
+			Size_t count = 0;
 			// 1 e contraction
 			XERUS_LOG(info,idx);
 			for (size_t q = 0; q < d; ++q){
@@ -224,6 +225,7 @@ class ContractPsiHek{
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
 						ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+						count++;
 						res += signp *  val * ek;
 						idx[p] = 0; //annilation
 					}
@@ -256,6 +258,7 @@ class ContractPsiHek{
 								idx[p] = 1;
 								ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
 								res += val * ek;
+								count++;
 								idx[p] = 0;
 							}
 						}
@@ -267,7 +270,7 @@ class ContractPsiHek{
 				idx[r] = 1;
 				signr *= -1;
 			}
-
+			XERUS_LOG(info,count);
 			ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
 			return res  + shift*ek;
 		}
