@@ -33,6 +33,7 @@ int main(){
 
 	builder.reset(hf_sample);
 	auto grad_test = builder.getGrad();
+	grad_test -= lambda * ehf;
 	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad_test.frob_norm());
 	XERUS_LOG(info,grad_test.ranks());
