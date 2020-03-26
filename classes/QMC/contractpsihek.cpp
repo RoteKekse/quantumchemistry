@@ -9,6 +9,7 @@
 
 #include "../../classes/containerhash.cpp"
 #include "../../classes/loading_tensors.cpp"
+#include "../../classes/helpers.cpp"
 
 #include <memory>
 
@@ -82,7 +83,6 @@ class ContractPsiHek{
 		 * Contraction, does psi H ek for current sample, NOTE: use reset first
 		 */
 		value_t contract(){
-			Index i1,i2;
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
@@ -209,10 +209,66 @@ class ContractPsiHek{
 
 		TTTensor getGrad(){
 			TTTensor res(std::vector<size_t>(d,2));
+			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
+						size_t nextp = 0,nextq = 0;
+
+			// 1 e contraction
+			for (size_t q = 0; q < d; ++q){
+				if (idx[q] != 1) continue;
+				idx[q] = 0; // annil operator a_q
+				for (size_t p = 0; p < d; ++p){
+					if (idx[p] == 1) {signp *= -1; continue;}
+					if (p%2 != q%2) {continue;}
+					val = returnTValue(p/2,q/2);
+					if (std::abs(val) > 10e-12){
+						idx[p] = 1; //creation
+						auto ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+						res += signp *  val * ek;
+						idx[p] = 0; //annilation
+					}
+				}
+				signq *= -1;
+				signp = signq;
+				idx[q] = 1; 				// creation operator a^*q
+			}
+
+			signq = 1.0; signr == 1.0; signs = 1.0; signp = 1.0;
+			for (size_t r = 0; r < d; ++r){
+				if (idx[r] != 1) continue;
+				idx[r] = 0;
+				signs = signr;
+				for (size_t s = 0; s < r; ++s){
+					if (idx[s] != 1) continue;
+					idx[s] = 0;
+					signq = signs;
+					for (size_t q = 0; q < d; ++q){
+						if (idx[q] == 1) {signq *= -1; continue;}
+						idx[q] = 1;
+						signp = signq;
+						for (size_t p = 0; p < q; ++p){
+							if (idx[p] == 1) { signp *= -1;  continue;}
+							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
+							val1 = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
+							val2 = ((p%2 != s%2) || (q%2!=r%2)) ? 0 : returnVValue(q/2,p/2,r/2,s/2);
+							val = signp*(val1 - val2);
+							if (std::abs(val) > 10e-12){
+								idx[p] = 1;
+								auto ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+								result += val * ek;
+								idx[p] = 0;
+							}
+						}
+						idx[q] = 0;
+					}
+					idx[s] = 1;
+					signs *= -1;
+				}
+				idx[r] = 1;
+				signr *= -1;
+			}
 
 
 			return res;
-
 		}
 
 		/*

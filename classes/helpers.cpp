@@ -48,6 +48,8 @@ TTTensor makeUnitVector(std::vector<size_t> sample, size_t d){
 
 
 
+
+
 TTOperator particleNumberOperator(size_t k, size_t d){
 	TTOperator op(std::vector<size_t>(2*d,2));
 	Tensor id = Tensor::identity({2,2});
