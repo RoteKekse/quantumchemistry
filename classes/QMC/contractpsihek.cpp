@@ -254,7 +254,7 @@ class ContractPsiHek{
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
 								auto ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
-								result += val * ek;
+								res += val * ek;
 								idx[p] = 0;
 							}
 						}
