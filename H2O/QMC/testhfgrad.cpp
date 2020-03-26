@@ -25,18 +25,11 @@ int main(){
 
 	auto lambda = contract_TT(Hs,ehf,ehf);
 	TTTensor grad;
-	Tensor val;
 	grad(i1&0) = Hs(i1/2,j1/2)*ehf(j1&0);
-	builder.reset(hf_sample);
-	XERUS_LOG(info,builder.contract());
-	val() = grad(i1&0)*ehf(i1&0);
-	XERUS_LOG(info,val[0]);
-
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,"With Hamiltonian");
 	XERUS_LOG(info,grad.frob_norm());
-	XERUS_LOG(info,grad.ranks());
 	grad.round(1e-10);
 	XERUS_LOG(info,grad.ranks());
 
@@ -46,7 +39,6 @@ int main(){
 
 	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad_test.frob_norm());
-	XERUS_LOG(info,grad.ranks());
 	grad_test.round(1e-10);
 	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
