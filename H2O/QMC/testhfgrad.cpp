@@ -51,13 +51,13 @@ int main(){
 	step2 /= step2.frob_norm();
 	step3 /= step3.frob_norm();
 	step4 /= step4.frob_norm();
-	XERUS_LOG(info,lambda);
-	XERUS_LOG(info,contract_TT(Hs,step1,step1));
-	XERUS_LOG(info,contract_TT(Hs,step2,step2));
-	XERUS_LOG(info,contract_TT(Hs,step3,step3));
-	XERUS_LOG(info,contract_TT(Hs,step4,step4));
+	XERUS_LOG(info,"Start ev " << lambda);
+	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
+	XERUS_LOG(info,"Step2    " <<contract_TT(Hs,step2,step2));
+	XERUS_LOG(info,"Step3    " <<contract_TT(Hs,step3,step3));
+	XERUS_LOG(info,"Step4    " <<contract_TT(Hs,step4,step4));
 
-	size_t rank = 10;
+	size_t rank = 20;
 	step1.round(rank);
 	step2.round(rank);
 	step3.round(rank);
@@ -67,11 +67,11 @@ int main(){
 	step2 /= step2.frob_norm();
 	step3 /= step3.frob_norm();
 	step4 /= step4.frob_norm();
-	XERUS_LOG(info,lambda);
-	XERUS_LOG(info,contract_TT(Hs,step1,step1));
-	XERUS_LOG(info,contract_TT(Hs,step2,step2));
-	XERUS_LOG(info,contract_TT(Hs,step3,step3));
-	XERUS_LOG(info,contract_TT(Hs,step4,step4));
+	XERUS_LOG(info,"Start ev " << lambda);
+	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
+	XERUS_LOG(info,"Step2    " <<contract_TT(Hs,step2,step2));
+	XERUS_LOG(info,"Step3    " <<contract_TT(Hs,step3,step3));
+	XERUS_LOG(info,"Step4    " <<contract_TT(Hs,step4,step4));
 
 	return 0;
 }
