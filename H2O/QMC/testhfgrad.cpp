@@ -57,5 +57,20 @@ int main(){
 	XERUS_LOG(info,contract_TT(Hs,step3,step3));
 	XERUS_LOG(info,contract_TT(Hs,step4,step4));
 
+	step1.round(5);
+	step2.round(5);
+	step3.round(5);
+	step4.round(5);
+
+	step1 /= step1.frob_norm();
+	step2 /= step2.frob_norm();
+	step3 /= step3.frob_norm();
+	step4 /= step4.frob_norm();
+	XERUS_LOG(info,lambda);
+	XERUS_LOG(info,contract_TT(Hs,step1,step1));
+	XERUS_LOG(info,contract_TT(Hs,step2,step2));
+	XERUS_LOG(info,contract_TT(Hs,step3,step3));
+	XERUS_LOG(info,contract_TT(Hs,step4,step4));
+
 	return 0;
 }
