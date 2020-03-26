@@ -212,7 +212,6 @@ class ContractPsiHek{
 			TTTensor ek;
 			size_t count = 0;
 			// 1 e contraction
-			XERUS_LOG(info,idx);
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
 				idx[q] = 0; // annil operator a_q
