@@ -17,6 +17,7 @@ int main(){
 	auto ehf = makeUnitVector(hf_sample,d);
 
 	ContractPsiHek builder(ehf,d,p,path_T,path_V,0.0, shift);
+	builder.reset(hf_sample);
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
@@ -24,15 +25,18 @@ int main(){
 
 	auto lambda = contract_TT(Hs,ehf,ehf);
 	TTTensor grad;
+	Tensor val;
 	grad(i1&0) = Hs(i1/2,j1/2)*ehf(j1&0);
+	XERUS_LOG(info,builder.contract());
+	val() = grad(i1&0)*ehf(i1&0);
+	XERUS_LOG(info,val[0]);
+
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,"With Hamiltonian");
 	XERUS_LOG(info,grad.frob_norm());
 	XERUS_LOG(info,grad.ranks());
 
-
-	builder.reset(hf_sample);
 	auto grad_test = builder.getGrad();
 	grad_test -= lambda * ehf;
 
