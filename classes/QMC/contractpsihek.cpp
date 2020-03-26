@@ -162,6 +162,7 @@ class ContractPsiHek{
 			return T[{q , p }];
 		}
 
+
 		value_t returnVValue(size_t i, size_t k, size_t j, size_t l){
 			//XERUS_LOG(info, i<<j<<k<<l );
 			if (j <= i){
@@ -203,6 +204,15 @@ class ContractPsiHek{
 //			if (k <= l && j<= l && i <= (l==j ? k : j))
 //				return V[{l,k,j ,i}];
 			return 1.0;
+		}
+
+
+		TTTensor getGrad(){
+			TTTensor res(std::vector<size_t>(d,2));
+
+
+			return res;
+
 		}
 
 		/*
