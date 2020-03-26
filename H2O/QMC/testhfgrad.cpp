@@ -11,8 +11,8 @@ int main(){
 	size_t d = 48,p = 8;
 	value_t shift = 25.0;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
-	std::string path_T = "../data/T_H2O_48_bench.tensor";
-	std::string path_V= "../data/V_H2O_48_bench.tensor";
+	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
+	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 
 	auto ehf = makeUnitVector(hf_sample,d);
 
