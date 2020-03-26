@@ -210,8 +210,8 @@ class ContractPsiHek{
 		TTTensor getGrad(){
 			TTTensor res(std::vector<size_t>(d,2));
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
-						size_t nextp = 0,nextq = 0;
-
+			size_t nextp = 0,nextq = 0;
+			TTTensor ek;
 			// 1 e contraction
 			for (size_t q = 0; q < d; ++q){
 				if (idx[q] != 1) continue;
@@ -222,7 +222,7 @@ class ContractPsiHek{
 					val = returnTValue(p/2,q/2);
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
-						auto ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+						ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
 						res += signp *  val * ek;
 						idx[p] = 0; //annilation
 					}
@@ -253,7 +253,7 @@ class ContractPsiHek{
 							val = signp*(val1 - val2);
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
-								auto ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+								ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
 								res += val * ek;
 								idx[p] = 0;
 							}
@@ -267,8 +267,8 @@ class ContractPsiHek{
 				signr *= -1;
 			}
 
-
-			return res;
+			ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
+			return res  + shift*ek;
 		}
 
 		/*

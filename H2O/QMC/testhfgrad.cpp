@@ -37,6 +37,8 @@ int main(){
 	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad_test.frob_norm());
 	XERUS_LOG(info,grad_test.ranks());
+	grad_test.round(1e-12);
+	XERUS_LOG(info,grad_test.ranks());
 	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
 	return 0;
 }
