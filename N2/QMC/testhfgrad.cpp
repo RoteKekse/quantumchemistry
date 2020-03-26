@@ -9,8 +9,8 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 48,p = 8,iterations=1e5;
-	value_t shift = 25.0;
+	size_t d = 120,p = 14,iterations=1e5;
+	value_t shift = 135.0;
 
 	std::vector<size_t> hf_sample = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
 	std::string path_T = "../data/T_N2_60_single.tensor";
