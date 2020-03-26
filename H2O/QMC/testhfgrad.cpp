@@ -57,10 +57,11 @@ int main(){
 	XERUS_LOG(info,contract_TT(Hs,step3,step3));
 	XERUS_LOG(info,contract_TT(Hs,step4,step4));
 
-	step1.round(5);
-	step2.round(5);
-	step3.round(5);
-	step4.round(5);
+	size_t rank = 10;
+	step1.round(rank);
+	step2.round(rank);
+	step3.round(rank);
+	step4.round(rank);
 
 	step1 /= step1.frob_norm();
 	step2 /= step2.frob_norm();
