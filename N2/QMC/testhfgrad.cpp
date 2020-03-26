@@ -23,10 +23,10 @@ int main(){
 	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 
 
-	auto grad = builder.getGrad();
 	auto lambda = tang.get_eigenvalue();
 	XERUS_LOG(info,"Start ev " << lambda);
 
+	auto grad = builder.getGrad();
 	grad -= lambda * ehf;
 
 	XERUS_LOG(info,"Without Hamiltonian");
