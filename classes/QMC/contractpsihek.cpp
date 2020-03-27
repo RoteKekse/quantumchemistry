@@ -205,7 +205,7 @@ class ContractPsiHek{
 		}
 
 
-		TTTensor getGrad(){
+		TTTensor getGrad(size_t rank = 0){
 			TTTensor res(std::vector<size_t>(d,2));
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
@@ -240,6 +240,7 @@ class ContractPsiHek{
 				for (size_t s = 0; s < r; ++s){
 					XERUS_LOG(info,"r = " << r << " s = " << s);
 					XERUS_LOG(info,res.ranks());
+					if (rank > 0) res.round(rank);
 					if (idx[s] != 1) continue;
 					idx[s] = 0;
 					signq = signs;
