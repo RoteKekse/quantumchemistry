@@ -11,12 +11,12 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 	while(true){
 		size_t rand_out = rand() % dim;
 
-    auto found = std::binary_search (sample.begin(), sample.end(), rand_out);
-		if (!found){
-			sample.erase (sample.begin()+rand_in);
-			addElementToVector(sample, rand_out, dim);
-			break;
-		}
+		auto found = std::binary_search (sample.begin(), sample.end(), rand_out);
+			if (!found){
+				sample.erase (sample.begin()+rand_in);
+				addElementToVector(sample, rand_out, dim);
+				break;
+			}
 	}
 
 	return sample;
