@@ -212,6 +212,7 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 	public:
 		PsiProbabilityFunction(TTTensor _psi): d(_psi.order()){
 			XERUS_LOG(info,_psi.ranks());
+			XERUS_LOG(info,values.size());
 			psi = _psi;
 		}
 
