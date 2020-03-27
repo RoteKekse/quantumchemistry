@@ -51,19 +51,8 @@ int main(){
 		read_from_disc("../data/hf_gradient_48.tttensor",grad_tmp);
 	XERUS_LOG(info, "Error " << (grad_tmp - grad).frob_norm());
 
-//	auto step1 = ehf - 0.3 *grad_test;
-//	auto step2 = ehf - 0.2 *grad_test;
-//	auto step3 = ehf - 0.1 *grad_test;
-//	auto step4 = ehf - 0.05 *grad_test;
-//	step1 /= step1.frob_norm();
-//	step2 /= step2.frob_norm();
-//	step3 /= step3.frob_norm();
-//	step4 /= step4.frob_norm();
-//	XERUS_LOG(info,"Start ev " << lambda);
-//	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
-//	XERUS_LOG(info,"Step2    " <<contract_TT(Hs,step2,step2));
-//	XERUS_LOG(info,"Step3    " <<contract_TT(Hs,step3,step3));
-//	XERUS_LOG(info,"Step4    " <<contract_TT(Hs,step4,step4));
+	std::vector<size_t> test_sample = {0,1,2,4,5,22,23,30,31};
+	XERUS_LOG(info,grad_tmp[makeIndex(test_sample,d)]);
 
 	size_t rank = 20;
 	auto step1 = ehf - 0.2 *grad;

@@ -46,7 +46,13 @@ TTTensor makeUnitVector(std::vector<size_t> sample, size_t d){
 	return unit;
 }
 
-
+std::vector<size_t> makeIndex(std::vector<size_t> sample, size_t d){
+	std::vector<size_t> index(d, 0);
+	for (size_t i : sample)
+		if (i < d)
+			index[i] = 1;
+	return index;
+}
 
 
 
