@@ -73,11 +73,13 @@ int main(){
 	step3 /= step3.frob_norm();
 	tang.update(step1);
 	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
+	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
 	tang.update(step2);
 	XERUS_LOG(info,"Step2    " <<tang.get_eigenvalue() << "\n" << step2.ranks());
+	XERUS_LOG(info,"Step2    " <<contract_TT(Hs,step2,step2));
 	tang.update(step3);
 	XERUS_LOG(info,"Step3    " <<tang.get_eigenvalue() << "\n" << step3.ranks());
-
+	XERUS_LOG(info,"Step3    " <<contract_TT(Hs,step3,step3));
 
 	return 0;
 }
