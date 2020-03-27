@@ -1,6 +1,8 @@
 #include <xerus.h>
 #include <stdlib.h>
 
+#pragma once
+
 void addElementToVector(std::vector<size_t>& v, size_t elem, size_t max_size);
 
 
