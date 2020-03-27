@@ -11,6 +11,7 @@ int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
 	size_t d = 48,p = 8, iterations=5e5;;
 	value_t shift = 25.0;
+	bool build = true;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
@@ -34,15 +35,21 @@ int main(){
 	grad.round(1e-10);
 	XERUS_LOG(info,grad.ranks());
 
-	builder.reset(hf_sample);
-	auto grad_test = builder.getGrad();
-	grad_test -= lambda * ehf;
+	TTTensor grad_tmp;
+	if (build){
+		grad_tmp = builder.getGrad();
 
-	XERUS_LOG(info,"Without Hamiltonian");
-	XERUS_LOG(info,grad_test.frob_norm());
-	grad_test.round(1e-10);
-	XERUS_LOG(info,grad_test.ranks());
-	XERUS_LOG(info,"Error = " << (grad_test-grad).frob_norm());
+		grad_tmp -= lambda * ehf;
+
+		XERUS_LOG(info,"Without Hamiltonian");
+		XERUS_LOG(info,grad.frob_norm());
+		grad_tmp.round(1e-10);
+		XERUS_LOG(info,grad.ranks());
+
+		write_to_disc("../data/hf_gradient_48.tttensor",grad_tmp);
+	}
+	else
+		read_from_disc("../data/hf_gradient_48.tttensor",grad_tmp);
 
 //	auto step1 = ehf - 0.3 *grad_test;
 //	auto step2 = ehf - 0.2 *grad_test;
