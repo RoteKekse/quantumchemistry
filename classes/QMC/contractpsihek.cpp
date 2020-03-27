@@ -223,7 +223,7 @@ class ContractPsiHek{
 						idx[p] = 1; //creation
 						//ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
 						count++;
-						res += signp *  val * ek;
+						//res += signp *  val * ek;
 						idx[p] = 0; //annilation
 					}
 				}
@@ -255,7 +255,7 @@ class ContractPsiHek{
 							if (std::abs(val) > 10e-12){
 								idx[p] = 1;
 								//ek = TTTensor::dirac(std::vector<size_t>(d,2),idx);
-								res += val * ek;
+								//res += val * ek;
 								count++;
 								idx[p] = 0;
 							}
