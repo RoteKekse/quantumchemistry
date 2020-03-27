@@ -19,7 +19,6 @@ int main(){
 
 	ContractPsiHek builder(ehf,d,p,path_T,path_V,0.0, shift);
 	builder.reset(hf_sample);
-	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 
 	xerus::TTOperator Hs,P;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
@@ -71,7 +70,7 @@ int main(){
 	step1 /= step1.frob_norm();
 	step2 /= step2.frob_norm();
 	step3 /= step3.frob_norm();
-	tang.update(step1);
+	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
 	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
 	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
 	XERUS_LOG(info,"Step1    " <<contract_TT(P,step1,step1));
