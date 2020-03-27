@@ -55,7 +55,8 @@ int main(){
 	std::vector<size_t> test_sample = {0,1,2,3,4,22,23,30,31};
 	for (size_t i = 0; i < 100; ++i){
 		auto ts2 = TrialSample(hf_sample,d);
-		XERUS_LOG(info,ts2 << " " << grad_tmp[makeIndex(ts2,d)]);
+		if (std::abs(grad_tmp[makeIndex(ts2,d)]) > 1e-6)
+			XERUS_LOG(info,ts2 << " " << grad_tmp[makeIndex(ts2,d)]);
 	}
 	size_t rank = 20;
 	auto step1 = ehf - 0.2 *grad;
