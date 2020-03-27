@@ -239,8 +239,8 @@ class ContractPsiHek{
 				signs = signr;
 				for (size_t s = 0; s < r; ++s){
 					XERUS_LOG(info,"r = " << r << " s = " << s);
-					XERUS_LOG(info,res.ranks());
 					if (rank > 0) res.round(rank);
+					XERUS_LOG(info,res.ranks());
 					if (idx[s] != 1) continue;
 					idx[s] = 0;
 					signq = signs;
