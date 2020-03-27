@@ -5,7 +5,7 @@
 #include "../../classes/helpers.cpp"
 #include "../../classes/QMC/contractpsihek.cpp"
 #include "../../classes/QMC/tangential_parallel.cpp"
-#include "../../classes/QMC/trialfuntions.cpp"
+#include "../../classes/QMC/trialfunctions.cpp"
 
 
 int main(){
