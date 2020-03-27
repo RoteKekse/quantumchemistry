@@ -10,7 +10,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 48,p = 8, iterations=1e6;
+	size_t d = 48,p = 8, iterations=1e7;
 	value_t shift = 25.0;
 	bool build = false;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
