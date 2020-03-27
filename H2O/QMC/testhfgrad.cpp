@@ -5,6 +5,7 @@
 #include "../../classes/helpers.cpp"
 #include "../../classes/QMC/contractpsihek.cpp"
 #include "../../classes/QMC/tangential_parallel.cpp"
+#include "../../classes/QMC/trialfuntions.cpp"
 
 
 int main(){
@@ -51,9 +52,11 @@ int main(){
 		read_from_disc("../data/hf_gradient_48.tttensor",grad_tmp);
 	XERUS_LOG(info, "Error " << (grad_tmp - grad).frob_norm());
 
-	std::vector<size_t> test_sample = {0,1,2,4,5,22,23,30,31};
-	XERUS_LOG(info,grad_tmp[makeIndex(test_sample,d)]);
-
+	std::vector<size_t> test_sample = {0,1,2,3,4,22,23,30,31};
+	for (size_t i = 0; i < 100; ++i){
+		auto ts2 = TrialSample(hf_sample,d);
+		XERUS_LOG(info,ts2 << " " << grad_tmp[makeIndex(ts2,d)]);
+	}
 	size_t rank = 20;
 	auto step1 = ehf - 0.2 *grad;
 	auto step2 = ehf - 0.1 *grad;
