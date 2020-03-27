@@ -21,10 +21,10 @@ int main(){
 	builder.reset(hf_sample);
 	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 
-	xerus::TTOperator Hs;
+	xerus::TTOperator Hs,P;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
 	read_from_disc(name2,Hs);
-
+	P = particleNumberOperator(d);
 	auto lambda = contract_TT(Hs,ehf,ehf);
 	TTTensor grad;
 	grad(i1&0) = Hs(i1/2,j1/2)*ehf(j1&0);
@@ -74,12 +74,15 @@ int main(){
 	tang.update(step1);
 	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
 	XERUS_LOG(info,"Step1    " <<contract_TT(Hs,step1,step1));
+	XERUS_LOG(info,"Step1    " <<contract_TT(P,step1,step1));
 	tang.update(step2);
 	XERUS_LOG(info,"Step2    " <<tang.get_eigenvalue() << "\n" << step2.ranks());
 	XERUS_LOG(info,"Step2    " <<contract_TT(Hs,step2,step2));
+	XERUS_LOG(info,"Step2    " <<contract_TT(P,step2,step2));
 	tang.update(step3);
 	XERUS_LOG(info,"Step3    " <<tang.get_eigenvalue() << "\n" << step3.ranks());
 	XERUS_LOG(info,"Step3    " <<contract_TT(Hs,step3,step3));
+	XERUS_LOG(info,"Step3    " <<contract_TT(P,step3,step3));
 
 	return 0;
 }
