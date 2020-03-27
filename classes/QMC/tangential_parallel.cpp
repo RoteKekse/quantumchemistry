@@ -38,7 +38,7 @@ class Tangential{
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 10;
 			PsiProbabilityFunction PsiPF(phi);
-			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample, start_sample, d);
+			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
 
