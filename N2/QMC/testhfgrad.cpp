@@ -9,7 +9,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 120,p = 14,rank = 20, iterations=5e5;
+	size_t d = 120,p = 14,rank = 30, iterations=5e5;
 	value_t shift = 135.0;
 
 	std::vector<size_t> hf_sample = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
@@ -35,6 +35,8 @@ int main(){
 	grad.round(rank);
 	XERUS_LOG(info,grad.ranks());
 
+	write_to_disc("../data/hf_gradient_120.tttensor",grad);
+
 	auto step1 = ehf - 0.1 *grad;
 	auto step2 = ehf - 0.05 *grad;
 	auto step3 = ehf - 0.02 *grad;
@@ -55,15 +57,15 @@ int main(){
 	step5 /= step5.frob_norm();
 	XERUS_LOG(info,"Start ev " << lambda);
 	tang.update(step1);
-	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue());
+	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
 	tang.update(step2);
-	XERUS_LOG(info,"Step2    " <<tang.get_eigenvalue());
+	XERUS_LOG(info,"Step2    " <<tang.get_eigenvalue() << "\n" << step2.ranks());
 	tang.update(step3);
-	XERUS_LOG(info,"Step3    " <<tang.get_eigenvalue());
+	XERUS_LOG(info,"Step3    " <<tang.get_eigenvalue() << "\n" << step3.ranks());
 	tang.update(step4);
-	XERUS_LOG(info,"Step4    " <<tang.get_eigenvalue());
+	XERUS_LOG(info,"Step4    " <<tang.get_eigenvalue() << "\n" << step4.ranks());
 	tang.update(step5);
-	XERUS_LOG(info,"Step5    " <<tang.get_eigenvalue());
+	XERUS_LOG(info,"Step5    " <<tang.get_eigenvalue() << "\n" << step5.ranks());
 
 	return 0;
 }
