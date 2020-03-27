@@ -32,6 +32,7 @@ class Tangential{
 			phi = _phi;
 			uvP.update(_phi);
 			eHxValues.clear();
+			builder.reset_psi(_phi);
 		}
 
 		value_t get_eigenvalue(){
