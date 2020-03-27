@@ -45,7 +45,10 @@ int main(){
 	XERUS_LOG(info,grad.frob_norm());
 	auto step1 = ehf - 0.1 *grad;
 	XERUS_LOG(info,step1.frob_norm());
-
+	step1.round(20);
+	step1 /= step1.frob_norm();
+	tang.update(step1);
+	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
 
 //	auto step1 = ehf - 0.1 *grad;
 //	auto step2 = ehf - 0.05 *grad;
