@@ -32,6 +32,7 @@ int main(){
 	XERUS_LOG(info,"Without Hamiltonian");
 	XERUS_LOG(info,grad.frob_norm());
 	grad.round(1e-10);
+	grad.round(rank);
 	XERUS_LOG(info,grad.ranks());
 
 	auto step1 = ehf - 0.3 *grad;
