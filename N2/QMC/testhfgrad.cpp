@@ -9,7 +9,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 120,p = 14,rank = 20, iterations=1e5;
+	size_t d = 120,p = 14,rank = 20, iterations=5e5;
 	value_t shift = 135.0;
 
 	std::vector<size_t> hf_sample = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
@@ -35,21 +35,24 @@ int main(){
 	grad.round(rank);
 	XERUS_LOG(info,grad.ranks());
 
-	auto step1 = ehf - 0.3 *grad;
-	auto step2 = ehf - 0.2 *grad;
-	auto step3 = ehf - 0.1 *grad;
-	auto step4 = ehf - 0.05 *grad;
+	auto step1 = ehf - 0.1 *grad;
+	auto step2 = ehf - 0.05 *grad;
+	auto step3 = ehf - 0.02 *grad;
+	auto step4 = ehf - 0.01 *grad;
+	auto step5 = ehf - 0.005 *grad;
 
 
 	step1.round(rank);
 	step2.round(rank);
 	step3.round(rank);
 	step4.round(rank);
+	step5.round(rank);
 
 	step1 /= step1.frob_norm();
 	step2 /= step2.frob_norm();
 	step3 /= step3.frob_norm();
 	step4 /= step4.frob_norm();
+	step5 /= step5.frob_norm();
 	XERUS_LOG(info,"Start ev " << lambda);
 	tang.update(step1);
 	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue());
@@ -59,6 +62,8 @@ int main(){
 	XERUS_LOG(info,"Step3    " <<tang.get_eigenvalue());
 	tang.update(step4);
 	XERUS_LOG(info,"Step4    " <<tang.get_eigenvalue());
+	tang.update(step5);
+	XERUS_LOG(info,"Step5    " <<tang.get_eigenvalue());
 
 	return 0;
 }
