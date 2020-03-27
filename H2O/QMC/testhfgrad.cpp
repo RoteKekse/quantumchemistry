@@ -49,7 +49,7 @@ int main(){
 	}
 	else
 		read_from_disc("../data/hf_gradient_48.tttensor",grad_tmp);
-	XERUS_LOG(info, "Error " << (grad_tmp - grad).frob_norm);
+	XERUS_LOG(info, "Error " << (grad_tmp - grad).frob_norm());
 
 //	auto step1 = ehf - 0.3 *grad_test;
 //	auto step2 = ehf - 0.2 *grad_test;
