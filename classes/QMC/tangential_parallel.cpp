@@ -58,6 +58,7 @@ class Tangential{
 			value_t ev = 0;
 			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
 			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
+				XERUS_LOG(info,pair.first);
 				psi_ek = PsiPF.values[pair.first];
 				factor = eHxValues[pair.first]* (value_t) pair.second.first/psi_ek;
 				ev += factor;
