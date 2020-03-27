@@ -220,7 +220,6 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 				std::vector<size_t> idx = makeIndex(sample);
 				values[sample] =  psi[idx];
 			}
-			XERUS_LOG(info,std::pow(values[sample],2));
 			return std::pow(values[sample],2);
 		}
 
