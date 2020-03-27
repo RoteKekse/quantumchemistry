@@ -22,7 +22,7 @@ int main(){
 	builder.reset(hf_sample);
 	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 
-	auto grad = builder.getGrad();
+	auto grad = builder.getGrad(rank);
 
 	auto lambda = tang.get_eigenvalue();
 	XERUS_LOG(info,"Start ev " << lambda);
