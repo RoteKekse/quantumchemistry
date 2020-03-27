@@ -10,7 +10,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 48,p = 8, iterations=5e5;;
+	size_t d = 48,p = 8, iterations=1e6;
 	value_t shift = 25.0;
 	bool build = false;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
@@ -58,7 +58,7 @@ int main(){
 		if (std::abs(grad_tmp[makeIndex(ts2,d)]) > 1e-6)
 			XERUS_LOG(info,ts2 << " " << grad_tmp[makeIndex(ts2,d)]);
 	}
-	size_t rank = 20;
+	size_t rank = 10;
 	auto step1 = ehf - 0.2 *grad;
 	auto step2 = ehf - 0.1 *grad;
 	auto step3 = ehf - 0.05 *grad;
