@@ -34,7 +34,7 @@ int main(){
 
 		XERUS_LOG(info,"Without Hamiltonian");
 		XERUS_LOG(info,grad.frob_norm());
-		grad.round(1e-4);
+		grad.round(1e-10);
 		grad.round(rank);
 		XERUS_LOG(info,grad.ranks());
 
@@ -48,12 +48,14 @@ int main(){
 	XERUS_LOG(info,step1.frob_norm());
 	step1.round(20);
 	XERUS_LOG(info,step1.ranks());
-	step1.round(1e-8);
+	step1.round(1e-4);
 	XERUS_LOG(info,step1.ranks());
 	Tensor hfval;
+
+	step1 /= step1.frob_norm();
+
 	hfval() = ehf(i1&0)*step1(i1&0);
 	XERUS_LOG(info,hfval);
-	step1 /= step1.frob_norm();
 	XERUS_LOG(info,"Particle Number " << contract_TT(P,step1,step1));
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
 	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() << "\n" << step1.ranks());
