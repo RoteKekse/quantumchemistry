@@ -11,6 +11,8 @@ int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
 	size_t d = 120,p = 14,rank = 60, iterations=1e4;
 	value_t shift = 135.0;
+	value_t nuc = 23.5724393955273;
+
 	bool build = false;
 
 	std::vector<size_t> hf_sample = {0,1,2,3,4,5,6,7,8,9,10,11,12,13};
@@ -46,7 +48,7 @@ int main(){
 	XERUS_LOG(info,grad.frob_norm());
 	auto step1 = ehf - 0.1 *grad;
 	XERUS_LOG(info,step1.frob_norm());
-	step1.round(5);
+	step1.round(10);
 	XERUS_LOG(info,step1.ranks());
 	step1.round(1e-8);
 	XERUS_LOG(info,step1.ranks());
@@ -58,7 +60,7 @@ int main(){
 	XERUS_LOG(info,hfval);
 	XERUS_LOG(info,"Particle Number " << contract_TT(P,step1,step1));
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
-	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() << "\n" << step1.ranks());
+	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() - shift + nuc << "\n" << step1.ranks());
 
 //	auto step1 = ehf - 0.1 *grad;
 //	auto step2 = ehf - 0.05 *grad;
