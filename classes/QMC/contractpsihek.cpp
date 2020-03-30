@@ -323,6 +323,37 @@ class ContractPsiHek{
 //			return result + shift;
 //		}
 
+		value_t evBruteForce(){
+			result = 0;
+			Tensor tmp;
+			value_t val,val1,val2;
+			for (size_t q = 0; q < d; ++q){
+				for (size_t p = 0; p < d; ++p){
+					if (p%2 != q%2) {continue;}
+					val = returnTValue(p/2,q/2);
+					if (std::abs(val) > 10e-12){
+						result += val* contract_TT(return_one_e_ac(p,q,d),psi,psi);
+					}
+				}
+			}
+
+			for (size_t r = 0; r < d; ++r){
+				for (size_t s = 0; s < d; ++s){
+					XERUS_LOG(info,r << " " << s);
+					for (size_t q = 0; q < d; ++q){
+						for (size_t p = 0; p < d; ++p){
+							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
+							val = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
+							if (std::abs(val) > 10e-12){
+								result += 0.5*val* contract_TT(return_two_e_ac(p,q,s,r,d),psi,psi);
+							}
+						}
+					}
+				}
+			}
+
+			return result +shift;
+		}
 
 
 		void makeInvSampleAndIndex(){

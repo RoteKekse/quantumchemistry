@@ -34,8 +34,6 @@ class Metropolis{
 
 		std::vector<size_t> next_sample(T(current_sample,d));
 		value_t probability_next = P->P(next_sample);
-		if (probability_next > 1e-6)
-			XERUS_LOG(info,next_sample << "  \t " << probability_next);
 
 		value_t random_number = ((value_t) rand() / (RAND_MAX));
 		value_t acceptance_rate = probability_next/probability_current;
