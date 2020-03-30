@@ -46,7 +46,7 @@ int main(){
 	XERUS_LOG(info,grad.frob_norm());
 	auto step1 = ehf - 0.1 *grad;
 	XERUS_LOG(info,step1.frob_norm());
-	step1.round(20);
+	step1.round(5);
 	XERUS_LOG(info,step1.ranks());
 	step1.round(1e-8);
 	XERUS_LOG(info,step1.ranks());
