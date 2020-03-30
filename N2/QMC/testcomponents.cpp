@@ -42,7 +42,7 @@ int main(){
 	XERUS_LOG(info, "Eigenvalue approx. " << ev_app + nuc - shift);
 
 	XERUS_LOG(info,"-- Calculate direction"  );
-	auto tang_app = tang.get_tangential_components(ev_app,0.005);
+	auto tang_app = tang.get_tangential_components(ev_app,0.01);
 
 	XERUS_LOG(info,"-- Save direction"  );
 	res = tang.builtTTTensor(tang_app);

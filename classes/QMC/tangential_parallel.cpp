@@ -98,8 +98,9 @@ class Tangential{
 			}
 
 			XERUS_LOG(info,"Start eHx");
-
+			XERUS_LOG(info, "Size before" << samples.size());
 			auto samples_keys = extract_keys(samples,accuracy);
+			XERUS_LOG(info, "Size after" << samples.size());
 			//Calculate eHx for relevant samples
 #pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
 						for (size_t i = 0; i < samples_keys.size(); ++i){
@@ -107,9 +108,9 @@ class Tangential{
 							if (itr == eHxValues.end()){
 								 //setting builder to newest sample!! Important
 								builder.reset(samples_keys[i]);
-							  value_t tmp = builder.contract();
+								value_t tmp = builder.contract();
 #pragma omp critical
-					eHxValues[samples_keys[i]] = tmp;
+								eHxValues[samples_keys[i]] = tmp;
 				}
 			}
 			XERUS_LOG(info,"Start component computation");
