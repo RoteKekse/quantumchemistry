@@ -48,7 +48,7 @@ int main(){
 	XERUS_LOG(info,step1.frob_norm());
 	step1.round(20);
 	XERUS_LOG(info,step1.ranks());
-	step1.round(1e-4);
+	step1.round(1e-8);
 	XERUS_LOG(info,step1.ranks());
 	Tensor hfval;
 
