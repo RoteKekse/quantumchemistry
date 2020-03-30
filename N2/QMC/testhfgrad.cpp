@@ -50,7 +50,9 @@ int main(){
 	XERUS_LOG(info,step1.ranks());
 	step1.round(1e-8);
 	XERUS_LOG(info,step1.ranks());
-
+	Tensor hfval;
+	hfval() = ehf(i1&0)*step1(i1&0);
+	XERUS_LOG(info,hfval);
 	step1 /= step1.frob_norm();
 	XERUS_LOG(info,"Particle Number " << contract_TT(P,step1,step1));
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
