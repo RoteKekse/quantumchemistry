@@ -5,7 +5,6 @@
 #include "../../classes/loading_tensors.cpp"
 #include "../../classes/helpers.cpp"
 
-TTTensor buildStartVector(std::vector<size_t> sample, size_t p, size_t d);
 
 int main(){
 	size_t nob = 60,num_elec = 14,iterations = 1e5;
@@ -15,6 +14,8 @@ int main(){
 	value_t nuc = 23.5724393955273;
 	std::string path_T = "../data/T_N2_60_single_small.tensor";
 	std::string path_V= "../data/V_N2_60_single_small.tensor";
+	std::string initial_value = "../data/initial_value_rank_10.tttensor";
+
 
 	XERUS_LOG(info,"---- Simulation for " << molecule << " molecule with shift " << shift << " ----");
 	XERUS_LOG(info,"Number of iterations " << iterations );
@@ -23,7 +24,7 @@ int main(){
 
 	xerus::TTTensor phi,res,res_last;
 	XERUS_LOG(info,"-- Building Initial Vector"  );
-	phi = buildStartVector(hf,num_elec,2*nob);
+	read_from_disc(initial_value,phi);
 	phi /= phi.frob_norm(); //normalize
 	XERUS_LOG(info,"-- Project on tangential space"  );
 	project(phi,num_elec,2*nob);
@@ -57,7 +58,3 @@ int main(){
 }
 
 
-TTTensor buildStartVector(std::vector<size_t> sample, size_t p, size_t d){
-
-	return makeUnitVector(sample,d);
-}
