@@ -18,6 +18,7 @@ int main(){
 	std::string path_V= "../data/V_N2_60_single_small.tensor";
 
 	auto ehf = makeUnitVector(hf_sample,d);
+	auto P = particleNumberOperator(d);
 
 	ContractPsiHek builder(ehf,d,p,path_T,path_V,0.0, shift);
 	builder.reset(hf_sample);
@@ -47,6 +48,7 @@ int main(){
 	XERUS_LOG(info,step1.frob_norm());
 	step1.round(20);
 	step1 /= step1.frob_norm();
+	XERUS_LOG(info,"Particle Number " << contract_TT(P,step1,step1));
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
 	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() << "\n" << step1.ranks());
 
