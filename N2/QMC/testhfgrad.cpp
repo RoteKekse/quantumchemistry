@@ -9,7 +9,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 120,p = 14,rank = 20, iterations=1e5;
+	size_t d = 120,p = 14,rank = 60, iterations=1e5;
 	value_t shift = 135.0;
 	bool build = false;
 
@@ -25,6 +25,7 @@ int main(){
 	TTTensor grad;
 	if (build){
 		grad = builder.getGrad(rank);
+		Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 		auto lambda = tang.get_eigenvalue();
 		XERUS_LOG(info,"Start ev " << lambda);
 
@@ -46,8 +47,8 @@ int main(){
 	XERUS_LOG(info,step1.frob_norm());
 	step1.round(20);
 	step1 /= step1.frob_norm();
-	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
-	XERUS_LOG(info,"Step1    " <<tang.get_eigenvalue() << "\n" << step1.ranks());
+	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
+	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() << "\n" << step1.ranks());
 
 //	auto step1 = ehf - 0.1 *grad;
 //	auto step2 = ehf - 0.05 *grad;
