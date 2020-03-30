@@ -7,7 +7,7 @@
 
 
 int main(){
-	size_t nob = 60,num_elec = 14,iterations = 1e5;
+	size_t nob = 60,num_elec = 14,iterations = 1e4;
 	value_t ev, shift = 135.0, ev_app;
 	std::string molecule = "N2";
 	std::vector<size_t> hf = { 0, 1,2,3,4,5,6,7,8,9,10,11,12,13 };
