@@ -98,9 +98,9 @@ class Tangential{
 			}
 
 			XERUS_LOG(info,"Start eHx");
-			XERUS_LOG(info, "Size before" << samples.size());
+			XERUS_LOG(info, "Size before " << samples.size());
 			auto samples_keys = extract_keys(samples,accuracy);
-			XERUS_LOG(info, "Size after" << samples.size());
+			XERUS_LOG(info, "Size after  " << samples_keys.size());
 			//Calculate eHx for relevant samples
 #pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
 						for (size_t i = 0; i < samples_keys.size(); ++i){
