@@ -47,6 +47,10 @@ int main(){
 	auto step1 = ehf - 0.1 *grad;
 	XERUS_LOG(info,step1.frob_norm());
 	step1.round(20);
+	XERUS_LOG(info,step1.ranks());
+	step1.round(1e-8);
+	XERUS_LOG(info,step1.ranks());
+
 	step1 /= step1.frob_norm();
 	XERUS_LOG(info,"Particle Number " << contract_TT(P,step1,step1));
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
