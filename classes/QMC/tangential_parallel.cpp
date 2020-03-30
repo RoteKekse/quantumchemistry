@@ -240,7 +240,6 @@ class Tangential{
 					umap[next_sample].second = markow->P->P(next_sample);
 				} else
 					umap[next_sample].first += 1;
-				XERUS_LOG(info,next_sample << "  \t " << umap[next_sample].second);
 				if (i% (iterations / 100) == 0)
 					XERUS_LOG(info,i);
 
