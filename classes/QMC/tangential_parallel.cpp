@@ -37,12 +37,26 @@ class Tangential{
 
 		value_t get_eigenvalue(){
 			value_t ev_exact,res,psi_ek,factor,dk;
-			size_t iter_factor = 10;
+			size_t iter_factor = 3;
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+#pragma omp parallel shared(samples,iterations)
+			{
 			PsiProbabilityFunction PsiPF(phi);
 			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
-			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> private_samples;
 			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
-
+#pragma omp critical
+			{
+			for(std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: private_samples){
+				auto itr = samples.find(pair.first);
+				if (itr == samples.end()){
+					samples[pair.first].first = pair.second.first;
+					samples[pair.first].second = pair.second.second;
+				} else
+					samples[pair.first].first += pair.second.first;
+			}
+			}
+			}
 			auto samples_keys = extract_keys(samples,0.0);
 #pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
 			for (size_t i = 0; i < samples_keys.size(); ++i){
@@ -53,13 +67,14 @@ class Tangential{
 					value_t tmp = builder.contract();
 #pragma omp critical
 								eHxValues[samples_keys[i]] = tmp;
-					}
 				}
+			}
+			PsiProbabilityFunction PsiPF(phi);
 			value_t ev = 0;
 			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
 			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
 				XERUS_LOG(info,pair.first);
-				psi_ek = PsiPF.values[pair.first];
+				psi_ek = PsiPF.Pval(pair.first);
 				factor = eHxValues[pair.first]* (value_t) pair.second.first/psi_ek;
 				ev += factor;
 			}

@@ -223,6 +223,11 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 			return std::pow(values[sample],2);
 		}
 
+		value_t Pval(std::vector<size_t> sample) {
+			std::vector<size_t> idx = makeIndex(sample);
+			return psi[idx];
+		}
+
 		std::vector<size_t> makeIndex(std::vector<size_t> sample){
 			std::vector<size_t> index(d, 0);
 			for (size_t i : sample)
