@@ -9,7 +9,7 @@
 
 int main(){
 	Index i1,i2,i3,j1,j2,j3,k1,k2;
-	size_t d = 120,p = 14,rank = 60, iterations=5e5;
+	size_t d = 120,p = 14,rank = 20, iterations=1e5;
 	value_t shift = 135.0;
 	bool build = false;
 
