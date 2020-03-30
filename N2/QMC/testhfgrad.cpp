@@ -63,7 +63,7 @@ int main(){
 //	builder.reset_psi(step1);
 //	XERUS_LOG(info, "Step1 exact " << builder.evBruteForce()-shift + nuc);
 
-	write_to_disc("../data/initial_value_rank_5.tttensor",step1);
+	write_to_disc("../data/initial_value_rank_10.tttensor",step1);
 	Tangential tang2(d,p,iterations,path_T,path_V,shift,hf_sample,step1);
 	XERUS_LOG(info,"Step1    " <<tang2.get_eigenvalue() - shift + nuc << "\n" << step1.ranks());
 
