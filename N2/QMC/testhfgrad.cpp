@@ -21,7 +21,6 @@ int main(){
 
 	ContractPsiHek builder(ehf,d,p,path_T,path_V,0.0, shift);
 	builder.reset(hf_sample);
-	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,ehf);
 
 	TTTensor grad;
 	if (build){
