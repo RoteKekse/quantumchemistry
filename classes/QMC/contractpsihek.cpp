@@ -112,6 +112,7 @@ class ContractPsiHek{
 			}
 
 			signq = 1.0; signr == 1.0; signs = 1.0; signp = 1.0;
+			size_t count1 = 0, count2 = 0;
 			for (size_t r = 0; r < d; ++r){
 				if (idx[r] != 1) continue;
 				idx[r] = 0;
@@ -126,7 +127,9 @@ class ContractPsiHek{
 						signp = signq;
 						for (size_t p = 0; p < q; ++p){
 							if (idx[p] == 1) { signp *= -1;  continue;}
+							count1++;
 							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
+							count2++;
 							val1 = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
 							val2 = ((p%2 != s%2) || (q%2!=r%2)) ? 0 : returnVValue(q/2,p/2,r/2,s/2);
 							val = signp*(val1 - val2);
@@ -150,6 +153,8 @@ class ContractPsiHek{
 				idx[r] = 1;
 				signr *= -1;
 			}
+			XERUS_LOG(info,count1);
+			XERUS_LOG(info,count2);
 			return result + shift * psiEntry();
 		}
 
