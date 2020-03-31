@@ -136,7 +136,7 @@ class ContractPsiHek{
 //							if (std::abs(val - signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}])) > 1e-14)
 //															XERUS_LOG(info,p << " " << q << " " << r << " " << s << " " << val << " " << signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}]));
 
-							if (std::abs(val) > 10e-12){
+							if (std::abs(val) > 10e-10){
 								idx[p] = 1;
 								auto itr = umap_psi.find(idx);
 								if (itr == umap_psi.end())
