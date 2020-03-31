@@ -22,7 +22,7 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 1;
+	size_t test_number = 3;
 	size_t test_number2 = 0;
 	size_t test_number3 = 0;
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};

@@ -112,7 +112,7 @@ class ContractPsiHek{
 			}
 
 			signq = 1.0; signr == 1.0; signs = 1.0; signp = 1.0;
-			size_t count1 = 0, count2 = 0;
+			size_t count1 = 0, count2 = 0,count3 = 0;
 			for (size_t r = 0; r < d; ++r){
 				if (idx[r] != 1) continue;
 				idx[r] = 0;
@@ -141,6 +141,7 @@ class ContractPsiHek{
 								auto itr = umap_psi.find(idx);
 								if (itr == umap_psi.end())
 									umap_psi[idx] = psi[idx];
+								count3++;
 								result += val * umap_psi[idx];
 								idx[p] = 0;
 							}
@@ -155,6 +156,7 @@ class ContractPsiHek{
 			}
 			XERUS_LOG(info,count1);
 			XERUS_LOG(info,count2);
+			XERUS_LOG(info,count3);
 			return result + shift * psiEntry();
 		}
 
