@@ -280,6 +280,8 @@ class ContractPsiHek{
 					elm2 = queue.front();
 					queue.pop();
 				}
+				XERUS_LOG(info,elm1.first);
+				XERUS_LOG(info,elm2.first);
 				size_t pos = elm1.first;
 				auto data = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
