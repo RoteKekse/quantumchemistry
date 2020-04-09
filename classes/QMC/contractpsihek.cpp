@@ -253,6 +253,17 @@ class ContractPsiHek{
 				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
 				data_tmpl.emplace_back(tmp);
 			}
+			for (size_t i1 = 0; i1 < 3; ++i1){
+				for (size_t j1 = 0; j1 < 3; ++j1){
+					for (size_t k1 = 0; k1 <= p/2; ++k1){
+						for (size_t l1 = 0; l1 <= p/2; ++l1){
+							XERUS_LOG(info,getIndex(i1,j1,k1,l1));
+							XERUS_LOG(info,data_tmpl[getIndex(i1,j1,k1,l1)]);
+						}
+					}
+				}
+			}
+
 			// initialize queue with slices of TT Tensor
 			for (size_t i = 0; i < d; ++i){
 				auto psi0 = psi.get_component(i);
@@ -280,7 +291,7 @@ class ContractPsiHek{
 					elm2 = queue.front();
 					queue.pop();
 				}
-				XERUS_LOG(info,elm1.second[getIndex(0,0,4,4)]);
+				XERUS_LOG(info,elm1.second[getIndex(0,0,0,0)]);
 				XERUS_LOG(info,elm2.second[getIndex(0,0,0,0)]);
 				size_t pos = elm1.first;
 				auto data = data_tmpl;
