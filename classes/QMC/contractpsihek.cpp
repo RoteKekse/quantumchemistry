@@ -156,9 +156,9 @@ class ContractPsiHek{
 				idx[r] = 1;
 				signr *= -1;
 			}
-			XERUS_LOG(info,count1);
-			XERUS_LOG(info,count2);
-			XERUS_LOG(info,count3);
+//			XERUS_LOG(info,count1);
+//			XERUS_LOG(info,count2);
+//			XERUS_LOG(info,count3);
 			return result + shift * psiEntry();
 		}
 
