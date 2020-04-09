@@ -268,6 +268,7 @@ class ContractPsiHek{
 			bool finished = false;
 			size_t count = 0;
 			while (not finished){
+				XERUS_LOG(info, "Queue Size " << queue.size());
 				finished = queue.size() == 2 ? true : false;
 				auto elm1 = queue.front();
 				queue.pop();
