@@ -73,8 +73,8 @@ int main(){
 	}
 	auto end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for linear evaluation: "
-		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()/1000
-		<< " sec");
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+		<< " msec");
 
 	start = std::chrono::steady_clock::now();
 		for (size_t i = 0; i< test_number2; ++i){
@@ -84,8 +84,8 @@ int main(){
 		}
 	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for tree based evaluation: "
-		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()/1000
-		<< " sec");
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+		<< " msec");
 
 
 }
