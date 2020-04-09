@@ -22,9 +22,9 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 3;
-	size_t test_number2 = 0;
-	size_t test_number3 = 0;
+	size_t test_number = 0;  //correctness
+	size_t test_number2 = 10; //speed test
+	size_t test_number3 = 0; //diagonal
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
 	XERUS_LOG(info, "--- Loading shifted and preconditioned Hamiltonian ---");
@@ -63,6 +63,8 @@ int main(){
 		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12) << "     \t"<< std::abs(val1 - val2));
 		sample = TrialSample(sample,d);
 	}
+
+
 	auto start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number2; ++i){
 		builder.reset(sample);
@@ -70,7 +72,18 @@ int main(){
 		sample = TrialSample(sample,d);
 	}
 	auto end = std::chrono::steady_clock::now();
-	XERUS_LOG(info, "Elapsed time in seconds : "
+	XERUS_LOG(info, "Elapsed time in seconds for linear evaluation: "
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()/1000
+		<< " sec");
+
+	start = std::chrono::steady_clock::now();
+		for (size_t i = 0; i< test_number2; ++i){
+			builder.reset(sample);
+			builder.preparePsiEval();
+			sample = TrialSample(sample,d);
+		}
+	end = std::chrono::steady_clock::now();
+	XERUS_LOG(info, "Elapsed time in seconds for tree based evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()/1000
 		<< " sec");
 

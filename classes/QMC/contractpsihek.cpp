@@ -25,7 +25,7 @@ using xerus::misc::operator<<;
 class ContractPsiHek{
 	public:
 		const size_t d;
-		const size_t particle;
+		const size_t p;
 		Tensor V;
 //		Tensor V2;
 		Tensor T;
@@ -43,14 +43,16 @@ class ContractPsiHek{
 		std::vector<size_t> current_sample_inv;
 		std::vector<size_t> idx;
 		value_t result;
+	public:
 		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap_psi; // storing evaluations of psi
+		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap2_psi; // storing evaluations of psi
 
 	public:
 		/*
 		 * Constructor
 		 */
 		ContractPsiHek(TTTensor _psi,size_t _d,size_t _p,std::string _path_T, std::string _path_V, value_t _nuc, value_t _shift)
-		: psi(_psi), d(_d), particle(_p), path_T(_path_T),path_V(_path_V), nuc(_nuc), idx(d,0), shift(_shift){
+		: psi(_psi), d(_d), p(_p), path_T(_path_T),path_V(_path_V), nuc(_nuc), idx(d,0), shift(_shift){
 			T = load1eIntegrals();
 			V = load2eIntegrals();
 			N = loadNuclear();
@@ -111,7 +113,7 @@ class ContractPsiHek{
 				idx[q] = 1; 				// creation operator a^*q
 			}
 
-			signq = 1.0; signr == 1.0; signs = 1.0; signp = 1.0;
+			signq = 1.0; signr = 1.0; signs = 1.0; signp = 1.0;
 			size_t count1 = 0, count2 = 0,count3 = 0;
 			for (size_t r = 0; r < d; ++r){
 				if (idx[r] != 1) continue;
@@ -128,7 +130,7 @@ class ContractPsiHek{
 						for (size_t p = 0; p < q; ++p){
 							if (idx[p] == 1) { signp *= -1;  continue;}
 							count1++;
-							if ((p%2 != r%2 && q%2 != r%2) || (p%2 != s%2 && q%2 != s%2)) {continue;}
+							if (not ((p%2 == r%2 and q%2 == s%2) or (p%2 == s%2 and q%2 == r%2))) {continue;}
 							count2++;
 							val1 = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
 							val2 = ((p%2 != s%2) || (q%2!=r%2)) ? 0 : returnVValue(q/2,p/2,r/2,s/2);
@@ -158,6 +160,88 @@ class ContractPsiHek{
 			XERUS_LOG(info,count2);
 			XERUS_LOG(info,count3);
 			return result + shift * psiEntry();
+		}
+
+		void preparePsiEval(){ 			// TODO can one keep the lower contractions for different e_ks??
+			Index r1,r2,r3;
+			// a queue contianing a pair of the position and a vector containing of the data pairs index and Tensor
+			// the index of the data vector is the linearized version of an order 4 Tensor for the number of
+			// annihilated (max. 2), created (max 2.), spin up (max. p//2) and, spin down (max. p//2) particles
+			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
+			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
+			for (size_t i = 0; i < 3*3*(p/2+1)*(p/2+1); ++i){
+				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
+				data_tmpl.emplace_back(tmp);
+			}
+			// initialize queue with slices of TT Tensor
+			for (size_t i = 0; i < d; ++i){
+				auto psi0 = psi.get_component(i);
+				auto psi1 = psi.get_component(i);
+				psi0.fix_mode(1,0);
+				psi1.fix_mode(1,1);
+				auto data = data_tmpl;
+				data[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
+				data[getIndex(0,idx[i] == 1 ? 0 : 1,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+				queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(i,data));
+			}
+
+			bool finished = false;
+			while (not finished){
+				finished = queue.size = 2 ? true : false;
+				auto elm1 = queue.front();
+				queue.pop();
+				auto elm2 = queue.front();
+				queue.pop();
+				if (elm1.first > elm2.first){
+					queue.push(elm1);
+					elm1 = elm2;
+					elm2 = queue.front();
+					queue.pop();
+				}
+				size_t pos = elm1.first;
+				auto data = data_tmpl;
+
+				for (size_t i1 = 0; i1 < 3; ++i1){
+					for (size_t j1 = 0; j1 < 3; ++j1){
+						for (size_t k1 = 0; k1 <= p/2; ++k1){
+							for (size_t l1 = 0; l1 <= p/2; ++l1){
+								for (auto const& tuple1 : elm1.second[getIndex(i1,j1,k1,l1)]){
+									for (size_t i2 = 0; i2 < 3-i1; ++i2){
+										for (size_t j2 = 0; j2 < 3-j1; ++j2){
+											if (not finished){
+												for (size_t k2 = 0; k2 <= p/2-k1; ++k2){
+													for (size_t l2 = 0; l2 <= p/2-l1; ++l2){
+														for (auto const& tuple2 : elm2.second[getIndex(i2,j2,k2,l2)]){
+															std::vector<size_t> idx_new(tuple1.first);
+															idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+															Tensor tmp;
+															tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
+															data[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
+											}}}}
+											else {
+												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p/2-k1,p/2-l1)]){
+													std::vector<size_t> idx_new(tuple1.first);
+													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+													Tensor tmp;
+													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
+													umap2_psi[idx] = tmp[0];
+												}
+											}
+
+				}}}}}}}
+				if (not finished)
+					queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(pos,data));
+
+		}
+
+		}
+
+		// The first index is the number of annihilated particles compared to the sample
+		// The second index is the number of created particles compared to the sample
+		// The third index is the number of spin up particles contained
+		// The fourth index is the number of spin down particles contained
+		size_t getIndex(size_t i1, size_t j1, size_t k1, size_t l1){
+			return i1 + 3*(j1 + 3*(k1 + (p/2+1)*l1));
 		}
 
 		value_t returnTValue(size_t p, size_t q)
