@@ -162,6 +162,85 @@ class ContractPsiHek{
 			return result + shift * psiEntry();
 		}
 
+		value_t contract2(){
+			result = 0;
+			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
+			size_t nextp = 0,nextq = 0;
+
+			// 1 e contraction
+			for (size_t q = 0; q < d; ++q){
+				if (idx[q] != 1) continue;
+				idx[q] = 0; // annil operator a_q
+				for (size_t p = 0; p < d; ++p){
+					if (idx[p] == 1) {signp *= -1; continue;}
+					if (p%2 != q%2) {continue;}
+					val = returnTValue(p/2,q/2);
+//					if (std::abs(val - T2[{p,q}]) > 1e-14)
+//						XERUS_LOG(info,p << " " << q << " " << val);
+					if (std::abs(val) > 10e-12){
+						idx[p] = 1; //creation
+						auto itr = umap2_psi.find(idx);
+						if (itr == umap2_psi.end())
+							XERUS_LOG(info,"Not Found");
+						result += signp *  val * umap2_psi[idx];
+						idx[p] = 0; //annilation
+					}
+				}
+				signq *= -1;
+				signp = signq;
+				idx[q] = 1; 				// creation operator a^*q
+			}
+
+			signq = 1.0; signr = 1.0; signs = 1.0; signp = 1.0;
+			size_t count1 = 0, count2 = 0,count3 = 0;
+			for (size_t r = 0; r < d; ++r){
+				if (idx[r] != 1) continue;
+				idx[r] = 0;
+				signs = signr;
+				for (size_t s = 0; s < r; ++s){
+					if (idx[s] != 1) continue;
+					idx[s] = 0;
+					signq = signs;
+					for (size_t q = 0; q < d; ++q){
+						if (idx[q] == 1) {signq *= -1; continue;}
+						idx[q] = 1;
+						signp = signq;
+						for (size_t p = 0; p < q; ++p){
+							if (idx[p] == 1) { signp *= -1;  continue;}
+							count1++;
+							if (not ((p%2 == r%2 and q%2 == s%2) or (p%2 == s%2 and q%2 == r%2))) {continue;}
+							count2++;
+							val1 = ((p%2 != r%2) || (q%2!=s%2)) ? 0 : returnVValue(p/2,q/2,r/2,s/2);
+							val2 = ((p%2 != s%2) || (q%2!=r%2)) ? 0 : returnVValue(q/2,p/2,r/2,s/2);
+							val = signp*(val1 - val2);
+//							if (std::abs(val - signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}])) > 1e-14)
+//															XERUS_LOG(info,p << " " << q << " " << r << " " << s << " " << val << " " << signp*(V2[{p,q,r,s}]-V2[{q,p,r,s}]));
+
+							if (std::abs(val) > 10e-8){
+								idx[p] = 1;
+								auto itr = umap2_psi.find(idx);
+								if (itr == umap2_psi.end())
+									XERUS_LOG(info,"Not Found");
+								count3++;
+								result += val * umap2_psi[idx];
+								idx[p] = 0;
+							}
+						}
+						idx[q] = 0;
+					}
+					idx[s] = 1;
+					signs *= -1;
+				}
+				idx[r] = 1;
+				signr *= -1;
+			}
+//			XERUS_LOG(info,count1);
+//			XERUS_LOG(info,count2);
+//			XERUS_LOG(info,count3);
+			return result + shift * psiEntry();
+		}
+
+
 		void preparePsiEval(){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
 			// a queue contianing a pair of the position and a vector containing of the data pairs index and Tensor
