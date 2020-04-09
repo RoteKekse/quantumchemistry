@@ -166,6 +166,7 @@ class ContractPsiHek{
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
+			XERUS_LOG(info,"Start index\n" << idx);
 
 			// 1 e contraction
 			for (size_t q = 0; q < d; ++q){
@@ -181,7 +182,7 @@ class ContractPsiHek{
 						idx[p] = 1; //creation
 						auto itr = umap2_psi.find(idx);
 						if (itr == umap2_psi.end())
-							XERUS_LOG(info,"Not Found" << idx);
+							XERUS_LOG(info,"Not Found\n" << idx);
 						result += signp *  val * umap2_psi[idx];
 						idx[p] = 0; //annilation
 					}
@@ -220,7 +221,7 @@ class ContractPsiHek{
 								idx[p] = 1;
 								auto itr = umap2_psi.find(idx);
 								if (itr == umap2_psi.end())
-									XERUS_LOG(info,"Not Found" << idx);
+									XERUS_LOG(info,"Not Found\n" << idx);
 								count3++;
 								result += val * umap2_psi[idx];
 								idx[p] = 0;
