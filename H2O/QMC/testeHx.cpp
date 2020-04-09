@@ -23,7 +23,7 @@ int main(){
 	read_from_disc(path_V2,V);
 
 	size_t test_number = 0;  //correctness
-	size_t test_number2 = 10; //speed test
+	size_t test_number2 = 100; //speed test
 	size_t test_number3 = 0; //diagonal
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 
