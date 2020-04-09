@@ -254,7 +254,7 @@ class ContractPsiHek{
 				data_tmpl.emplace_back(tmp);
 			}
 			for (size_t i1 = 0; i1 < 3; ++i1){
-				for (size_t j1 = 0; j1 < 3; ++j1){
+				for (size_t j1 = 0; j1 < 4; ++j1){
 					for (size_t k1 = 0; k1 <= p/2; ++k1){
 						for (size_t l1 = 0; l1 <= p/2; ++l1){
 							XERUS_LOG(info,getIndex(i1,j1,k1,l1));
