@@ -268,8 +268,8 @@ class ContractPsiHek{
 			bool finished = false;
 			size_t count = 0;
 			while (not finished){
-				XERUS_LOG(info, "Queue Size " << queue.size());
 				finished = queue.size() == 2 ? true : false;
+				XERUS_LOG(info, "Queue Size " << queue.size());
 				auto elm1 = queue.front();
 				queue.pop();
 				auto elm2 = queue.front();
@@ -300,7 +300,9 @@ class ContractPsiHek{
 															data[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 											}}}}
 											else {
+												XERUS_LOG(info,"hello");
 												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p/2-k1,p/2-l1)]){
+													XERUS_LOG(info,"hello2");
 													std::vector<size_t> idx_new(tuple1.first);
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
