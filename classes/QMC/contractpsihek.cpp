@@ -178,7 +178,7 @@ class ContractPsiHek{
 					val = returnTValue(p/2,q/2);
 //					if (std::abs(val - T2[{p,q}]) > 1e-14)
 //						XERUS_LOG(info,p << " " << q << " " << val);
-					if (std::abs(val) > 10e-12){
+					if (std::abs(val) > 10e-8){
 						idx[p] = 1; //creation
 						auto itr = umap2_psi.find(idx);
 						if (itr == umap2_psi.end())
@@ -266,6 +266,7 @@ class ContractPsiHek{
 			}
 
 			bool finished = false;
+			size_t count = 0;
 			while (not finished){
 				finished = queue.size() == 2 ? true : false;
 				auto elm1 = queue.front();
@@ -280,7 +281,6 @@ class ContractPsiHek{
 				}
 				size_t pos = elm1.first;
 				auto data = data_tmpl;
-
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
 						for (size_t k1 = 0; k1 <= p/2; ++k1){
@@ -305,6 +305,7 @@ class ContractPsiHek{
 													Tensor tmp;
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
 													umap2_psi[idx] = tmp[0];
+													count++;
 												}
 											}
 
@@ -312,8 +313,8 @@ class ContractPsiHek{
 				if (not finished)
 					queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(pos,data));
 
-		}
-
+			}
+			XERUS_LOG(info, "count " << count);
 		}
 
 		// The first index is the number of annihilated particles compared to the sample
