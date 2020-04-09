@@ -181,7 +181,7 @@ class ContractPsiHek{
 						idx[p] = 1; //creation
 						auto itr = umap2_psi.find(idx);
 						if (itr == umap2_psi.end())
-							XERUS_LOG(info,"Not Found");
+							XERUS_LOG(info,"Not Found" << idx);
 						result += signp *  val * umap2_psi[idx];
 						idx[p] = 0; //annilation
 					}
@@ -220,7 +220,7 @@ class ContractPsiHek{
 								idx[p] = 1;
 								auto itr = umap2_psi.find(idx);
 								if (itr == umap2_psi.end())
-									XERUS_LOG(info,"Not Found");
+									XERUS_LOG(info,"Not Found" << idx);
 								count3++;
 								result += val * umap2_psi[idx];
 								idx[p] = 0;
