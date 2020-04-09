@@ -187,7 +187,7 @@ class ContractPsiHek{
 
 			bool finished = false;
 			while (not finished){
-				finished = queue.size = 2 ? true : false;
+				finished = queue.size() == 2 ? true : false;
 				auto elm1 = queue.front();
 				queue.pop();
 				auto elm2 = queue.front();
