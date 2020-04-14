@@ -304,7 +304,6 @@ class ContractPsiHek{
 											}}}}
 											else {
 												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p/2-k1,p/2-l1)]){
-													XERUS_LOG(info,"hello2");
 													std::vector<size_t> idx_new(tuple1.first);
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
