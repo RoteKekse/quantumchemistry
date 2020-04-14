@@ -75,6 +75,8 @@ class ContractPsiHek{
 			result = 0;
 			current_sample = sample;
 			makeInvSampleAndIndex();
+			umap2_psi.clear();
+
 		}
 
 		void reset_psi(TTTensor _psi){
@@ -182,9 +184,9 @@ class ContractPsiHek{
 //						XERUS_LOG(info,p << " " << q << " " << val);
 					if (std::abs(val) > 10e-8){
 						idx[p] = 1; //creation
-						auto itr = umap2_psi.find(idx);
-						if (itr == umap2_psi.end())
-							XERUS_LOG(info,"Not Found\n" << idx);
+//						auto itr = umap2_psi.find(idx);
+//						if (itr == umap2_psi.end())
+//							XERUS_LOG(info,"Not Found\n" << idx);
 						result += signp *  val * umap2_psi[idx];
 						idx[p] = 0; //annilation
 					}
@@ -221,9 +223,9 @@ class ContractPsiHek{
 
 							if (std::abs(val) > 10e-8){
 								idx[p] = 1;
-								auto itr = umap2_psi.find(idx);
-								if (itr == umap2_psi.end())
-									XERUS_LOG(info,"Not Found\n" << idx);
+//								auto itr = umap2_psi.find(idx);
+//								if (itr == umap2_psi.end())
+//									XERUS_LOG(info,"Not Found\n" << idx);
 								count3++;
 								result += val * umap2_psi[idx];
 								idx[p] = 0;
