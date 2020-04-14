@@ -319,7 +319,7 @@ class ContractPsiHek{
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
-													umap2_psi[idx] = tmp[0];
+													umap2_psi[idx_new] = tmp[0];
 													count++;
 												}
 											}
