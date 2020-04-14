@@ -50,7 +50,8 @@ class Tangential{
 				if (itr == eHxValues.end()){
 					 //setting builder to newest sample!! Important
 					builder.reset(samples_keys[i]);
-					value_t tmp = builder.contract();
+					builder.preparePsiEval();
+					value_t tmp = builder.contract_tree();
 #pragma omp critical
 								eHxValues[samples_keys[i]] = tmp;
 					}
@@ -108,7 +109,8 @@ class Tangential{
 							if (itr == eHxValues.end()){
 								 //setting builder to newest sample!! Important
 								builder.reset(samples_keys[i]);
-								value_t tmp = builder.contract();
+								builder.preparePsiEval();
+								value_t tmp = builder.contract_tree();
 #pragma omp critical
 								eHxValues[samples_keys[i]] = tmp;
 				}
@@ -161,7 +163,8 @@ class Tangential{
 						if (itr == eHxValues.end()){
 							 //setting builder to newest sample!! Important
 							builder.reset(pair.first);
-							eHxValues[pair.first] = builder.contract();
+							builder.preparePsiEval();
+							eHxValues[pair.first] = builder.contract_tree();
 						}
 
 						auto loc_grad = uvP.localProduct(pair.first,pos,true);
