@@ -283,6 +283,10 @@ class ContractPsiHek{
 				}
 				size_t pos = elm1.first;
 				XERUS_LOG(info, pos);
+				if (pos == 0 ){
+					XERUS_LOG(info,elm1.second[getIndex(1,0,1,2)]);
+				}
+
 				auto data = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
