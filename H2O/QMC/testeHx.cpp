@@ -85,7 +85,8 @@ int main(){
 	start = std::chrono::steady_clock::now();
 		for (size_t i = 0; i< test_number2; ++i){
 			builder.reset(sample);
-			builder.contract_tree();
+			builder.preparePsiEval();
+			value_t val1 = builder.contract_tree();
 			sample = TrialSample(sample,d);
 		}
 	end = std::chrono::steady_clock::now();
