@@ -301,6 +301,7 @@ class ContractPsiHek{
 															if (pos == 0 and idx_new.size() <=8){
 																XERUS_LOG(info, i1 << " " <<j1 << " " <<k1 << " " <<l1);
 																XERUS_LOG(info, i2 << " " <<j2 << " " <<k2 << " " <<l2);
+																XERUS_LOG(info, i2+i1 << " " <<j2+j1 << " " <<k2+k1 << " " <<l2+l1);
 																XERUS_LOG(info,idx_new);
 															}
 															tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
