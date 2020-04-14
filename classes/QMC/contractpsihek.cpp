@@ -26,6 +26,8 @@ class ContractPsiHek{
 	public:
 		const size_t d;
 		const size_t p;
+		const size_t p_up;
+		const size_t p_down;
 		Tensor V;
 //		Tensor V2;
 		Tensor T;
@@ -180,9 +182,9 @@ class ContractPsiHek{
 //						XERUS_LOG(info,p << " " << q << " " << val);
 					if (std::abs(val) > 10e-8){
 						idx[p] = 1; //creation
-//						auto itr = umap2_psi.find(idx);
-//						if (itr == umap2_psi.end())
-//							XERUS_LOG(info,"Not Found\n" << idx);
+						auto itr = umap2_psi.find(idx);
+						if (itr == umap2_psi.end())
+							XERUS_LOG(info,"Not Found\n" << idx);
 						result += signp *  val * umap2_psi[idx];
 						idx[p] = 0; //annilation
 					}
@@ -219,9 +221,9 @@ class ContractPsiHek{
 
 							if (std::abs(val) > 10e-8){
 								idx[p] = 1;
-//								auto itr = umap2_psi.find(idx);
-//								if (itr == umap2_psi.end())
-//									XERUS_LOG(info,"Not Found\n" << idx);
+								auto itr = umap2_psi.find(idx);
+								if (itr == umap2_psi.end())
+									XERUS_LOG(info,"Not Found\n" << idx);
 								count3++;
 								result += val * umap2_psi[idx];
 								idx[p] = 0;
@@ -249,7 +251,7 @@ class ContractPsiHek{
 			// annihilated (max. 2), created (max 2.), spin up (max. p//2) and, spin down (max. p//2) particles
 			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
 			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
-			for (size_t i = 0; i < 3*3*(p/2+1)*(p/2+1); ++i){
+			for (size_t i = 0; i < 3*3*(p_up+1)*(p_down+1); ++i){
 				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
 				data_tmpl.emplace_back(tmp);
 			}
@@ -285,14 +287,14 @@ class ContractPsiHek{
 				auto data = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
-						for (size_t k1 = 0; k1 <= p/2; ++k1){
-							for (size_t l1 = 0; l1 <= p/2; ++l1){
+						for (size_t k1 = 0; k1 <= p_up; ++k1){
+							for (size_t l1 = 0; l1 <= p_down; ++l1){
 								for (auto const& tuple1 : elm1.second[getIndex(i1,j1,k1,l1)]){
 									for (size_t i2 = 0; i2 < 3-i1; ++i2){
 										for (size_t j2 = 0; j2 < 3-j1; ++j2){
 											if (not finished){
-												for (size_t k2 = 0; k2 <= p/2-k1; ++k2){
-													for (size_t l2 = 0; l2 <= p/2-l1; ++l2){
+												for (size_t k2 = 0; k2 <= p_up-k1; ++k2){
+													for (size_t l2 = 0; l2 <= p_down-l1; ++l2){
 														for (auto const& tuple2 : elm2.second[getIndex(i2,j2,k2,l2)]){
 															std::vector<size_t> idx_new(tuple1.first);
 															idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
@@ -301,7 +303,7 @@ class ContractPsiHek{
 															data[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 											}}}}
 											else {
-												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p/2-k1,p/2-l1)]){
+												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p_up-k1,p_down-l1)]){
 													std::vector<size_t> idx_new(tuple1.first);
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
@@ -324,7 +326,7 @@ class ContractPsiHek{
 		// The third index is the number of spin up particles contained
 		// The fourth index is the number of spin down particles contained
 		size_t getIndex(size_t i1, size_t j1, size_t k1, size_t l1){
-			return l1 + (p/2+1)*(k1 + (p/2+1)*(j1 + 3*i1));
+			return l1 + (p_down+1)*(k1 + (p_up+1)*(j1 + 3*i1));
 		}
 
 		value_t returnTValue(size_t p, size_t q)
@@ -531,9 +533,16 @@ class ContractPsiHek{
 
 
 		void makeInvSampleAndIndex(){
+			p_up = 0;
+			p_down = 0;
 			for (size_t i = 0; i < d; ++i){
-				if(!std::binary_search (current_sample.begin(), current_sample.end(), i))
+				if(!std::binary_search (current_sample.begin(), current_sample.end(), i)){
 					current_sample_inv.emplace_back(i);
+					if (i%2 == 0)
+						p_up++;
+					else
+						p_down++;
+				}
 				else
 					idx[i] = 1;
 			}
