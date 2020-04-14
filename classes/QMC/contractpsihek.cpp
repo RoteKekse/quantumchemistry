@@ -536,7 +536,7 @@ class ContractPsiHek{
 			for (size_t i = 0; i < d; ++i){
 				if(!std::binary_search (current_sample.begin(), current_sample.end(), i))
 					current_sample_inv.emplace_back(i);
-					else
+				else
 					idx[i] = 1;
 			}
 		}
