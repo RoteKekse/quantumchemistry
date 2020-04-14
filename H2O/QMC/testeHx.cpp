@@ -58,11 +58,11 @@ int main(){
 
 	for (size_t i = 0; i< test_number; ++i){
 		builder.reset(sample);
-		value_t val1 = builder.contract();
+		value_t val1 = builder.contract_linear();
 		auto ek = makeUnitVector(sample,d);
 		value_t val2 = contract_TT(Hs,phi,ek);
 		builder.preparePsiEval();
-		value_t val3 = builder.contract2();
+		value_t val3 = builder.contract_tree();
 		XERUS_LOG(info, "Sample = \t" << sample << std::setprecision(12));
 		XERUS_LOG(info,val1);
 		XERUS_LOG(info,val2);
@@ -74,7 +74,7 @@ int main(){
 	auto start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number2; ++i){
 		builder.reset(sample);
-		value_t val1 = builder.contract();
+		value_t val1 = builder.contract_linear();
 		sample = TrialSample(sample,d);
 	}
 	auto end = std::chrono::steady_clock::now();
@@ -85,7 +85,7 @@ int main(){
 	start = std::chrono::steady_clock::now();
 		for (size_t i = 0; i< test_number2; ++i){
 			builder.reset(sample);
-			builder.preparePsiEval();
+			builder.contract_tree();
 			sample = TrialSample(sample,d);
 		}
 	end = std::chrono::steady_clock::now();

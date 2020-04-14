@@ -86,7 +86,7 @@ class ContractPsiHek{
 		/*
 		 * Contraction, does psi H ek for current sample, NOTE: use reset first
 		 */
-		value_t contract(){
+		value_t contract_linear(){
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
@@ -164,7 +164,7 @@ class ContractPsiHek{
 			return result + shift * psiEntry();
 		}
 
-		value_t contract2(){
+		value_t contract_tree(){
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
@@ -318,7 +318,7 @@ class ContractPsiHek{
 					queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(pos,data));
 
 			}
-			XERUS_LOG(info, "count " << count);
+			//XERUS_LOG(info, "count " << count);
 		}
 
 		// The first index is the number of annihilated particles compared to the sample
