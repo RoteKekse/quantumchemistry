@@ -50,8 +50,8 @@ class Tangential{
 				if (itr == eHxValues.end()){
 					 //setting builder to newest sample!! Important
 					builder.reset(samples_keys[i]);
-					//builder.preparePsiEval();
-					value_t tmp = builder.contract_linear();
+					builder.preparePsiEval();
+					value_t tmp = builder.contract_tree();
 #pragma omp critical
 								eHxValues[samples_keys[i]] = tmp;
 					}

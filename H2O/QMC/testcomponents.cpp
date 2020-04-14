@@ -35,8 +35,8 @@ int main(){
 	XERUS_LOG(info, "Eigenvalue exact " << ev);
 
 
-	std::string path_T = "../data/T_H2O_48_bench.tensor";
-	std::string path_V= "../data/V_H2O_48_bench.tensor";
+	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
+	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };
 	Tangential tang(2*nob,num_elec,iterations,path_T,path_V,shift,sample,phi);
 	tang.uvP.xbase.first = top.xbasis[0]; //use same orthogonalization!!!
