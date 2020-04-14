@@ -546,6 +546,8 @@ class ContractPsiHek{
 				else
 					idx[i] = 1;
 			}
+			XERUS_LOG(info,p_up);
+			XERUS_LOG(info,p_down);
 		}
 
 		std::vector<size_t> makeIndexToSample(std::vector<size_t> _idx){
