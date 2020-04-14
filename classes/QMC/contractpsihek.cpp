@@ -26,8 +26,8 @@ class ContractPsiHek{
 	public:
 		const size_t d;
 		const size_t p;
-		const size_t p_up;
-		const size_t p_down;
+		size_t p_up;
+		size_t p_down;
 		Tensor V;
 //		Tensor V2;
 		Tensor T;
