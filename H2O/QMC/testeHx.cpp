@@ -22,8 +22,8 @@ int main(){
 	read_from_disc(path_T2,T);
 	read_from_disc(path_V2,V);
 
-	size_t test_number = 5;  //correctness
-	size_t test_number2 = 0; //speed test
+	size_t test_number = 20;  //correctness
+	size_t test_number2 = 100; //speed test
 	size_t test_number3 = 0; //diagonal
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 	//std::vector<size_t> sample = { 0, 1, 2, 9, 13, 17, 22, 23 };
