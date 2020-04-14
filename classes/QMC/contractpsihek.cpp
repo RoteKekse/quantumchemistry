@@ -316,7 +316,7 @@ class ContractPsiHek{
 					queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(pos,data));
 
 			}
-			XERUS_LOG(info, "count " << count);
+			//XERUS_LOG(info, "count " << count);
 		}
 
 		// The first index is the number of annihilated particles compared to the sample
