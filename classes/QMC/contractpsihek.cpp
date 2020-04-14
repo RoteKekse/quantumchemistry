@@ -244,7 +244,7 @@ class ContractPsiHek{
 
 		void preparePsiEval(){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
-			// a queue contianing a pair of the position and a vector containing of the data pairs index and Tensor
+			// a queue containing a pair of the position and a vector containing of the data pairs index and Tensor
 			// the index of the data vector is the linearized version of an order 4 Tensor for the number of
 			// annihilated (max. 2), created (max 2.), spin up (max. p//2) and, spin down (max. p//2) particles
 			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
@@ -252,16 +252,6 @@ class ContractPsiHek{
 			for (size_t i = 0; i < 3*3*(p/2+1)*(p/2+1); ++i){
 				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
 				data_tmpl.emplace_back(tmp);
-			}
-			for (size_t i1 = 0; i1 < 3; ++i1){
-				for (size_t j1 = 0; j1 < 3; ++j1){
-					for (size_t k1 = 0; k1 <= p/2; ++k1){
-						for (size_t l1 = 0; l1 <= p/2; ++l1){
-							XERUS_LOG(info,getIndex(i1,j1,k1,l1));
-							XERUS_LOG(info,data_tmpl[getIndex(i1,j1,k1,l1)]);
-						}
-					}
-				}
 			}
 
 			// initialize queue with slices of TT Tensor
@@ -272,7 +262,7 @@ class ContractPsiHek{
 				psi1.fix_mode(1,1);
 				auto data = data_tmpl;
 				data[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
-				data[getIndex(0,idx[i] == 1 ? 0 : 1,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+				data[getIndex(0,idx[i] == 1 ? 0 : 1,(i+1)%2,i%2)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 				queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(i,data));
 			}
 
