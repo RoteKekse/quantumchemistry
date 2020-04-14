@@ -554,6 +554,8 @@ class ContractPsiHek{
 					sample.emplace_back(i);
 				}
 			}
+			XERUS_LOG(info,p_up);
+			XERUS_LOG(info,p_down);
 			return sample;
 		}
 
