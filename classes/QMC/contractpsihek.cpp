@@ -166,7 +166,7 @@ class ContractPsiHek{
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
 			size_t nextp = 0,nextq = 0;
-			XERUS_LOG(info,"Start index\n" << idx);
+//			XERUS_LOG(info,"Start index\n" << idx);
 
 			// 1 e contraction
 			for (size_t q = 0; q < d; ++q){
@@ -180,9 +180,9 @@ class ContractPsiHek{
 //						XERUS_LOG(info,p << " " << q << " " << val);
 					if (std::abs(val) > 10e-8){
 						idx[p] = 1; //creation
-						auto itr = umap2_psi.find(idx);
-						if (itr == umap2_psi.end())
-							XERUS_LOG(info,"Not Found\n" << idx);
+//						auto itr = umap2_psi.find(idx);
+//						if (itr == umap2_psi.end())
+//							XERUS_LOG(info,"Not Found\n" << idx);
 						result += signp *  val * umap2_psi[idx];
 						idx[p] = 0; //annilation
 					}
@@ -219,9 +219,9 @@ class ContractPsiHek{
 
 							if (std::abs(val) > 10e-8){
 								idx[p] = 1;
-								auto itr = umap2_psi.find(idx);
-								if (itr == umap2_psi.end())
-									XERUS_LOG(info,"Not Found\n" << idx);
+//								auto itr = umap2_psi.find(idx);
+//								if (itr == umap2_psi.end())
+//									XERUS_LOG(info,"Not Found\n" << idx);
 								count3++;
 								result += val * umap2_psi[idx];
 								idx[p] = 0;
@@ -270,7 +270,6 @@ class ContractPsiHek{
 			size_t count = 0;
 			while (not finished){
 				finished = queue.size() == 2 ? true : false;
-				XERUS_LOG(info, "Queue Size " << queue.size());
 				auto elm1 = queue.front();
 				queue.pop();
 				auto elm2 = queue.front();
@@ -282,12 +281,6 @@ class ContractPsiHek{
 					queue.pop();
 				}
 				size_t pos = elm1.first;
-				XERUS_LOG(info, pos);
-				if (pos == 0 ){
-					XERUS_LOG(info,"\n" <<elm1.second[getIndex(1,1,4,4)]);
-					XERUS_LOG(info,"\n" <<elm1.second[getIndex(1,1,2,2)]);
-					XERUS_LOG(info,"\n" <<elm2.second[getIndex(0,0,2,2)]);
-				}
 
 				auto data = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
@@ -304,12 +297,6 @@ class ContractPsiHek{
 															std::vector<size_t> idx_new(tuple1.first);
 															idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 															Tensor tmp;
-//															if (pos == 0 and idx_new.size() <=8){
-//																XERUS_LOG(info, i1 << " " <<j1 << " " <<k1 << " " <<l1);
-//																XERUS_LOG(info, i2 << " " <<j2 << " " <<k2 << " " <<l2);
-//																XERUS_LOG(info, i2+i1 << " " <<j2+j1 << " " <<k2+k1 << " " <<l2+l1);
-//																XERUS_LOG(info,idx_new);
-//															}
 															tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
 															data[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 											}}}}
