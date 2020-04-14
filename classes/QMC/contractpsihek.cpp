@@ -533,28 +533,27 @@ class ContractPsiHek{
 
 
 		void makeInvSampleAndIndex(){
+			for (size_t i = 0; i < d; ++i){
+				if(!std::binary_search (current_sample.begin(), current_sample.end(), i))
+					current_sample_inv.emplace_back(i);
+					else
+					idx[i] = 1;
+			}
+		}
+
+		std::vector<size_t> makeIndexToSample(std::vector<size_t> _idx){
 			p_up = 0;
 			p_down = 0;
-			for (size_t i = 0; i < d; ++i){
-				if(!std::binary_search (current_sample.begin(), current_sample.end(), i)){
-					current_sample_inv.emplace_back(i);
+			std::vector<size_t> sample;
+			for (size_t i = 0; i < _idx.size(); ++i){
+				if( idx[i] == 1){
 					if (i%2 == 0)
 						p_up++;
 					else
 						p_down++;
-				}
-				else
-					idx[i] = 1;
-			}
-			XERUS_LOG(info,p_up);
-			XERUS_LOG(info,p_down);
-		}
-
-		std::vector<size_t> makeIndexToSample(std::vector<size_t> _idx){
-			std::vector<size_t> sample;
-			for (size_t i = 0; i < _idx.size(); ++i)
-				if( idx[i] == 1)
 					sample.emplace_back(i);
+				}
+			}
 			return sample;
 		}
 
