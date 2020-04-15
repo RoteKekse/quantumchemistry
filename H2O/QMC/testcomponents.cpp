@@ -46,11 +46,11 @@ int main(){
 	ev_app = tang.get_eigenvalue();
 	XERUS_LOG(info, "Eigenvalue approx. " << ev_app);
 
-	auto tang_app = tang.get_tangential_components(ev_app,0.005);
+	auto tang_app = tang.get_tangential_components(ev_app,0.001);
 
 
 	res = top.builtTTTensor(tang_app);
-	name2 = "../data/residual_app" + std::to_string(2*nob) +"_benchmark_diag3_next_eigenvector_H2O_48_3_-23.647510_benchmark.tttensor";
+	name2 = "../data/new_direction.tttensor";
 	write_to_disc(name2,res);
 
 

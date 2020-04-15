@@ -14,13 +14,9 @@ using xerus::misc::operator<<;
 
 int main(){
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
-	std::string path_T2 = "../data/T_H2O_48_bench.tensor";
 	std::string path_V = "../data/V_H2O_48_bench_single.tensor";
-	std::string path_V2 = "../data/V_H2O_48_bench.tensor";
 	size_t shift = 25.0,d = 48, p = 8;
 	Tensor T,V;
-	read_from_disc(path_T2,T);
-	read_from_disc(path_V2,V);
 
 	size_t test_number = 5;  //correctness
 	size_t test_number2 = 100; //speed test
