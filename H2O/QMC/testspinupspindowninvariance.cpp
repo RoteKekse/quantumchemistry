@@ -18,7 +18,7 @@ int main(){
 	auto ehf = makeUnitVector(hf_sample,d);
 
 
-	std::vector<size_t> test_sample = {0,1,2,3,22,23,30,31};
+	std::vector<size_t> test_sample = {0,1,2,4,22,23,30,31};
 	auto etest = makeUnitVector(test_sample,d);
 
 
