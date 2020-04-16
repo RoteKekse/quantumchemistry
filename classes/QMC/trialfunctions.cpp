@@ -22,7 +22,7 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 	return sample;
 }
 
-std::vector<size_t> TrialSample(std::pair<std::vector<size_t>,std::vector<size_t>> sample, size_t dim){
+std::pair<std::vector<size_t>,std::vector<size_t>> TrialSample(std::pair<std::vector<size_t>,std::vector<size_t>> sample, size_t dim){
 	auto coin_flip = rand() % 2;
 	if (coin_flip == 0)
 		sample.first = TrialSample(sample.first,dim/2);
