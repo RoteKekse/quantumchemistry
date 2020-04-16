@@ -10,7 +10,9 @@ int main(){
 
 	TTTensor direction;
 	read_from_disc("../data/hf_gradient_48.tttensor",direction);
+	direction /= direction.frob_norm();
 	direction.round(0.0001);
+
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 	XERUS_LOG(info,"Direction norm   " <<direction.frob_norm());
 	XERUS_LOG(info,"Direction ranks  " <<direction.ranks());
