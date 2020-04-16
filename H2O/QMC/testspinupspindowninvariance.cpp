@@ -26,10 +26,17 @@ int main(){
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 	XERUS_LOG(info,"Direction norm   " <<direction.frob_norm());
 	XERUS_LOG(info,"Direction ranks  " <<direction.ranks());
+	std::vector<size_t> s1({ 1, 2, 3, 11, 22, 23, 31, 37 });
+	std::vector<size_t> s2({ 1, 2, 3, 9, 22, 23, 30, 35 });
+	auto ek1 = makeUnitVector(s1,d);
+	auto ek2 = makeUnitVector(s2,d);
+	XERUS_LOG(info,getUPDown( s1) << " \t" << s1<<": \t" <<contract_TT(id,ek1,direction));
+	XERUS_LOG(info,getUPDown( s2) << " \t" << s2<<": \t" <<contract_TT(id,ek2,direction));
+
 
 	std::vector<size_t> sample({0,1,2,3,22,23,30,31});
 	auto ehf = makeUnitVector(sample,d);
-	while(true){
+	while(false){
 		auto ek = makeUnitVector(sample,d);
 		value_t val = contract_TT(id,ek,direction);
 		if (std::abs(val)> 1e-12)
