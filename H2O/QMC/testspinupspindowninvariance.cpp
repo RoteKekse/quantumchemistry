@@ -33,7 +33,9 @@ int main(){
 	while(true){
 		sample = TrialSample(sample,d);
 		auto ek = makeUnitVector(sample,d);
-		XERUS_LOG(info,getUPDown(sample) <<" \t " <<sample<<": \t" <<contract_TT(id,ek,direction));
+		value_t val = contract_TT(id,ek,direction);
+		if (std::abs(val)> 1e-12)
+			XERUS_LOG(info,getUPDown(sample) <<" \t " <<sample<<": \t" <<contract_TT(id,ek,direction));
 
 	}
 
