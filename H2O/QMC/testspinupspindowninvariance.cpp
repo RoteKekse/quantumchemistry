@@ -12,6 +12,7 @@ int main(){
 	read_from_disc("../data/hf_gradient_48.tttensor",direction);
 	direction.round(rank);
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
+	XERUS_LOG(info,"Direction norm   " <<direction.frob_norm());
 
 
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
