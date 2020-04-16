@@ -35,7 +35,7 @@ int main(){
 		value_t val = contract_TT(id,ek,direction);
 		if (std::abs(val)> 1e-12)
 			XERUS_LOG(info,getUPDown(sample) <<" \t " <<sample<<": \t" <<contract_TT(id,ek,direction));
-		sample = TrialSample(sample,d);
+		sample = TrialSample2(sample,d);
 
 	}
 
