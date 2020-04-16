@@ -21,14 +21,13 @@ int main(){
 	TTTensor direction;
 	read_from_disc("../data/hf_gradient_48.tttensor",direction);
 	direction /= direction.frob_norm();
-	direction.round(0.01);
+	direction.round(10);
 
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 	XERUS_LOG(info,"Direction norm   " <<direction.frob_norm());
 	XERUS_LOG(info,"Direction ranks  " <<direction.ranks());
 
-
-	std::pair<std::vector<size_t>,std::vector<size_t>> sample({0,1,11,15},{0,1,11,15});
+	std::vector<size_t> sample({0,1,2,3,22,23,30,31});
 	auto ehf = makeUnitVector(sample,d);
 	while(true){
 		auto ek = makeUnitVector(sample,d);
@@ -38,6 +37,19 @@ int main(){
 		sample = TrialSample(sample,d);
 
 	}
+
+
+//
+//	std::pair<std::vector<size_t>,std::vector<size_t>> sample({0,1,11,15},{0,1,11,15});
+//	auto ehf = makeUnitVector(sample,d);
+//	while(true){
+//		auto ek = makeUnitVector(sample,d);
+//		value_t val = contract_TT(id,ek,direction);
+//		if (std::abs(val)> 1e-12)
+//			XERUS_LOG(info,sample<<": \t" <<contract_TT(id,ek,direction));
+//		sample = TrialSample(sample,d);
+//
+//	}
 
 
 
