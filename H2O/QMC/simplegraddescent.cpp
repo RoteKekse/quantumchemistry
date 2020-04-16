@@ -31,14 +31,13 @@ int main(){
 	start/= start.frob_norm();
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
+	phi.move_core(0);
 	XERUS_LOG(info,phi.ranks());
 
 	Tangential tang(2*nob,num_elec,iterations,path_T,path_V,shift,sample,phi);
 	TangentialOperation top(phi);
 	tang.uvP.xbase.first = top.xbasis[0]; //use same orthogonalization!!!
 	tang.uvP.xbase.second = top.xbasis[1];
-	XERUS_LOG(info,tang.uvP.xbase.first.ranks());
-	XERUS_LOG(info,tang.uvP.xbase.second.ranks());
 	for (size_t i = 0; i < numIter;++i){
 		ev_app = tang.get_eigenvalue();
 		XERUS_LOG(info, "Eigenvalue approx. " << std::setprecision(8) << ev_app - shift +nuc);

@@ -115,14 +115,12 @@ class Tangential{
 								eHxValues[samples_keys[i]] = tmp;
 				}
 			}
-			XERUS_LOG(info,"Start component computation");
 			//Calculate tangential component
 			Tensor result(phi.component(pos).dimensions);
 			XERUS_LOG(info,result.dimensions);
 			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
 				if ((value_t) pair.second.first > accuracy * (value_t) iterations){
 					auto loc_grad = uvP.localProduct(pair.first,pos,true);
-					XERUS_LOG(info,loc_grad.dimensions);
 					auto idx = makeIndex(pair.first);
 					builder.reset(pair.first);
 					dk = builder.diagionalEntry();
