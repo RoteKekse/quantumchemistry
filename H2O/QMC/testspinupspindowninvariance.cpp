@@ -28,14 +28,14 @@ int main(){
 	XERUS_LOG(info,"Direction ranks  " <<direction.ranks());
 
 
-	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
+	std::pair<std::vector<size_t>,std::vector<size_t>> sample({0,1,11,15},{0,1,11,15});
 	auto ehf = makeUnitVector(sample,d);
-	while(true){
+	while(false){
 		auto ek = makeUnitVector(sample,d);
 		value_t val = contract_TT(id,ek,direction);
 		if (std::abs(val)> 1e-12)
-			XERUS_LOG(info,getUPDown(sample) <<" \t " <<sample<<": \t" <<contract_TT(id,ek,direction));
-		sample = TrialSample2(sample,d);
+			XERUS_LOG(info,sample<<": \t" <<contract_TT(id,ek,direction));
+		sample = TrialSample(sample,d);
 
 	}
 

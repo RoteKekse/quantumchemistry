@@ -118,6 +118,19 @@ TTTensor makeUnitVector(std::vector<size_t> sample, size_t d){
 	return unit;
 }
 
+TTTensor makeUnitVector(std::pair<std::vector<size_t>,std::vector<size_t>> sample, size_t d){
+	std::vector<size_t> index(d, 0);
+	for (size_t i : sample.first)
+		if (i < d)
+			index[2*i] = 1;
+	for (size_t i : sample.second)
+		if (i < d)
+			index[2*i+1] = 1;
+	XERUS_LOG(info,index);
+	auto unit = TTTensor::dirac(std::vector<size_t>(d,2),index);
+	return unit;
+}
+
 std::vector<size_t> makeIndex(std::vector<size_t> sample, size_t d){
 	std::vector<size_t> index(d, 0);
 	for (size_t i : sample)
