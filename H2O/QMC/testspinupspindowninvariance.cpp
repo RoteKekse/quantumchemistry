@@ -5,12 +5,12 @@
 
 
 int main(){
-	size_t d = 48,p = 8,iterations = 1e5, rank = 50;
+	size_t d = 48,p = 8,iterations = 1e5, rank = 10;
 	value_t ev, shift = 25.0, ev_app;
 
 	TTTensor direction;
 	read_from_disc("../data/hf_gradient_48.tttensor",direction);
-	direction.round(rank);
+	//direction.round(rank);
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 	XERUS_LOG(info,"Direction norm   " <<direction.frob_norm());
 
