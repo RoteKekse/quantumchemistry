@@ -50,7 +50,7 @@ int main(){
 
 
 	res = top.builtTTTensor(tang_app);
-	name2 = "../data/new_direction.tttensor";
+	name2 = "../data/new_direction 	.tttensor";
 	write_to_disc(name2,res);
 
 
