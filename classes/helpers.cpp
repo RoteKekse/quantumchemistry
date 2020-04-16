@@ -126,7 +126,6 @@ TTTensor makeUnitVector(std::pair<std::vector<size_t>,std::vector<size_t>> sampl
 	for (size_t i : sample.second)
 		if (i < d)
 			index[2*i+1] = 1;
-	XERUS_LOG(info,index);
 	auto unit = TTTensor::dirac(std::vector<size_t>(d,2),index);
 	return unit;
 }

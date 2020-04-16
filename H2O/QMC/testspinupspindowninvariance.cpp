@@ -30,7 +30,7 @@ int main(){
 
 	std::pair<std::vector<size_t>,std::vector<size_t>> sample({0,1,11,15},{0,1,11,15});
 	auto ehf = makeUnitVector(sample,d);
-	while(false){
+	while(true){
 		auto ek = makeUnitVector(sample,d);
 		value_t val = contract_TT(id,ek,direction);
 		if (std::abs(val)> 1e-12)
