@@ -37,7 +37,8 @@ int main(){
 	TangentialOperation top(phi);
 	tang.uvP.xbase.first = top.xbasis[0]; //use same orthogonalization!!!
 	tang.uvP.xbase.second = top.xbasis[1];
-
+	XERUS_LOG(info,tang.uvP.xbase.first.ranks());
+	XERUS_LOG(info,tang.uvP.xbase.second.ranks());
 	for (size_t i = 0; i < numIter;++i){
 		ev_app = tang.get_eigenvalue();
 		XERUS_LOG(info, "Eigenvalue approx. " << std::setprecision(8) << ev_app - shift +nuc);
