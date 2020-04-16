@@ -31,11 +31,11 @@ int main(){
 	std::vector<size_t> sample = {0,1,2,3,22,23,30,31};
 	auto ehf = makeUnitVector(sample,d);
 	while(true){
-		sample = TrialSample(sample,d);
 		auto ek = makeUnitVector(sample,d);
 		value_t val = contract_TT(id,ek,direction);
 		if (std::abs(val)> 1e-12)
 			XERUS_LOG(info,getUPDown(sample) <<" \t " <<sample<<": \t" <<contract_TT(id,ek,direction));
+		sample = TrialSample(sample,d);
 
 	}
 
