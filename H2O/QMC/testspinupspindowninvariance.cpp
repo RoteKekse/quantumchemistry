@@ -5,7 +5,7 @@
 
 
 int main(){
-	size_t d = 48,p = 8,iterations = 1e5, rank = 10;
+	size_t d = 48,p = 8,iterations = 1e5, rank = 50;
 	value_t ev, shift = 25.0, ev_app;
 
 	TTTensor direction;
