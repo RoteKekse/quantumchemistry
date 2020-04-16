@@ -24,6 +24,7 @@ int main(){
 	read_from_disc(name2,Hs);
 
 	XERUS_LOG(info,"Round start vector to " << eps << " keepin gisng values bigger than " << eps/std::sqrt(2*nob-1));
+	phi/= phi.frob_norm();
 	phi.round(eps);
 	phi/= phi.frob_norm();
 
