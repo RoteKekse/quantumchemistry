@@ -42,7 +42,7 @@ int main(){
 		ev_app = tang.get_eigenvalue();
 		XERUS_LOG(info, "Eigenvalue approx. " << std::setprecision(8) << ev_app - shift +nuc);
 		XERUS_LOG(info, "Eigenvalue exact   " << std::setprecision(8) << contract_TT(Hs,phi,phi)- shift +nuc);
-		auto tang_app = tang.get_tangential_components(ev_app,0.001);
+		auto tang_app = tang.get_tangential_components(ev_app,0.005);
 		res = top.builtTTTensor(tang_app);
 		res /= res.frob_norm();
 
