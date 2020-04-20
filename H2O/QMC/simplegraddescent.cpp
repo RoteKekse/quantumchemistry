@@ -14,7 +14,7 @@ int main(){
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };
 	value_t nuc = -52.4190597253;
-	value_t alpha = 0.01;
+	value_t alpha = 0.05;
 
 	XERUS_LOG(info,"Loading Start vector from disc");
 	TTTensor start, phi,res;
