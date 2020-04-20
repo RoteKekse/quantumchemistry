@@ -8,8 +8,8 @@
 #include "../../classes/helpers.cpp"
 
 int main(){
-	size_t nob = 24,num_elec = 8,iterations = 1e5,pos = 5, numIter = 10;
-	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.5,rank=10;
+	size_t nob = 24,num_elec = 8,iterations = 1e5,pos = 5, numIter = 10,rank=10;
+	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.5;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };

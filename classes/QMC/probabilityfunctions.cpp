@@ -64,32 +64,41 @@ class ProjectorProbabilityFunctionBase : public ProbabilityFunction{
 			Tensor comp,tmp,unit,xi;
 			leftxStack = Tensor::ones({1});
 			rightxStack = Tensor::ones({1});
-
-			for (size_t pos=d-1; pos>position;pos--){
-				tmp = xbase.first.get_component(pos);
-				if (std::find(sample.begin(), sample.end(), pos) != sample.end())
-					tmp.fix_mode(1,1);
-				else
-					tmp.fix_mode(1,0);
-				rightxStack(i1) = tmp(i1,j1)*rightxStack(j1);
+#pragma omp parallel sections
+		{
+#pragma omp section
+			{
+				for (size_t pos=d-1; pos>position;pos--){
+					tmp = xbase.first.get_component(pos);
+					if (std::find(sample.begin(), sample.end(), pos) != sample.end())
+						tmp.fix_mode(1,1);
+					else
+						tmp.fix_mode(1,0);
+					rightxStack(i1) = tmp(i1,j1)*rightxStack(j1);
+				}
 			}
-			for (size_t pos=0; pos<position;pos++){
-				tmp = xbase.second.get_component(pos);
-				if (std::find(sample.begin(), sample.end(), pos) != sample.end())
-					tmp.fix_mode(1,1);
-				else
-					tmp.fix_mode(1,0);
-				leftxStack(i1) = tmp(j1,i1)*leftxStack(j1);
+#pragma omp section
+			{
+				for (size_t pos=0; pos<position;pos++){
+					tmp = xbase.second.get_component(pos);
+					if (std::find(sample.begin(), sample.end(), pos) != sample.end())
+						tmp.fix_mode(1,1);
+					else
+						tmp.fix_mode(1,0);
+					leftxStack(i1) = tmp(j1,i1)*leftxStack(j1);
+				}
 			}
-
-			// projection
-			if (std::find(sample.begin(), sample.end(), position) != sample.end())
-				unit = Tensor::dirac({2},1);
-			else
-				unit = Tensor::dirac({2},0);
+#pragma omp section
+			{
+				if (std::find(sample.begin(), sample.end(), position) != sample.end())
+					unit = Tensor::dirac({2},1);
+				else
+					unit = Tensor::dirac({2},0);
+			}
+		}
 
 			comp(i1,i2,i3) = leftxStack(i1) * unit(i2)  * rightxStack(i3);
-
+			// projection
 			if (position < d - 1 and proj){
 				xi=xbase.second.get_component(position);
 				tmp(i1,i2,i3)= xi(i1,i2,k1)*xi(j1,j2,k1)*comp(j1,j2,i3);
