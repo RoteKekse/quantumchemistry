@@ -9,7 +9,7 @@
 
 int main(){
 	size_t nob = 24,num_elec = 8,iterations = 1e5,pos = 5, numIter = 10;
-	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.5;
+	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.5,rank=10;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };
@@ -50,7 +50,7 @@ int main(){
 		phi -= alpha*res;
 
 		phi /= phi.frob_norm();
-		phi.round(eps);
+		phi.round(rank);
 		phi /= phi.frob_norm();
 		XERUS_LOG(info,phi.ranks());
 
