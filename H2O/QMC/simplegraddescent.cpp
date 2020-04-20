@@ -62,7 +62,9 @@ int main(){
 	}
 
 
-
+	ev_app = tang.get_eigenvalue();
+	XERUS_LOG(info, "Eigenvalue approx. " << std::setprecision(8) << ev_app - shift +nuc);
+	XERUS_LOG(info, "Eigenvalue exact   " << std::setprecision(8) << contract_TT(Hs,phi,phi)- shift +nuc);
 
 
 
