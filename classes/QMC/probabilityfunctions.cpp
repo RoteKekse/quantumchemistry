@@ -269,9 +269,13 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 
 		value_t P(std::vector<size_t> sample) override {
 			auto itr = values.find(sample);
+			XERUS_LOG(info,sample);
+			XERUS_LOG(info,values[sample]);
 			if (itr == values.end()){
 				preparePsiEval(sample);
 			}
+			XERUS_LOG(info,values[sample]);
+
 			return std::pow(values[sample],2);
 		}
 
