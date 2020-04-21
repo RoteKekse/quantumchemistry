@@ -1,11 +1,11 @@
 #include <xerus.h>
 #include <chrono>
 
-#include "../classes/QMC/metropolis.cpp"
-#include "../classes/QMC/contractpsihek.cpp"
-#include "../classes/QMC/trialfunctions.cpp"
-#include "../classes/QMC/probabilityfunctions.cpp"
-#include "../classes/QMC/unitvectorprojection.cpp"
+#include "../../classes/QMC/metropolis.cpp"
+#include "../../classes/QMC/contractpsihek.cpp"
+#include "../../classes/QMC/trialfunctions.cpp"
+#include "../../classes/QMC/probabilityfunctions.cpp"
+#include "../../classes/QMC/unitvectorprojection.cpp"
 
 template<class ProbabilityFunction>
 void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> &umap, size_t iterations);
