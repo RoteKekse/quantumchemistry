@@ -25,7 +25,8 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 std::vector<size_t> TrialSampleSym(std::vector<size_t> sample, size_t dim){
 	auto rand_in = rand() % sample.size();
 	bool odd = sample[rand_in] % 2 == 1  ? true : false;
-
+	XERUS_LOG(info, odd);
+	XERUS_LOG(info, sample[rand_in]);
 	while(true){
 		size_t rand_out = rand() % (dim/2);
 
