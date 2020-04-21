@@ -219,9 +219,10 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 		size_t d;
 		size_t p_up;
 		size_t p_down;
+		size_t count;
 
 	public:
-		PsiProbabilityFunction(TTTensor _psi): d(_psi.order()), p_up(0), p_down(0){
+		PsiProbabilityFunction(TTTensor _psi): d(_psi.order()), p_up(0), p_down(0), count(0){
 			psi = _psi;
 		}
 
@@ -258,7 +259,8 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 
 		void preparePsiEval(std::vector<size_t> sample){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
-
+			count++;
+			XERUS_LOG(info,count);
 			std::vector<size_t> idx;
 			for (size_t i = 0; i < d; ++i){
 				if(std::binary_search (sample.begin(), sample.end(), i)){
