@@ -21,7 +21,7 @@ int main(){
 
 	XERUS_LOG(info, "Start metropolis tree");
 	PsiProbabilityFunction2 PsiPF2(phi);
-	Metropolis<PsiProbabilityFunction2> markow2(&PsiPF2, TrialSample2, start_sample, d);
+	Metropolis<PsiProbabilityFunction2> markow2(&PsiPF2, TrialSampleSym2, start_sample, d);
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples2;
 	auto start = std::chrono::steady_clock::now();
 	runMetropolis<PsiProbabilityFunction2>(&markow2,samples2,iterations);
@@ -33,7 +33,7 @@ int main(){
 
 	XERUS_LOG(info, "Start metropolis linear");
 	PsiProbabilityFunction PsiPF(phi);
-	Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
+	Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 	start = std::chrono::steady_clock::now();
 	runMetropolis<PsiProbabilityFunction>(&markow1,samples,iterations);

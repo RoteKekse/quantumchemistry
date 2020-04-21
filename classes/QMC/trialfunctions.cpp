@@ -22,6 +22,30 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 	return sample;
 }
 
+std::vector<size_t> TrialSampleSym(std::vector<size_t> sample, size_t dim){
+	auto rand_in = rand() % sample.size();
+	bool odd = sample[rand_in] % 2 == 1  ? true : false;
+	sample.erase (sample.begin()+rand_in);
+
+	while(true){
+		size_t rand_out = rand() % (dim/2);
+		if (odd)
+			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out+1)){
+				addElementToVector(sample,  2*rand_out+1, dim);
+				break;
+			}
+		else {
+			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out)){
+				addElementToVector(sample,  2*rand_out, dim);
+				break;
+			}
+		}
+
+	}
+
+	return sample;
+}
+
 std::pair<std::vector<size_t>,std::vector<size_t>> TrialSample(std::pair<std::vector<size_t>,std::vector<size_t>> sample, size_t dim){
 	auto coin_flip = rand() % 2;
 	if (coin_flip == 0)
@@ -61,6 +85,16 @@ std::vector<size_t> TrialSample2(std::vector<size_t> sample, size_t dim){
 	if  (rand() % 2 == 1) return sample_new; //!!!
 	while(true){
 		sample_new = TrialSample(sample_new, dim);
+		if ( sample_new != sample)
+			return sample_new;
+	}
+}
+
+std::vector<size_t> TrialSampleSym2(std::vector<size_t> sample, size_t dim){
+	auto sample_new = TrialSampleSym(sample, dim);
+	if  (rand() % 2 == 1) return sample_new; //!!!
+	while(true){
+		sample_new = TrialSampleSym(sample_new, dim);
 		if ( sample_new != sample)
 			return sample_new;
 	}
