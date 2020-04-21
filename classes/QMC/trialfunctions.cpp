@@ -25,17 +25,19 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 std::vector<size_t> TrialSampleSym(std::vector<size_t> sample, size_t dim){
 	auto rand_in = rand() % sample.size();
 	bool odd = sample[rand_in] % 2 == 1  ? true : false;
-	sample.erase (sample.begin()+rand_in);
 
 	while(true){
 		size_t rand_out = rand() % (dim/2);
+
 		if (odd)
 			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out+1)){
+				sample.erase (sample.begin()+rand_in);
 				addElementToVector(sample,  2*rand_out+1, dim);
 				break;
 			}
 		else {
 			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out)){
+				sample.erase (sample.begin()+rand_in);
 				addElementToVector(sample,  2*rand_out, dim);
 				break;
 			}
