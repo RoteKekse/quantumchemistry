@@ -303,7 +303,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 						p_down++;
 				}
 			}
-
+			XERUS_LOG(info,"hello");
 
 			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
 			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
@@ -311,6 +311,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
 				data_tmpl.emplace_back(tmp);
 			}
+			XERUS_LOG(info,"hello");
 
 			// initialize queue with slices of TT Tensor
 			for (size_t i = 0; i < d; ++i){
@@ -323,6 +324,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 				data[getIndex(0,idx[i] == 1 ? 0 : 1,(i+1)%2,i%2)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 				queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(i,data));
 			}
+			XERUS_LOG(info,"hello");
 
 			bool finished = false;
 			size_t count = 0;
