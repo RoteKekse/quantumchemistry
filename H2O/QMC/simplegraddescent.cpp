@@ -57,7 +57,7 @@ int main(){
 			phi_tmp /= phi_tmp.frob_norm();
 			tang.update(phi_tmp);
 			ev_app_tmp = tang.get_eigenvalue();
-			XERUS_LOG(info, "ev_app_tmp = " << ev_app_tmp);
+			XERUS_LOG(info, "ev_app_tmp = " << ev_app_tmp- shift +nuc);
 
 			if (ev_app_tmp < ev_app or alpha < 1e-3)
 				break;
