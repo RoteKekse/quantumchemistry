@@ -309,7 +309,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 						p_down++;
 				}
 			}
-
+			XERUS_LOG(info,"P_up = " << p_up << " P_down " << p_down);
 			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
 			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
 			for (size_t i = 0; i < 3*3*(p_up+1)*(p_down+1); ++i){
