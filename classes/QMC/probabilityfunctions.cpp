@@ -234,7 +234,7 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 			return std::pow(values[sample],2);
 		}
 
-		value_t P2(std::vector<size_t> sample) override {
+		value_t P2(std::vector<size_t> sample) {
 			auto itr = values.find(sample);
 			if (itr == values.end()){
 				preparePsiEval(sample);
