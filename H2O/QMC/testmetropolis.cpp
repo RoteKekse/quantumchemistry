@@ -55,7 +55,7 @@ void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<s
 	std::vector<size_t> next_sample;
 	for (size_t i = 0; i <  (size_t) (iterations/10); ++i){
 		next_sample = markow->getNextSample();
-		if (i%(iterations/100) == 0)
+		//if (i%(iterations/100) == 0)
 				XERUS_LOG(info,"Step " << i);
 	}
 
