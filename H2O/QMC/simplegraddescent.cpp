@@ -49,6 +49,7 @@ int main(){
 
 		ev_app_tmp = ev_app;
 		while (true){
+			XERUS_LOG(info, "alpha = " << alpha);
 			phi_tmp = phi -  alpha*res;
 
 			phi_tmp /= phi_tmp.frob_norm();
