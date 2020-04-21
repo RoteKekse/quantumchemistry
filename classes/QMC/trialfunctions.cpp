@@ -91,7 +91,7 @@ std::vector<size_t> TrialSample2(std::vector<size_t> sample, size_t dim){
 }
 
 std::vector<size_t> TrialSampleSym2(std::vector<size_t> sample, size_t dim){
-	XERUS_LOG(info,sample_new);
+	XERUS_LOG(info,sample);
 
 	auto sample_new = TrialSampleSym(sample, dim);
 	XERUS_LOG(info,sample_new);
