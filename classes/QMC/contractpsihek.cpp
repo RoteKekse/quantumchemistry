@@ -7,9 +7,9 @@
 #include <boost/algorithm/string_regex.hpp>
 #include <unordered_map>
 
-#include "../../classes/containerhash.cpp"
-#include "../../classes/loading_tensors.cpp"
-#include "../../classes/helpers.cpp"
+#include "../containerhash.cpp"
+#include "../loading_tensors.cpp"
+#include "../helpers.cpp"
 
 #include <memory>
 

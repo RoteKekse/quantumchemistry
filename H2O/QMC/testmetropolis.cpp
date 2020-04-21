@@ -17,16 +17,33 @@ int main(){
 	std::vector<size_t> start_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
+
+
+	XERUS_LOG(info, "Start metropolis tree");
+	PsiProbabilityFunction PsiPF2(phi);
+	Metropolis<PsiProbabilityFunction> markow2(&PsiPF2, TrialSample2, start_sample, d);
+	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples2;
+	auto start = std::chrono::steady_clock::now();
+	runMetropolis<PsiProbabilityFunction>(&markow2,samples2,iterations);
+	auto end = std::chrono::steady_clock::now();
+	XERUS_LOG(info, "Elapsed time in seconds for tree evaluation: "
+		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+		<< " msec");
+
+
+	XERUS_LOG(info, "Start metropolis linear");
 	PsiProbabilityFunction PsiPF(phi);
 	Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
-
 	auto start = std::chrono::steady_clock::now();
 	runMetropolis<PsiProbabilityFunction>(&markow1,samples,iterations);
 	auto end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
+
+
+
 
 
 	return 0;
