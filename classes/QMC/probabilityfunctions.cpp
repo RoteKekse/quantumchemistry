@@ -273,6 +273,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			if (itr == values.end()){
 				preparePsiEval(sample);
 			}
+			XERUS_LOG(info,values.size());
 
 			return std::pow(values[index],2);
 		}
