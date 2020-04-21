@@ -18,6 +18,8 @@ int main(){
 	xerus::TTTensor phi;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
 
+	XERUS_LOG(info,"Test TrialSampleSym2");
+	XERUS_LOG(info,TrialSampleSym2(start_sample,d));
 
 	XERUS_LOG(info, "Start metropolis tree");
 	PsiProbabilityFunction2 PsiPF2(phi);
@@ -55,7 +57,7 @@ void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<s
 	std::vector<size_t> next_sample;
 	for (size_t i = 0; i <  (size_t) (iterations/10); ++i){
 		next_sample = markow->getNextSample();
-		//if (i%(iterations/100) == 0)
+		if (i%(iterations/100) == 0)
 				XERUS_LOG(info,"Step " << i);
 	}
 
