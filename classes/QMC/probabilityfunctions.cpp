@@ -300,6 +300,8 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			count++;
 			XERUS_LOG(info,count);
 			std::vector<size_t> idx(d,0);
+			p_up = 0;
+			p_down = 0;
 			for (size_t i = 0; i < d; ++i){
 				if(std::binary_search (sample.begin(), sample.end(), i)){
 					idx[i] = 1;
