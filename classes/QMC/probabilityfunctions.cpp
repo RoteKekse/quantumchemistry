@@ -235,7 +235,39 @@ class PsiProbabilityFunction : public ProbabilityFunction{
 			return std::pow(values[sample],2);
 		}
 
-		value_t P2(std::vector<size_t> sample) {
+		value_t Pval(std::vector<size_t> sample) {
+			std::vector<size_t> idx = makeIndex(sample);
+			return psi[idx];
+		}
+
+		std::vector<size_t> makeIndex(std::vector<size_t> sample){
+			std::vector<size_t> index(d, 0);
+			for (size_t i : sample)
+				if (i < d)
+					index[i] = 1;
+			return index;
+		}
+
+
+};
+
+
+class PsiProbabilityFunction2 : public ProbabilityFunction{
+	public:
+		TTTensor psi;
+		size_t d;
+		size_t p_up;
+		size_t p_down;
+		size_t count;
+
+	public:
+		PsiProbabilityFunction2(TTTensor _psi): d(_psi.order()), p_up(0), p_down(0), count(0){
+			psi = _psi;
+		}
+
+
+
+		value_t P(std::vector<size_t> sample) override {
 			auto itr = values.find(sample);
 			if (itr == values.end()){
 				preparePsiEval(sample);
