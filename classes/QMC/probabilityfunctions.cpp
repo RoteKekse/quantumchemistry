@@ -271,10 +271,12 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			auto itr = values.find(sample);
 			XERUS_LOG(info,sample);
 			XERUS_LOG(info,values[sample]);
+			XERUS_LOG(info,values.size());
 			if (itr == values.end()){
 				preparePsiEval(sample);
 			}
 			XERUS_LOG(info,values[sample]);
+			XERUS_LOG(info,values.size());
 
 			return std::pow(values[sample],2);
 		}
