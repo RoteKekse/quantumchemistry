@@ -269,16 +269,12 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 
 		value_t P(std::vector<size_t> sample) override {
 			auto itr = values.find(sample);
-			XERUS_LOG(info,sample);
-			XERUS_LOG(info,values[sample]);
-			XERUS_LOG(info,values.size());
+			auto index = makeIndex(sample);
 			if (itr == values.end()){
 				preparePsiEval(sample);
 			}
-			XERUS_LOG(info,values[sample]);
-			XERUS_LOG(info,values.size());
 
-			return std::pow(values[sample],2);
+			return std::pow(values[index],2);
 		}
 
 		value_t Pval(std::vector<size_t> sample) {
@@ -297,8 +293,6 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 
 		void preparePsiEval(std::vector<size_t> sample){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
-			count++;
-			XERUS_LOG(info,count);
 			std::vector<size_t> idx(d,0);
 			p_up = 0;
 			p_down = 0;
@@ -371,7 +365,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
-													values[sample] = tmp[0];
+													values[idx_new] = tmp[0];
 													count++;
 												}
 											}
