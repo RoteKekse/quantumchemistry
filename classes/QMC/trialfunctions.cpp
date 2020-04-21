@@ -29,6 +29,7 @@ std::vector<size_t> TrialSampleSym(std::vector<size_t> sample, size_t dim){
 	XERUS_LOG(info, sample[rand_in]);
 	while(true){
 		size_t rand_out = rand() % (dim/2);
+		XERUS_LOG(info, rand_out);
 
 		if (odd)
 			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out+1)){
