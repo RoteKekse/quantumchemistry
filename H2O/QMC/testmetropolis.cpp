@@ -35,9 +35,9 @@ int main(){
 	PsiProbabilityFunction PsiPF(phi);
 	Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
-	auto start = std::chrono::steady_clock::now();
+	start = std::chrono::steady_clock::now();
 	runMetropolis<PsiProbabilityFunction>(&markow1,samples,iterations);
-	auto end = std::chrono::steady_clock::now();
+	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
