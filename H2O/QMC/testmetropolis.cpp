@@ -20,6 +20,9 @@ int main(){
 
 	XERUS_LOG(info,"Test TrialSampleSym2");
 	XERUS_LOG(info,TrialSampleSym2(start_sample,d));
+	XERUS_LOG(info,TrialSampleSym2(start_sample,d));
+	XERUS_LOG(info,TrialSampleSym2(start_sample,d));
+	XERUS_LOG(info,TrialSampleSym2(start_sample,d));
 
 	XERUS_LOG(info, "Start metropolis tree");
 	PsiProbabilityFunction2 PsiPF2(phi);
