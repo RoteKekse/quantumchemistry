@@ -271,7 +271,6 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			auto index = makeIndex(sample);
 			auto itr = values.find(index);
 			if (itr == values.end()){
-				XERUS_LOG(info,sample);
 				preparePsiEval(sample);
 			}
 
@@ -295,7 +294,6 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 		void preparePsiEval(std::vector<size_t> sample){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
 			count++;
-			XERUS_LOG(info,count);
 			std::vector<size_t> idx(d,0);
 			p_up = 0;
 			p_down = 0;
