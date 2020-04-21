@@ -95,6 +95,7 @@ std::vector<size_t> TrialSampleSym2(std::vector<size_t> sample, size_t dim){
 	if  (rand() % 2 == 1) return sample_new; //!!!
 	while(true){
 		sample_new = TrialSampleSym(sample_new, dim);
+		XERUS_LOG(info,sample_new);
 		if ( sample_new != sample)
 			return sample_new;
 	}
