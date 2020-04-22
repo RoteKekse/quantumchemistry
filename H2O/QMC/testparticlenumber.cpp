@@ -24,6 +24,7 @@ int main(){
 	XERUS_LOG(info,"Loading Start vector from disc");
 	TTTensor start, phi,res, phi_tmp;
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
+	XERUS_LOG(info, "\n" << start.ranks());
 	phi = makeUnitVector(sample,2*nob);
 
 	XERUS_LOG(info,"Particle number phi start         " << std::setprecision(16) << contract_TT(P,phi,phi));
