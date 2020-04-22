@@ -273,6 +273,8 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			if (itr == values.end()){
 				XERUS_LOG(info,sample);
 				preparePsiEval(index);
+				XERUS_LOG(info,values.size());
+
 			}
 
 			return std::pow(values[index],2);
@@ -366,7 +368,6 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 													Tensor tmp;
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
 													values[idx_new] = tmp[0];
-													XERUS_LOG(info,values.size());
 													count++;
 												}
 											}
