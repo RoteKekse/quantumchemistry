@@ -74,9 +74,7 @@ class Tangential{
 
 		// Loop for projection of each component
 		for (size_t pos = 0; pos < d; ++pos){
-			XERUS_LOG(info,"Pos = " << pos);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
-			XERUS_LOG(info,"Start metropolis");
 #pragma omp parallel shared(samples,iterations)
 			{
 			ProjectorProbabilityFunction2 PPF(phi,pos, true,builder);
@@ -97,10 +95,7 @@ class Tangential{
 
 			}
 
-			XERUS_LOG(info,"Start eHx");
-			XERUS_LOG(info, "Size before " << samples.size());
 			auto samples_keys = extract_keys(samples,accuracy);
-			XERUS_LOG(info, "Size after  " << samples_keys.size());
 			//Calculate eHx for relevant samples
 #pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
 						for (size_t i = 0; i < samples_keys.size(); ++i){
@@ -114,7 +109,6 @@ class Tangential{
 								eHxValues[samples_keys[i]] = tmp;
 				}
 			}
-			XERUS_LOG(info,"Start component computation");
 			//Calculate tangential component
 			Tensor result(phi.component(pos).dimensions);
 			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
@@ -127,7 +121,7 @@ class Tangential{
 					result += factor * loc_grad;
 				}
 			}
-			XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples " << samples.size());
+			XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples before " << samples.size() << " and after " << samples_keys.size());
 			results.emplace_back(result);
 		}
 	return results;

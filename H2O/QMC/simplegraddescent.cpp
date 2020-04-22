@@ -31,7 +31,7 @@ int main(){
 	read_from_disc(name2,Hs);
 	XERUS_LOG(info, "Eigenvalue start   " << std::setprecision(8) << contract_TT(Hs,phi,phi)- shift +nuc);
 
-	XERUS_LOG(info,"Round start vector to " << eps << " keepin gisng values bigger than " << eps/std::sqrt(2*nob-1));
+	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(2*nob-1));
 	start/= start.frob_norm();
 	for (value_t ee = 0.05; ee <= eps ; ee+=0.05){
 		start.round(ee);
