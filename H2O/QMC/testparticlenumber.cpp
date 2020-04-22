@@ -30,7 +30,7 @@ int main(){
 	XERUS_LOG(info,"Particle number up phi start      " << std::setprecision(16) << contract_TT(Pup,phi,phi));
 	XERUS_LOG(info,"Particle number down phi start    " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 
-
+	start.move_core(0);
 	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(2*nob-1));
 	start/= start.frob_norm();
 	XERUS_LOG(info,"Particle number grad              " << std::setprecision(16) << contract_TT(P,start,start));
