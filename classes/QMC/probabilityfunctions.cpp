@@ -272,6 +272,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			auto itr = values.find(index);
 			if (itr == values.end()){
 				XERUS_LOG(info,sample);
+				XERUS_LOG(info,"\n" << index);
 				preparePsiEval(index);
 				XERUS_LOG(info,values.size());
 
