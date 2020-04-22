@@ -73,7 +73,7 @@ void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<s
 			umap[next_sample].second = markow->P->P(next_sample);
 		} else
 			umap[next_sample].first += 1;
-		if (i%(iterations/10) == 0){
+		if (i%(iterations/10000) == 0){
 			XERUS_LOG(info,"Step " << i);
 			XERUS_LOG(info,"Size umap " << umap.size());
 		}
