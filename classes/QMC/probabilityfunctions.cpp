@@ -272,7 +272,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 			auto itr = values.find(index);
 			if (itr == values.end()){
 				XERUS_LOG(info,sample);
-				preparePsiEval(sample);
+				preparePsiEval(index);
 			}
 
 			return std::pow(values[index],2);
@@ -285,29 +285,26 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 
 		std::vector<size_t> makeIndex(std::vector<size_t> sample){
 			std::vector<size_t> index(d, 0);
-			for (size_t i : sample)
+			p_up = 0;
+			p_down = 0;
+			for (size_t i : sample){
 				if (i < d)
 					index[i] = 1;
+				if (i%2 == 0)
+					p_up++;
+				else
+					p_down++;
+			}
 			return index;
 		}
 
 
-		void preparePsiEval(std::vector<size_t> sample){ 			// TODO can one keep the lower contractions for different e_ks??
+		void preparePsiEval(std::vector<size_t> idx){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
 			count++;
 			XERUS_LOG(info,count);
-			std::vector<size_t> idx(d,0);
-			p_up = 0;
-			p_down = 0;
-			for (size_t i = 0; i < d; ++i){
-				if(std::binary_search (sample.begin(), sample.end(), i)){
-					idx[i] = 1;
-					if (i%2 == 0)
-						p_up++;
-					else
-						p_down++;
-				}
-			}
+
+
 			std::queue<std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>> queue;
 			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
 			for (size_t i = 0; i < 3*3*(p_up+1)*(p_down+1); ++i){
@@ -341,6 +338,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 					elm2 = queue.front();
 					queue.pop();
 				}
+
 				size_t pos = elm1.first;
 
 				auto data = data_tmpl;
