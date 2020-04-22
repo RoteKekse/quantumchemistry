@@ -9,7 +9,7 @@
 
 int main(){
 	size_t nob = 24,num_elec = 8,iterations = 1e4,pos = 5, numIter = 20,rank=20;
-	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.5,ev_app_tmp;
+	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1,ev_app_tmp;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };
@@ -33,11 +33,17 @@ int main(){
 
 	XERUS_LOG(info,"Round start vector to " << eps << " keepin gisng values bigger than " << eps/std::sqrt(2*nob-1));
 	start/= start.frob_norm();
-	start.round(eps);
+	for (value_t ee = 0.05; ee <= eps ; ee+=0.05){
+		start.round(ee);
+		start/= start.frob_norm();
+	}
 	start/= start.frob_norm();
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
 	phi.move_core(0);
+	XERUS_LOG(info,"Particle number phi updated       " << std::setprecision(16) << contract_TT(P,phi,phi));
+	XERUS_LOG(info,"Particle number up phi updated    " << std::setprecision(16) << contract_TT(Pup,phi,phi));
+	XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 	XERUS_LOG(info,phi.ranks());
 
 	Tangential tang(2*nob,num_elec,iterations,path_T,path_V,shift,sample,phi);
@@ -63,6 +69,7 @@ int main(){
 			tang.update(phi_tmp);
 			ev_app_tmp = tang.get_eigenvalue();
 			XERUS_LOG(info, "ev_app_tmp = " << ev_app_tmp- shift +nuc);
+			XERUS_LOG(info, "Eigenvalue exact tmp   " << std::setprecision(8) << contract_TT(Hs,phi_tmp,phi_tmp)- shift +nuc);
 
 			if (ev_app_tmp < ev_app or alpha < 1e-3)
 				break;

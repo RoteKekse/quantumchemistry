@@ -80,7 +80,7 @@ class Tangential{
 #pragma omp parallel shared(samples,iterations)
 			{
 			ProjectorProbabilityFunction2 PPF(phi,pos, true,builder);
-			Metropolis<ProjectorProbabilityFunction2> markow2(&PPF, /*TODO check*/ TrialSample2, start_sample, d);
+			Metropolis<ProjectorProbabilityFunction2> markow2(&PPF, /*TODO check*/ TrialSampleSym2, start_sample, d);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> private_samples;
 			runMetropolis<ProjectorProbabilityFunction2>(&markow2,private_samples,(size_t) (iterations/3));
 #pragma omp critical
