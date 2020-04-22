@@ -26,27 +26,27 @@ int main(){
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	phi = makeUnitVector(sample,2*nob);
 
-	XERUS_LOG(info,"Particle number phi start         " << std::setprecision(12) << contract_TT(P,phi,phi));
-	XERUS_LOG(info,"Particle number up phi start      " << std::setprecision(12) << contract_TT(Pup,phi,phi));
-	XERUS_LOG(info,"Particle number down phi start    " << std::setprecision(12) << contract_TT(Pdown,phi,phi));
+	XERUS_LOG(info,"Particle number phi start         " << std::setprecision(16) << contract_TT(P,phi,phi));
+	XERUS_LOG(info,"Particle number up phi start      " << std::setprecision(16) << contract_TT(Pup,phi,phi));
+	XERUS_LOG(info,"Particle number down phi start    " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 
 
 	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(2*nob-1));
 	start/= start.frob_norm();
-	XERUS_LOG(info,"Particle number grad              " << std::setprecision(12) << contract_TT(P,start,start));
-	XERUS_LOG(info,"Particle number up grad           " << std::setprecision(12) << contract_TT(Pup,start,start));
-	XERUS_LOG(info,"Particle number down grad         " << std::setprecision(12) << contract_TT(Pdown,start,start));
+	XERUS_LOG(info,"Particle number grad              " << std::setprecision(16) << contract_TT(P,start,start));
+	XERUS_LOG(info,"Particle number up grad           " << std::setprecision(16) << contract_TT(Pup,start,start));
+	XERUS_LOG(info,"Particle number down grad         " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	start.round(eps);
 	start/= start.frob_norm();
-	XERUS_LOG(info,"Particle number grad rounded      " << std::setprecision(12) << contract_TT(P,start,start));
-	XERUS_LOG(info,"Particle number up grad rounded   " << std::setprecision(12) << contract_TT(Pup,start,start));
-	XERUS_LOG(info,"Particle number down grad rounded " << std::setprecision(12) << contract_TT(Pdown,start,start));
+	XERUS_LOG(info,"Particle number grad rounded      " << std::setprecision(16) << contract_TT(P,start,start));
+	XERUS_LOG(info,"Particle number up grad rounded   " << std::setprecision(16) << contract_TT(Pup,start,start));
+	XERUS_LOG(info,"Particle number down grad rounded " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
 	phi.move_core(0);
-	XERUS_LOG(info,"Particle number phi updated       " << std::setprecision(12) << contract_TT(P,phi,phi));
-	XERUS_LOG(info,"Particle number up phi updated    " << std::setprecision(12) << contract_TT(Pup,phi,phi));
-	XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(12) << contract_TT(Pdown,phi,phi));
+	XERUS_LOG(info,"Particle number phi updated       " << std::setprecision(16) << contract_TT(P,phi,phi));
+	XERUS_LOG(info,"Particle number up phi updated    " << std::setprecision(16) << contract_TT(Pup,phi,phi));
+	XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 	XERUS_LOG(info,phi.ranks());
 
 
