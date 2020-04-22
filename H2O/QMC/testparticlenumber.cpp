@@ -56,6 +56,11 @@ int main(){
 	XERUS_LOG(info,"Particle number grad rounded      " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up grad rounded   " << std::setprecision(16) << contract_TT(Pup,start,start));
 	XERUS_LOG(info,"Particle number down grad rounded " << std::setprecision(16) << contract_TT(Pdown,start,start));
+	start.round(10);
+	start/= start.frob_norm();
+	XERUS_LOG(info,"Particle number grad rounded      " << std::setprecision(16) << contract_TT(P,start,start));
+	XERUS_LOG(info,"Particle number up grad rounded   " << std::setprecision(16) << contract_TT(Pup,start,start));
+	XERUS_LOG(info,"Particle number down grad rounded " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
 	phi.move_core(0);
