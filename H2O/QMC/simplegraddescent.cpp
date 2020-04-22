@@ -22,7 +22,9 @@ int main(){
 	phi = makeUnitVector(sample,2*nob);
 
 
-
+	auto P = particleNumberOperator(2*nob);
+	auto Pup = particleNumberOperatorUp(2*nob);
+	auto Pdown = particleNumberOperatorDown(2*nob);
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(2*nob)  +"_full_shifted_benchmark.ttoperator";
