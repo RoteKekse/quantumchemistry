@@ -68,6 +68,7 @@ void runMetropolis(Metropolis<ProbabilityFunction>* markow, std::unordered_map<s
 		next_sample = markow->getNextSample();
 		auto itr = umap.find(next_sample);
 		if (itr == umap.end()){
+			XERUS_LOG(info,"The current sample is " << next_sample);
 			umap[next_sample].first = 1;
 			umap[next_sample].second = markow->P->P(next_sample);
 		} else
