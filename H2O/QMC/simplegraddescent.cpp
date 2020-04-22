@@ -21,6 +21,9 @@ int main(){
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	phi = makeUnitVector(sample,2*nob);
 
+
+
+
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(2*nob)  +"_full_shifted_benchmark.ttoperator";
 	read_from_disc(name2,Hs);

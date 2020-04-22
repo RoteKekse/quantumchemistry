@@ -211,3 +211,58 @@ TTOperator particleNumberOperator(size_t d){
 
 	return op;
 }
+
+TTOperator particleNumberOperatorUp(size_t d){
+	TTOperator op(std::vector<size_t>(2*d,2));
+	Tensor id = Tensor::identity({2,2});
+	id.reinterpret_dimensions({1,2,2,1});
+	auto n = id;
+	n[{0,0,0,0}] = 0;
+	Tensor tmp({1,2,2,2});
+	tmp.offset_add(id,{0,0,0,0});
+	tmp.offset_add(n,{0,0,0,1});
+	op.set_component(0,tmp);
+	for (size_t i = 1; i < d-1; ++i){
+		tmp = Tensor({2,2,2,2});
+		tmp.offset_add(id,{0,0,0,0});
+		tmp.offset_add(id,{1,0,0,1});
+		if (i%2 == 0)
+			tmp.offset_add(n,{0,0,0,1});
+
+		op.set_component(i,tmp);
+	}
+	tmp = Tensor({2,2,2,1});
+	tmp.offset_add(id,{1,0,0,0});
+	op.set_component(d-1,tmp);
+
+
+	return op;
+}
+
+TTOperator particleNumberOperatorDown(size_t d){
+	TTOperator op(std::vector<size_t>(2*d,2));
+	Tensor id = Tensor::identity({2,2});
+	id.reinterpret_dimensions({1,2,2,1});
+	auto n = id;
+	n[{0,0,0,0}] = 0;
+	Tensor tmp({1,2,2,2});
+	tmp.offset_add(id,{0,0,0,0});
+	op.set_component(0,tmp);
+	for (size_t i = 1; i < d-1; ++i){
+		tmp = Tensor({2,2,2,2});
+		tmp.offset_add(id,{0,0,0,0});
+		tmp.offset_add(id,{1,0,0,1});
+		if (i%2 == 1)
+			tmp.offset_add(n,{0,0,0,1});
+		op.set_component(i,tmp);
+	}
+  tmp = Tensor({2,2,2,1});
+	tmp.offset_add(n,{0,0,0,0});
+	tmp.offset_add(id,{1,0,0,0});
+	op.set_component(d-1,tmp);
+
+
+	return op;
+}
+
+
