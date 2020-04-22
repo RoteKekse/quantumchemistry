@@ -361,6 +361,7 @@ class PsiProbabilityFunction2 : public ProbabilityFunction{
 											}}}}
 											else {
 												for (auto const& tuple2 : elm2.second[getIndex(i2,j2,p_up-k1,p_down-l1)]){
+													XERUS_LOG(info,"hello");
 													std::vector<size_t> idx_new(tuple1.first);
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
