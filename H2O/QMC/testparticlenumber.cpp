@@ -38,7 +38,7 @@ int main(){
 	XERUS_LOG(info,"Particle number up grad           " << std::setprecision(16) << contract_TT(Pup,start,start));
 	XERUS_LOG(info,"Particle number down grad         " << std::setprecision(16) << contract_TT(Pdown,start,start));
 
-	for (value_t ee = 0.05; ee <= 3 ; ee+=0.05){
+	for (value_t ee = 0.05; ee <= eps ; ee+=0.05){
 		start.round(ee);
 		start/= start.frob_norm();
 		XERUS_LOG(info, "Rounded to " << ee << "\n" << start.ranks());
