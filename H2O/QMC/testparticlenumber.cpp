@@ -41,7 +41,7 @@ int main(){
 	for (value_t ee = 0.05; ee <= 3 ; ee+=0.05){
 		start.round(ee);
 		start/= start.frob_norm();
-		XERUS_LOG(info, "Rounded to " << ee);
+		XERUS_LOG(info, "Rounded to " << ee << "\n" << start.ranks());
 		XERUS_LOG(info,"Particle number grad rounded      " << std::setprecision(16) << contract_TT(P,start,start));
 		XERUS_LOG(info,"Particle number up grad rounded   " << std::setprecision(16) << contract_TT(Pup,start,start));
 		XERUS_LOG(info,"Particle number down grad rounded " << std::setprecision(16) << contract_TT(Pdown,start,start));
