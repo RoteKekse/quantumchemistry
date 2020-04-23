@@ -67,7 +67,7 @@ class Tangential{
 			return ev;
 		}
 
-		value_t get_eigenvalue(value_t accuracy =  0.0005){
+		value_t get_eigenvalue(value_t accuracy =  0.0001){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
