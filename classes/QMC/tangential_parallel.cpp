@@ -42,7 +42,7 @@ class Tangential{
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
-			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
+			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
 
@@ -73,7 +73,7 @@ class Tangential{
 		value_t get_eigenvalue2(value_t accuracy =  0.00001){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			PsiProbabilityFunction PsiPF(phi);
-			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
+			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSample2, start_sample, d);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
 
