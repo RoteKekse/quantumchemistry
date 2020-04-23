@@ -35,7 +35,7 @@ class Tangential{
 			builder.reset_psi(_phi);
 		}
 
-		value_t get_eigenvalue(){
+		value_t get_eigenvalue2(){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
@@ -64,6 +64,37 @@ class Tangential{
 				ev += factor;
 			}
 			ev /= (value_t) iter_factor*iterations;
+			return ev;
+		}
+
+		value_t get_eigenvalue(){
+			value_t ev_exact,res,psi_ek,factor,dk;
+			size_t iter_factor = 1000;
+			PsiProbabilityFunction PsiPF(phi);
+			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
+
+			auto samples_keys = extract_keys(samples,0.0);
+#pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
+			for (size_t i = 0; i < samples_keys.size(); ++i){
+				auto itr = eHxValues.find(samples_keys[i]);
+				if (itr == eHxValues.end()){
+					 //setting builder to newest sample!! Important
+					builder.reset(samples_keys[i]);
+					builder.preparePsiEval();
+					value_t tmp = builder.contract_tree();
+#pragma omp critical
+								eHxValues[samples_keys[i]] = tmp;
+					}
+				}
+			value_t ev = 0;
+			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
+			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
+				psi_ek = PsiPF.values[pair.first];
+				factor = eHxValues[pair.first]*psi_ek;
+				ev += factor;
+			}
 			return ev;
 		}
 
