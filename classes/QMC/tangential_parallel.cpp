@@ -38,7 +38,7 @@ class Tangential{
 			builder.reset_psi(_phi);
 		}
 
-		value_t get_eigenvalue2(){
+		value_t get_eigenvalue(){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
@@ -70,7 +70,7 @@ class Tangential{
 			return ev;
 		}
 
-		value_t get_eigenvalue(value_t accuracy =  0.00001){
+		value_t get_eigenvalue2(value_t accuracy =  0.00001){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			PsiProbabilityFunction PsiPF(phi);
 			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
