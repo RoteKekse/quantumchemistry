@@ -67,7 +67,7 @@ class Tangential{
 			return ev;
 		}
 
-		value_t get_eigenvalue(){
+		value_t get_eigenvalue(value_t accuracy =  0.0005){
 			value_t ev_exact,res,psi_ek,factor,dk;
 			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
@@ -75,7 +75,7 @@ class Tangential{
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 			runMetropolis<PsiProbabilityFunction>(&markow1,samples,iter_factor*iterations);
 
-			auto samples_keys = extract_keys(samples,0.0);
+			auto samples_keys = extract_keys(samples,accuracy);
 #pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
 			for (size_t i = 0; i < samples_keys.size(); ++i){
 				auto itr = eHxValues.find(samples_keys[i]);
@@ -89,11 +89,13 @@ class Tangential{
 					}
 				}
 			value_t ev = 0;
-			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
+			XERUS_LOG(info, "Number of samples for Eigenvalue " << samples_keys.size());
 			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
 				psi_ek = PsiPF.values[pair.first];
-				factor = eHxValues[pair.first]*psi_ek;
-				ev += factor;
+				if (psi_ek > accuracy ){
+					factor = eHxValues[pair.first]*psi_ek;
+					ev += factor;
+				}
 			}
 			return ev;
 		}
