@@ -88,7 +88,8 @@ int main(){
 		tang.update(phi);
 		tang.uvP.xbase.first = top.xbasis[0]; //use same orthogonalization!!!
 		tang.uvP.xbase.second = top.xbasis[1];
-		alpha *= 2;
+		if (alpha < 0.1)
+			alpha *= 2;
 	}
 
 
