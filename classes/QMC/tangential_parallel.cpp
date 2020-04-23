@@ -23,6 +23,9 @@ class Tangential{
 		ContractPsiHek builder;
 		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 		unitVectorProjection uvP;
+		size_t iter_factor = 10000;
+
+
 		Tangential(size_t _d, size_t _p, size_t _iter, std::string _path_T, std::string _path_V, value_t _shift, std::vector<size_t> _s, TTTensor _phi) \
 				: d(_d), p(_p), iterations(_iter), path_T(_path_T), path_V(_path_V), shift(_shift), start_sample(_s), \
 					phi(_phi), builder(phi,d,p,path_T,path_V,0.0, shift), uvP(_phi) {
@@ -69,7 +72,6 @@ class Tangential{
 
 		value_t get_eigenvalue(value_t accuracy =  0.00001){
 			value_t ev_exact,res,psi_ek,factor,dk;
-			size_t iter_factor = 1000;
 			PsiProbabilityFunction PsiPF(phi);
 			Metropolis<PsiProbabilityFunction> markow1(&PsiPF, TrialSampleSym2, start_sample, d);
 			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
