@@ -14,10 +14,10 @@ int main(){
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	std::vector<size_t> sample = { 0, 1,2,3,22,23,30,31 };
 	value_t nuc = -52.4190597253;
-	value_t alpha = 0.1;
+	value_t alpha = 0.1,beta;
 
 	XERUS_LOG(info,"Loading Start vector from disc");
-	TTTensor start, phi,res, phi_tmp;
+	TTTensor start, phi,res, phi_tmp,step;
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	phi = makeUnitVector(sample,2*nob);
 
@@ -25,6 +25,7 @@ int main(){
 	auto P = particleNumberOperator(2*nob);
 	auto Pup = particleNumberOperatorUp(2*nob);
 	auto Pdown = particleNumberOperatorDown(2*nob);
+	auto id = xerus::TTOperator::identity(std::vector<size_t>(4*nob,2));
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(2*nob)  +"_full_shifted_benchmark.ttoperator";
@@ -50,18 +51,27 @@ int main(){
 	TangentialOperation top(phi);
 	tang.uvP.xbase.first = top.xbasis[0]; //use same orthogonalization!!!
 	tang.uvP.xbase.second = top.xbasis[1];
+	std::vector<Tensor> tang_app, tang_app_old;
 	ev_app = tang.get_eigenvalue();
 	for (size_t i = 0; i < numIter;++i){
 		XERUS_LOG(info, "Eigenvalue approx. " << std::setprecision(8) << ev_app - shift +nuc);
 		XERUS_LOG(info, "Eigenvalue exact   " << std::setprecision(8) << contract_TT(Hs,phi,phi)- shift +nuc);
-		auto tang_app = tang.get_tangential_components(ev_app,0.005);
-		res = top.builtTTTensor(tang_app);
-		res /= res.frob_norm();
+		tang_app = tang.get_tangential_components(ev_app,0.005);
 
+		if (i == 0){
+			res = top.builtTTTensor(tang_app);
+		} else {
+			tang_app_old = top.localProduct(res,id);
+			beta = frob_norm(tang_app)/frob_norm(tang_app_old); //Fletcher Reeves update
+			add(tang_app,tang_app_old, beta);
+			res = top.builtTTTensor(tang_app);
+		}
+
+		step = res/res.frob_norm();
 		ev_app_tmp = ev_app;
 		while (true){
 			XERUS_LOG(info, "alpha = " << alpha);
-			phi_tmp = phi -  alpha*res;
+			phi_tmp = phi -  alpha*step;
 
 			phi_tmp /= phi_tmp.frob_norm();
 			phi_tmp.round(rank);
