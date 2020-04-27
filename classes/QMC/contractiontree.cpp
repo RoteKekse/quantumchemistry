@@ -17,7 +17,7 @@ class ContractionTree {
 
 	//function
 	public:
-		ContractionTree(TTTensor &_phi, std::vector<size_t> _sample) : phi(_phi),d(_phi.order()), sample(_sample),
+		ContractionTree(const TTTensor &_phi, std::vector<size_t> _sample) : phi(_phi),d(_phi.order()), sample(_sample),
 			lvl(std::ceil(std::log2(_phi.order()))+1){
 			XERUS_LOG(info,"d = " << d);
 			XERUS_LOG(info,"Sample = " << sample);
@@ -50,7 +50,7 @@ class ContractionTree {
 			}
 		}
 
-		ContractionTree(TTTensor &_phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
+		ContractionTree(const TTTensor & _phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
 			phi(_phi),d(_phi.order()), sample(_sample),lvl(std::ceil(std::log2(_phi.order()))+1), tree(_tree){}
 
 		ContractionTree( const ContractionTree&  _other ) = default;
