@@ -51,7 +51,8 @@ class ContractionTree {
 		}
 
 
-		//ContractionTree(const std::vector<std::vector<Tensor>> tree);
+		ContractionTree( const ContractionTree&  _other ) = default;
+
 		value_t getValue(){
 			return tree[lvl-1][0][0];
 		}
