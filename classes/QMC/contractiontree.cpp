@@ -45,7 +45,7 @@ class ContractionTree {
 				XERUS_LOG(info,"  s = " << s);
 				for (size_t c = 0; c < s; ++s){
 					XERUS_LOG(info, "    c = " << c);
-					XERUS_LOG(info, tree[l-1][0]);
+					XERUS_LOG(info, tree[l-1][1]);
 					Tensor tmp;
 					tmp(r1,r2) = tree[l-1][2*s](r1,r3) * tree[l-1][2*s+1](r3,r2);
 					list_tmp.emplace_back(std::move(tmp));
