@@ -48,12 +48,13 @@ class ContractionTree {
 					list_tmp.emplace_back(tree[l-1].back());
 				tree.emplace_back(std::move(list_tmp));
 			}
-			XERUS_LOG(info,tree[lvl-1][0][0]);
 		}
 
 
 		//ContractionTree(const std::vector<std::vector<Tensor>> tree);
-		//value_t getValue();
+		value_t getValue(){
+			return tree[lvl-1][0][0];
+		}
 		//ContractionTree updatedTree(std::vector<size_t> new_sample);
 
 

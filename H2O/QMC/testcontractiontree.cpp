@@ -18,5 +18,7 @@ int main(){
 
 	XERUS_LOG(info, "Phi at HF sample "  << phi[hf_idx]);
 
-	ContractionTree(phi,hf_sample);
+	ContractionTree tree(phi,hf_sample);
+	XERUS_LOG(info, "Phi at HF sample "  << tree.getValue());
+
 }
