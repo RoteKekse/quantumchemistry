@@ -51,7 +51,7 @@ class ContractionTree {
 					list_tmp.emplace_back(std::move(tmp));
 				}
 				if (2*s < tree[l-1].size())
-					list_tmp.emplace_back(tree[l].back());
+					list_tmp.emplace_back(tree[l-1].back());
 				tree.emplace_back(std::move(list_tmp));
 			}
 			XERUS_LOG(info,tree[lvl-1][0][0]);
