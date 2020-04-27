@@ -40,7 +40,7 @@ int main(){
 	start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample(sample,d);
-		phi(makeIndex(sample,d));
+		phi[makeIndex(sample,d)];
 	}
 	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for two hop linear evaluation: "
@@ -63,7 +63,7 @@ int main(){
 	start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample2(sample,d);
-		phi(makeIndex(sample,d));
+		phi[makeIndex(sample,d)];
 	}
 	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for one hop linear evaluation: "
