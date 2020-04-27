@@ -28,6 +28,7 @@ class ContractionTree {
 			for (size_t i; i < lvl; ++i){
 				tree.emplace_back(std::vector<Tensor>());
 			}
+			XERUS_LOG(info, tree.size());
 			XERUS_LOG(info,"Initialize leaves");
 			for (size_t i = 0; i < d; ++i){
 				XERUS_LOG(info,i);
