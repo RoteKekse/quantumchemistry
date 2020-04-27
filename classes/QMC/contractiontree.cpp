@@ -24,12 +24,9 @@ class ContractionTree {
 			XERUS_LOG(info,"lvl = " << lvl);
 			Index r1,r2,r3,r4;
 
-			XERUS_LOG(info,"Initialize empty tree");
-			for (size_t i; i < lvl; ++i){
-				tree.emplace_back(std::vector<Tensor>());
-			}
-			XERUS_LOG(info, tree.size());
+
 			XERUS_LOG(info,"Initialize leaves");
+			std::vector<Tensor> list;
 			for (size_t i = 0; i < d; ++i){
 				XERUS_LOG(info,i);
 				XERUS_LOG(info,phi.dimensions);
@@ -39,19 +36,22 @@ class ContractionTree {
 					comp.fix_mode(1,1);
 				else
 					comp.fix_mode(1,0);
-				tree[0].emplace_back(std::move(comp));
+				list.emplace_back(std::move(comp));
 			}
+			tree.emplace_back(std::move(list));
+			XERUS_LOG(info, tree.size());
 			XERUS_LOG(info,"Build tree");
 			for (size_t l = 1; l < lvl; ++l){
+				std::vector<Tensor> list_tmp;
 				size_t s = tree[l-1].size() / 2;
 				for (size_t c = 0; c < s; ++s){
 					Tensor tmp;
 					tmp(r1,r2) = tree[l-1][2*s](r1,r3) * tree[l-1][2*s+1](r3,r2);
-					tree[l].emplace_back(std::move(tmp));
+					list_tmp.emplace_back(std::move(tmp));
 				}
 				if (2*s < tree[l-1].size())
-					tree[l].emplace_back(tree[l].back());
-
+					list_tmp.emplace_back(tree[l].back());
+				tree.emplace_back(std::move(list_tmp));
 			}
 			XERUS_LOG(info,tree[lvl-1][0][0]);
 		}
