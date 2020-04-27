@@ -11,7 +11,7 @@ double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, 
 
 
 int main(){
-	size_t nob = 24,num_elec = 8,iterations = 1e5,pos = 5, numIter = 20,rank=20;
+	size_t nob = 24,num_elec = 8,iterations = 1e5, numIter = 20,rank=20;
 	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1,ev_app_tmp;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
