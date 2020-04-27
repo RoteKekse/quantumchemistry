@@ -12,7 +12,7 @@ using namespace xerus;
 using xerus::misc::operator<<;
 
 int main(){
-	size_t d = 48, p = 8,test_number = 1000;
+	size_t d = 48, p = 8,test_number = 100000;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
@@ -43,7 +43,7 @@ int main(){
 		phi[makeIndex(sample,d)];
 	}
 	end = std::chrono::steady_clock::now();
-	XERUS_LOG(info, "Elapsed time in seconds for two hop linear evaluation: "
+	XERUS_LOG(info, "Elapsed time in seconds for one hop linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
 
@@ -66,7 +66,7 @@ int main(){
 		phi[makeIndex(sample,d)];
 	}
 	end = std::chrono::steady_clock::now();
-	XERUS_LOG(info, "Elapsed time in seconds for one hop linear evaluation: "
+	XERUS_LOG(info, "Elapsed time in seconds for two hop linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
 
