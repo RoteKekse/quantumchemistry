@@ -23,7 +23,7 @@ int main(){
 
 
 	std::vector<size_t> t1 = {0,1,2,3,22,23,30,47};
-	std::vector<size_t> t2 = {0,1,2,5,22,23,31,34};
+	std::vector<size_t> t2 = {0,1,5,8,22,23,30,31};
 	std::vector<size_t> t3 = {0,1,2,7,23,24,30,33};
 
 	auto res1 = tree.updatedTree(t1);
