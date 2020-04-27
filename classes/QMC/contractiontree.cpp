@@ -39,6 +39,7 @@ class ContractionTree {
 			XERUS_LOG(info, tree.size());
 			XERUS_LOG(info,"Build tree");
 			for (size_t l = 1; l < lvl; ++l){
+				XERUS_LOG(info, "l = " << l);
 				std::vector<Tensor> list_tmp;
 				size_t s = tree[l-1].size() / 2;
 				for (size_t c = 0; c < s; ++s){
