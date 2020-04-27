@@ -24,9 +24,11 @@ class ContractionTree {
 			XERUS_LOG(info,"lvl = " << lvl);
 			Index r1,r2,r3,r4;
 
+			XERUS_LOG(info,"Initialize empty tree");
 			for (size_t i; i << lvl; ++i){
 				tree.emplace_back(std::vector<Tensor>());
 			}
+			XERUS_LOG(info,"Initialize leaves");
 			for (size_t i = 0; i < d; ++i){
 				auto comp = phi.get_component(i);
 				if (std::find(sample.begin(), sample.end(), i) != sample.end())
@@ -35,6 +37,7 @@ class ContractionTree {
 					comp.fix_mode(1,0);
 				tree[0].emplace_back(comp);
 			}
+			XERUS_LOG(info,"Build tree");
 			for (size_t l = 1; l < lvl; ++l){
 				size_t s = tree[l-1].size() / 2;
 				for (size_t c = 0; c < s; ++s){
