@@ -28,7 +28,8 @@ class Tangential{
 
 		Tangential(size_t _d, size_t _p, size_t _iter, std::string _path_T, std::string _path_V, value_t _shift, std::vector<size_t> _s, TTTensor _phi) \
 				: d(_d), p(_p), iterations(_iter), path_T(_path_T), path_V(_path_V), shift(_shift), start_sample(_s), \
-					phi(_phi), builder(phi,d,p,path_T,path_V,0.0, shift), uvP(_phi) {
+					phi(_phi), builder(phi,d,p,path_T,path_V,0.0, shift,_s), uvP(_phi) {
+			XERUS_LOG(info, "The Hartree Fock sample is " << _s);
 		}
 
 		void update(TTTensor _phi){

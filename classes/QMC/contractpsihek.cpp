@@ -40,6 +40,7 @@ class ContractPsiHek{
 		TTTensor psi;
 
 	private:
+		std::vector<size_t> hf_sample;
 		std::vector<size_t> current_sample;
 		std::vector<size_t> current_sample_k;
 		std::vector<size_t> current_sample_inv;
@@ -53,8 +54,8 @@ class ContractPsiHek{
 		/*
 		 * Constructor
 		 */
-		ContractPsiHek(TTTensor _psi,size_t _d,size_t _p,std::string _path_T, std::string _path_V, value_t _nuc, value_t _shift)
-		: psi(_psi), d(_d), p(_p), path_T(_path_T),path_V(_path_V), nuc(_nuc), idx(d,0), shift(_shift){
+		ContractPsiHek(TTTensor _psi,size_t _d,size_t _p,std::string _path_T, std::string _path_V, value_t _nuc, value_t _shift,std::vector<size_t> _hf)
+		: psi(_psi), d(_d), p(_p), path_T(_path_T),path_V(_path_V), nuc(_nuc), idx(d,0), shift(_shift),hf_sample(_hf){
 			T = load1eIntegrals();
 			V = load2eIntegrals();
 			N = loadNuclear();
@@ -91,7 +92,6 @@ class ContractPsiHek{
 		value_t contract_linear(){
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
-			size_t nextp = 0,nextq = 0;
 
 			// 1 e contraction
 			for (size_t q = 0; q < d; ++q){
@@ -169,7 +169,6 @@ class ContractPsiHek{
 		value_t contract_tree(){
 			result = 0;
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
-			size_t nextp = 0,nextq = 0;
 //			XERUS_LOG(info,"Start index\n" << idx);
 
 			// 1 e contraction
@@ -386,7 +385,6 @@ class ContractPsiHek{
 		TTTensor getGrad(size_t rank = 0){
 			TTTensor res(std::vector<size_t>(d,2));
 			value_t signp = 1.0,signq = 1.0,signr =1.0,signs=1.0,val = 0,val1=0,val2 = 0;
-			size_t nextp = 0,nextq = 0;
 			TTTensor ek;
 			size_t count = 0;
 			// 1 e contraction
@@ -481,6 +479,18 @@ class ContractPsiHek{
 					val2 = (p%2 != q%2) ? 0 : returnVValue(p/2,q/2,q/2,p/2);
 					result += 0.5*(val1-val2);
 				}
+			}
+			return result + shift;
+		}
+
+		value_t diagionalEntryFock(){
+			result = 0;
+			for(size_t q : current_sample){
+				result +=returnTValue(q/2,q/2);
+
+				for (size_t p : hf_sample)
+					result +=(V[{q,p,q,p}]-V[{q,p,p,q}]);
+
 			}
 			return result + shift;
 		}
