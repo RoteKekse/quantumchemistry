@@ -86,6 +86,9 @@ int main(){
 		tang.update(phi);
 		ev_app = contract_TT(Hs,phi,phi);
 		XERUS_LOG(info, "Eigenvalue exact tmp   " << std::setprecision(8) << ev_app- shift +nuc);
+		XERUS_LOG(info,"Particle number phi updated       " << std::setprecision(16) << contract_TT(P,phi,phi));
+		XERUS_LOG(info,"Particle number up phi updated    " << std::setprecision(16) << contract_TT(Pup,phi,phi));
+		XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 
 
 		XERUS_LOG(info,"ranks = \n" <<phi.ranks());
