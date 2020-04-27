@@ -18,13 +18,16 @@ class ContractionTree {
 	public:
 		ContractionTree(TTTensor _phi, std::vector<size_t> _sample) : d(_phi.order()), sample(_sample),
 			lvl(std::log2(_phi.order())){
+			XERUS_LOG(info,"d = " << d);
+			XERUS_LOG(info,"Sample = " << sample);
+			XERUS_LOG(info,"lvl = " << lvl);
 
 		}
 
 
-		ContractionTree(const std::vector<std::vector<Tensor>> tree);
-		value_t getValue();
-		ContractionTree updatedTree(std::vector<size_t> new_sample);
+		//ContractionTree(const std::vector<std::vector<Tensor>> tree);
+		//value_t getValue();
+		//ContractionTree updatedTree(std::vector<size_t> new_sample);
 
 
 };
