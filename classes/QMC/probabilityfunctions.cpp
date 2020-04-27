@@ -147,6 +147,28 @@ class ProjectorProbabilityFunction2 : public ProjectorProbabilityFunctionBase{
 
 };
 
+class ProjectorProbabilityFunctionFock : public ProjectorProbabilityFunctionBase{
+	public:
+		ContractPsiHek builder;
+
+	public:
+		ProjectorProbabilityFunctionFock(TTTensor _psi, size_t _pos, bool _proj, ContractPsiHek& _builder) :
+			ProjectorProbabilityFunctionBase(_psi, _pos, _proj), builder(_builder){}
+
+		value_t P(std::vector<size_t> sample) override {
+			auto itr = values.find(sample);
+			if (itr == values.end()){
+				builder.reset(sample);
+				value_t Fk = builder.diagionalEntryFock();
+				values[sample] =  localProduct(sample).frob_norm()/Fk;
+			}
+
+			return std::pow(values[sample],2);
+		}
+
+
+};
+
 class ProjectorProbabilityFunction3 : public ProjectorProbabilityFunctionBase{
 	public:
 		TTOperator Fock_inv;

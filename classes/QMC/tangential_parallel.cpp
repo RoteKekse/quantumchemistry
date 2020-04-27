@@ -162,6 +162,124 @@ class Tangential{
 	return results;
 	}
 
+	std::vector<Tensor> get_tangential_components_fock(value_t ev, value_t accuracy=0.0001){
+		value_t ev_exact,res,psi_ek,factor,Fk;
+		std::vector<Tensor> results; // Vector of Tangential space components
+
+		// Loop for projection of each component
+		for (size_t pos = 0; pos < d; ++pos){
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+#pragma omp parallel shared(samples,iterations)
+			{
+			ProjectorProbabilityFunctionFock PPF(phi,pos, true,builder);
+			Metropolis<ProjectorProbabilityFunctionFock> markow2(&PPF, /*TODO check*/ TrialSampleSym2, start_sample, d);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> private_samples;
+			runMetropolis<ProjectorProbabilityFunctionFock>(&markow2,private_samples,(size_t) (iterations/3));
+#pragma omp critical
+			{
+			for(std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: private_samples){
+				auto itr = samples.find(pair.first);
+				if (itr == samples.end()){
+					samples[pair.first].first = pair.second.first;
+					samples[pair.first].second = pair.second.second;
+				} else
+					samples[pair.first].first += pair.second.first;
+			}
+			}
+
+			}
+
+			auto samples_keys = extract_keys(samples,accuracy);
+			//Calculate eHx for relevant samples
+#pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
+						for (size_t i = 0; i < samples_keys.size(); ++i){
+							auto itr = eHxValues.find(samples_keys[i]);
+							if (itr == eHxValues.end()){
+								 //setting builder to newest sample!! Important
+								builder.reset(samples_keys[i]);
+								builder.preparePsiEval();
+								value_t tmp = builder.contract_tree();
+#pragma omp critical
+								eHxValues[samples_keys[i]] = tmp;
+				}
+			}
+			//Calculate tangential component
+			Tensor result(phi.component(pos).dimensions);
+			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
+				if ((value_t) pair.second.first > accuracy * (value_t) iterations){
+					auto loc_grad = uvP.localProduct(pair.first,pos,true);
+					auto idx = makeIndex(pair.first);
+					builder.reset(pair.first);
+					Fk = builder.diagionalEntryFock();
+					factor = (eHxValues[pair.first] - ev*phi[idx])/Fk;
+					result += factor * loc_grad;
+				}
+			}
+			XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples before " << samples.size() << " and after " << samples_keys.size());
+			results.emplace_back(result);
+		}
+	return results;
+	}
+
+
+
+	std::vector<Tensor> get_tangential_components2(value_t ev){
+		value_t ev_exact,res,psi_ek,factor,dk;
+		std::vector<Tensor> results; // Vector of Tangential space components
+
+		// Loop for projection of each component
+		for (size_t pos = 0; pos < d; ++pos){
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
+#pragma omp parallel shared(samples,iterations)
+			{
+			ProjectorProbabilityFunction2 PPF(phi,pos, true,builder);
+			Metropolis<ProjectorProbabilityFunction2> markow2(&PPF, /*TODO check*/ TrialSampleSym2, start_sample, d);
+			std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> private_samples;
+			runMetropolis<ProjectorProbabilityFunction2>(&markow2,private_samples,(size_t) (iterations/3));
+#pragma omp critical
+			{
+			for(std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: private_samples){
+				auto itr = samples.find(pair.first);
+				if (itr == samples.end()){
+					samples[pair.first].first = pair.second.first;
+					samples[pair.first].second = pair.second.second;
+				} else
+					samples[pair.first].first += pair.second.first;
+			}
+			}
+
+			}
+
+			auto samples_keys = extract_keys(samples,0.0);
+			//Calculate eHx for relevant samples
+#pragma omp parallel for schedule(dynamic) shared(eHxValues) firstprivate(builder)
+						for (size_t i = 0; i < samples_keys.size(); ++i){
+							auto itr = eHxValues.find(samples_keys[i]);
+							if (itr == eHxValues.end()){
+								 //setting builder to newest sample!! Important
+								builder.reset(samples_keys[i]);
+								builder.preparePsiEval();
+								value_t tmp = builder.contract_tree();
+#pragma omp critical
+								eHxValues[samples_keys[i]] = tmp;
+				}
+			}
+			//Calculate tangential component
+			Tensor result(phi.component(pos).dimensions);
+			for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
+				auto loc_grad = uvP.localProduct(pair.first,pos,true);
+				auto idx = makeIndex(pair.first);
+				builder.reset(pair.first);
+				dk = builder.diagionalEntry();
+				factor = (eHxValues[pair.first] - ev*phi[idx])/dk;
+				result += factor * loc_grad;
+			}
+			XERUS_LOG(info,"Pos = " << pos << " " << result.frob_norm() << " Number of samples before " << samples.size() << " and after " << samples_keys.size());
+			results.emplace_back(result);
+		}
+	return results;
+	}
+
 
 	TTTensor builtTTTensor(const std::vector<Tensor>& y){
 		time_t begin_time = time (NULL);

@@ -58,7 +58,7 @@ int main(){
 	ev_app = contract_TT(Hs,phi,phi);
 	for (size_t i = 0; i < numIter;++i){
 		XERUS_LOG(info, "Eigenvalue exact   " << std::setprecision(8) << ev_app- shift +nuc);
-		tang_app = tang.get_tangential_components(ev_app,0.0001);
+		tang_app = tang.get_tangential_components_fock(ev_app,0.0001);
 
 		if (i == 0){
 			res = top.builtTTTensor(tang_app);
