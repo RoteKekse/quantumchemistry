@@ -49,7 +49,7 @@ class ContractionTree {
 					list_tmp.emplace_back(tree[l-1].back());
 				tree.emplace_back(std::move(list_tmp));
 			}
-			XERUS_LOG(info,"Number of operations " << noo);
+			//XERUS_LOG(info,"Number of operations " << noo);
 		}
 
 		ContractionTree(const TTTensor & _phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
@@ -108,7 +108,7 @@ class ContractionTree {
 				}
 				update_tree.emplace_back(std::move(list_tmp));
 			}
-			XERUS_LOG(info,"Number of operations " << noo);
+			//XERUS_LOG(info,"Number of operations " << noo);
 
 			return ContractionTree(phi,new_sample,new_tree);
 		}
