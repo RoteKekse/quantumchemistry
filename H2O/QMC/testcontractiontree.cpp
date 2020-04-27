@@ -26,7 +26,7 @@ int main(){
 
 	std::vector<size_t> sample = hf_sample;
 	auto start = std::chrono::steady_clock::now();
-	ContractionTree tree1h(phi,hf_sample);
+	ContractionTree tree1h(phi,sample);
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample(sample,d);
 		tree1h.updatedTree(sample);
@@ -49,10 +49,10 @@ int main(){
 
 	sample = hf_sample;
 	start = std::chrono::steady_clock::now();
-	ContractionTree tree1h(phi,hf_sample);
+	ContractionTree tree2h(phi,sample);
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample2(sample,d);
-		tree1h.updatedTree(sample);
+		tree2h.updatedTree(sample);
 	}
 	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for two hop  tree based evaluation: "
