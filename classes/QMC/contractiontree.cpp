@@ -70,13 +70,13 @@ class ContractionTree {
 				if (in_old and not in_new){
 					auto comp = phi.get_component(i);
 					comp.fix_mode(1,0);
-					new_tree[i] = comp;
+					new_tree[0][i] = std::move(comp);
 					list.emplace_back(true);
 				}
 				else if (in_new and not in_old){
 					auto comp = phi.get_component(i);
 					comp.fix_mode(1,1);
-					new_tree[i] = comp;
+					new_tree[0][i] = std::move(comp);
 					list.emplace_back(true);
 				}
 				else
@@ -92,7 +92,7 @@ class ContractionTree {
 					Tensor tmp;
 					if (update_tree[l-1][2*c] or update_tree[l-1][2*c+1]){
 						tmp(r1,r2) = new_tree[l-1][2*c](r1,r3) * new_tree[l-1][2*c+1](r3,r2);
-						new_tree[l][c] = tmp;
+						new_tree[l][c] = std::move(tmp);
 						list_tmp.emplace_back(true);
 					}
 					else
