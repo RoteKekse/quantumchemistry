@@ -19,9 +19,7 @@ class ContractionTree {
 	public:
 		ContractionTree(const TTTensor &_phi, std::vector<size_t> _sample) : phi(_phi),d(_phi.order()), sample(_sample),
 			lvl(std::ceil(std::log2(_phi.order()))+1){
-			XERUS_LOG(info,"d = " << d);
-			XERUS_LOG(info,"Sample = " << sample);
-			XERUS_LOG(info,"lvl = " << lvl);
+
 			Index r1,r2,r3,r4;
 
 
