@@ -30,12 +30,13 @@ class ContractionTree {
 			}
 			XERUS_LOG(info,"Initialize leaves");
 			for (size_t i = 0; i < d; ++i){
+				XERUS_LOG(info,i);
 				auto comp = phi.get_component(i);
 				if (std::find(sample.begin(), sample.end(), i) != sample.end())
 					comp.fix_mode(1,1);
 				else
 					comp.fix_mode(1,0);
-				tree[0].emplace_back(comp);
+				tree[0].emplace_back(std::move(comp));
 			}
 			XERUS_LOG(info,"Build tree");
 			for (size_t l = 1; l < lvl; ++l){
