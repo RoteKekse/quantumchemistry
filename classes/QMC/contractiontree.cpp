@@ -31,6 +31,7 @@ class ContractionTree {
 			XERUS_LOG(info,"Initialize leaves");
 			for (size_t i = 0; i < d; ++i){
 				XERUS_LOG(info,i);
+				XERUS_LOG(info,phi.dimensions);
 				auto comp = phi.get_component(i);
 				XERUS_LOG(info,comp.dimensions);
 				if (std::find(sample.begin(), sample.end(), i) != sample.end())
