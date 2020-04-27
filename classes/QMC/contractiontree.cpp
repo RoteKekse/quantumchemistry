@@ -50,13 +50,30 @@ class ContractionTree {
 			}
 		}
 
+		ContractionTree(TTTensor &_phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
+			phi(_phi),d(_phi.order()), sample(_sample),lvl(std::ceil(std::log2(_phi.order()))+1), tree(_tree){}
 
 		ContractionTree( const ContractionTree&  _other ) = default;
 
 		value_t getValue(){
 			return tree[lvl-1][0][0];
 		}
-		//ContractionTree updatedTree(std::vector<size_t> new_sample);
+
+		ContractionTree updatedTree(std::vector<size_t> new_sample){
+			std::vector<std::vector<bool>> update_tree;
+			std::vector<std::vector<Tensor>> new_tree = tree;
+			for (size_t i = 0; i < d; ++i){
+				bool in_old = std::find(sample.begin(), sample.end(), i) != sample.end();
+				bool in_new = std::find(new_sample.begin(), new_sample.end(), i) != new_sample.end();
+				if (in_old and not in_new){
+					auto comp = phi.get_component(i);
+					comp.fix_mode(1,0);
+
+				}
+			}
+
+			return ContractionTree(phi,new_sample,new_tree);
+		}
 
 
 };
