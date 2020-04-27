@@ -489,7 +489,7 @@ class ContractPsiHek{
 				result +=returnTValue(q/2,q/2);
 
 				for (size_t p : hf_sample)
-					result +=(V[{q,p,q,p}]-V[{q,p,p,q}]);
+					result +=(returnVValue(q/2,p/2,q/2,p/2)-returnVValue(q/2,p/2,p/2,q/2));
 
 			}
 			return result + shift;
