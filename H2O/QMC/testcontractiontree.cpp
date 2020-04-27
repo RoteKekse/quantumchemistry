@@ -21,4 +21,22 @@ int main(){
 	ContractionTree tree(phi,hf_sample);
 	XERUS_LOG(info, "Phi at HF sample "  << tree.getValue());
 
+
+	std::vector<size_t> t1 = {0,1,2,3,22,23,30,47};
+	std::vector<size_t> t2 = {0,1,2,5,22,23,31,34};
+	std::vector<size_t> t3 = {0,1,2,7,23,24,30,33};
+
+	auto res1 = tree.updatedTree(t1);
+	auto res2 = tree.updatedTree(t2);
+	auto res3 = tree.updatedTree(t3);
+
+	std::vector<size_t> idx1 = makeIndex(t1,d);
+	std::vector<size_t> idx2 = makeIndex(t2,d);
+	std::vector<size_t> idx3 = makeIndex(t3,d);
+
+	XERUS_LOG(info, "t1 "  << phi[idx1] << " " << res1.getValue());
+	XERUS_LOG(info, "t2 "  << phi[idx2] << " " << res2.getValue());
+	XERUS_LOG(info, "t3 "  << phi[idx3] << " " << res3.getValue());
+
+
 }
