@@ -37,35 +37,35 @@ int main(){
 		<< " msec");
 
 	sample = hf_sample;
-	auto start = std::chrono::steady_clock::now();
+	start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample(sample,d);
 		phi(makeIndex(sample,d));
 	}
-	auto end = std::chrono::steady_clock::now();
+	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for two hop linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
 
 	sample = hf_sample;
-	auto start = std::chrono::steady_clock::now();
+	start = std::chrono::steady_clock::now();
 	ContractionTree tree1h(phi,hf_sample);
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample2(sample,d);
 		tree1h.updatedTree(sample);
 	}
-	auto end = std::chrono::steady_clock::now();
+	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for two hop  tree based evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
 
 	sample = hf_sample;
-	auto start = std::chrono::steady_clock::now();
+	start = std::chrono::steady_clock::now();
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample2(sample,d);
 		phi(makeIndex(sample,d));
 	}
-	auto end = std::chrono::steady_clock::now();
+	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for one hop linear evaluation: "
 		<< std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
 		<< " msec");
