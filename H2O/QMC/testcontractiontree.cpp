@@ -13,7 +13,7 @@ int main(){
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
-
+	XERUS_LOG(info,phi.ranks());
 	std::vector<size_t> hf_idx = makeIndex(hf_sample,d);
 
 	XERUS_LOG(info, "Phi at HF sample "  << phi[hf_idx]);
