@@ -34,6 +34,7 @@ class ContractionTree {
 					comp.fix_mode(1,0);
 				list.emplace_back(std::move(comp));
 			}
+			size_t noo = 0;
 			tree.emplace_back(std::move(list));
 			for (size_t l = 1; l < lvl; ++l){
 				std::vector<Tensor> list_tmp;
@@ -41,13 +42,14 @@ class ContractionTree {
 				for (size_t c = 0; c < s; ++c){
 					Tensor tmp;
 					tmp(r1,r2) = tree[l-1][2*c](r1,r3) * tree[l-1][2*c+1](r3,r2);
-
+					noo+= tree[l-1][2*c].dimensions[0]*tree[l-1][2*c].dimensions[1]*tree[l-1][2*c+1].dimensions[1];
 					list_tmp.emplace_back(std::move(tmp));
 				}
 				if (2*s < tree[l-1].size())
 					list_tmp.emplace_back(tree[l-1].back());
 				tree.emplace_back(std::move(list_tmp));
 			}
+			XERUS_LOG(info,"Number of operations " << noo);
 		}
 
 		ContractionTree(const TTTensor & _phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
@@ -84,7 +86,7 @@ class ContractionTree {
 			}
 			update_tree.emplace_back(list);
 
-
+			size_t noo = 0;
 			for (size_t l = 1; l < lvl; ++l){
 				std::vector<bool> list_tmp;
 				size_t s = tree[l-1].size() / 2;
@@ -92,6 +94,7 @@ class ContractionTree {
 					Tensor tmp;
 					if (update_tree[l-1][2*c] or update_tree[l-1][2*c+1]){
 						tmp(r1,r2) = new_tree[l-1][2*c](r1,r3) * new_tree[l-1][2*c+1](r3,r2);
+						noo+= tree[l-1][2*c].dimensions[0]*tree[l-1][2*c].dimensions[1]*tree[l-1][2*c+1].dimensions[1];
 						new_tree[l][c] = std::move(tmp);
 						list_tmp.emplace_back(true);
 					}
@@ -105,6 +108,7 @@ class ContractionTree {
 				}
 				update_tree.emplace_back(std::move(list_tmp));
 			}
+			XERUS_LOG(info,"Number of operations " << noo);
 
 			return ContractionTree(phi,new_sample,new_tree);
 		}
