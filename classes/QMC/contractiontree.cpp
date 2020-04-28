@@ -7,7 +7,7 @@ using xerus::misc::operator<<;
 
 class ContractionTree {
 	public:
-		const TTTensor phi;
+		TTTensor phi;
 		const size_t d;
 		const std::vector<size_t> sample;
 		std::vector<std::vector<Tensor>> tree;
@@ -17,7 +17,7 @@ class ContractionTree {
 
 	//function
 	public:
-		ContractionTree(const TTTensor &_phi, std::vector<size_t> _sample) : phi(_phi),d(_phi.order()), sample(_sample),
+		ContractionTree(TTTensor &_phi, std::vector<size_t> _sample) : phi(_phi),d(_phi.order()), sample(_sample),
 			lvl(std::ceil(std::log2(_phi.order()))+1){
 
 			Index r1,r2,r3,r4;
@@ -50,7 +50,7 @@ class ContractionTree {
 			//XERUS_LOG(info,"Number of operations " << noo);
 		}
 
-		ContractionTree(const TTTensor & _phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
+		ContractionTree(TTTensor & _phi, std::vector<size_t> _sample, std::vector<std::vector<Tensor>> _tree) :
 			phi(_phi),d(_phi.order()), sample(_sample),lvl(std::ceil(std::log2(_phi.order()))+1), tree(_tree){}
 
 		ContractionTree( const ContractionTree&  _other ) = default;
