@@ -59,7 +59,7 @@ class ContractionTree {
 			return tree[lvl-1][0][0];
 		}
 
-		ContractionTree updatedTree(std::vector<size_t> new_sample){
+		std::vector<std::vector<Tensor>> updatedTree(std::vector<size_t> new_sample){
 			Index r1,r2,r3,r4;
 			std::vector<std::vector<bool>> update_tree;
 			std::vector<std::vector<Tensor>> new_tree = tree;
@@ -104,7 +104,7 @@ class ContractionTree {
 				}
 				update_tree.emplace_back(std::move(list_tmp));
 			}
-			return ContractionTree(phi,new_sample,new_tree);
+			return new_tree;
 		}
 
 
