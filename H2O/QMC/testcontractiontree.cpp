@@ -12,7 +12,7 @@ using namespace xerus;
 using xerus::misc::operator<<;
 
 int main(){
-	size_t d = 48, p = 8,rank = 10,test_number = 1e4,test_number2 = 1e3;
+	size_t d = 48, p = 8,rank = 20,test_number = 1e4,test_number2 = 1e3;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
 	//read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
