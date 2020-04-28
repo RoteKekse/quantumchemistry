@@ -26,12 +26,12 @@ int main(){
 
 	XERUS_LOG(info,"Start Correctness Test");
 	std::vector<size_t> sample = hf_sample;
-	ContractionTree tree1h(phi,sample);
+	ContractionTree treetest(phi,sample);
 	for (size_t i = 0; i< test_number2; ++i){
 		sample = TrialSample(sample,d);
-		auto tree = tree1h.updatedTree(sample);
-		tree1h = ContractionTree(phi,sample,tree);
-		if (std::abs(tree1h.getValue()-phi[makeIndex(sample,d)]) > 1e-12)
+		auto tree = treetest.updatedTree(sample);
+		treetest = ContractionTree(phi,sample,tree);
+		if (std::abs(treetest.getValue()-phi[makeIndex(sample,d)]) > 1e-12)
 			XERUS_LOG(info,"Found Error for sample " << sample);
 	}
 	XERUS_LOG(info,"End Correctness Test");
