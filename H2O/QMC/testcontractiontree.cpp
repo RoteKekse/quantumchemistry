@@ -12,10 +12,11 @@ using namespace xerus;
 using xerus::misc::operator<<;
 
 int main(){
-	size_t d = 48, p = 8,test_number = 1e6,test_number2 = 1e4;
+	size_t d = 48, p = 8,rank = 3,test_number = 1e6,test_number2 = 1e4;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
-	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
+	//read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
+	phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
 	XERUS_LOG(info,phi.ranks());
 	std::vector<size_t> hf_idx = makeIndex(hf_sample,d);
 
