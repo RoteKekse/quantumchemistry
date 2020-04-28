@@ -7,10 +7,10 @@ using xerus::misc::operator<<;
 
 class ContractionTree {
 	public:
-		const size_t d;
-		std::vector<std::vector<Tensor>> tree;
-		const std::vector<size_t> sample;
 		const TTTensor phi;
+		const size_t d;
+		const std::vector<size_t> sample;
+		const std::vector<std::vector<Tensor>> tree;
 	private:
 		const size_t lvl;
 
@@ -104,7 +104,6 @@ class ContractionTree {
 				}
 				update_tree.emplace_back(std::move(list_tmp));
 			}
-			XERUS_LOG(info,update_tree);
 			return ContractionTree(phi,new_sample,new_tree);
 		}
 
