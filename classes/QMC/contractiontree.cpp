@@ -8,11 +8,11 @@ using xerus::misc::operator<<;
 class ContractionTree {
 	public:
 		TTTensor phi;
-		const size_t d;
-		const std::vector<size_t> sample;
+		size_t d;
+		std::vector<size_t> sample;
 		std::vector<std::vector<Tensor>> tree;
 	private:
-		const size_t lvl;
+		size_t lvl;
 
 
 	//function
