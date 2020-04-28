@@ -12,7 +12,7 @@ using namespace xerus;
 using xerus::misc::operator<<;
 
 int main(){
-	size_t d = 48, p = 8,test_number = 1e5;
+	size_t d = 48, p = 8,test_number = 1e6,test_number2 = 1e4;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
@@ -24,7 +24,21 @@ int main(){
 	ContractionTree tree(phi,hf_sample);
 	XERUS_LOG(info, "Phi at HF sample "  << tree.getValue());
 
+	XERUS_LOG(info,"Start Correctness Test");
 	std::vector<size_t> sample = hf_sample;
+	ContractionTree tree1h(phi,sample);
+	for (size_t i = 0; i< test_number2; ++i){
+		sample = TrialSample(sample,d);
+		auto tree = tree1h.updatedTree(sample);
+		tree1h = ContractionTree(phi,sample,tree);
+		if (std::abs(tree1h.getValue()-phi[makeIndex(sample,d)]) > 1e-12)
+			XERUS_LOG(info,"Found Error for sample " << sample);
+	}
+	XERUS_LOG(info,"End Correctness Test");
+
+
+
+	sample = hf_sample;
 	auto start = std::chrono::steady_clock::now();
 	ContractionTree tree1h(phi,sample);
 	for (size_t i = 0; i< test_number; ++i){
