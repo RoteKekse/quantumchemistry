@@ -17,6 +17,7 @@ int main(){
 	xerus::TTTensor phi,res,res_last;
 	//read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
 	phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
+	phi/= phi.frob_norm();
 	XERUS_LOG(info,phi.ranks());
 	std::vector<size_t> hf_idx = makeIndex(hf_sample,d);
 
