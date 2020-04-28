@@ -84,15 +84,13 @@ class ContractionTree {
 			}
 			update_tree.emplace_back(list);
 
-			size_t noo = 0;
 			for (size_t l = 1; l < lvl; ++l){
 				std::vector<bool> list_tmp;
-				size_t s = tree[l-1].size() / 2;
+				size_t s = new_tree[l-1].size() / 2;
 				for (size_t c = 0; c < s; ++c){
 					Tensor tmp;
 					if (update_tree[l-1][2*c] or update_tree[l-1][2*c+1]){
 						tmp(r1,r2) = new_tree[l-1][2*c](r1,r3) * new_tree[l-1][2*c+1](r3,r2);
-						noo+= tree[l-1][2*c].dimensions[0]*tree[l-1][2*c].dimensions[1]*tree[l-1][2*c+1].dimensions[1];
 						new_tree[l][c] = std::move(tmp);
 						list_tmp.emplace_back(true);
 					}
@@ -106,8 +104,7 @@ class ContractionTree {
 				}
 				update_tree.emplace_back(std::move(list_tmp));
 			}
-			//XERUS_LOG(info,"Number of operations " << noo);
-
+			XERUS_LOG(info,update_tree);
 			return ContractionTree(phi,new_sample,new_tree);
 		}
 
