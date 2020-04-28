@@ -10,7 +10,7 @@ class ContractionTree {
 		const TTTensor phi;
 		const size_t d;
 		const std::vector<size_t> sample;
-		const std::vector<std::vector<Tensor>> tree;
+		std::vector<std::vector<Tensor>> tree;
 	private:
 		const size_t lvl;
 
