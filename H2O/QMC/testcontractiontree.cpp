@@ -12,7 +12,7 @@ using namespace xerus;
 using xerus::misc::operator<<;
 
 int main(){
-	size_t d = 48, p = 8,test_number = 1e6;
+	size_t d = 48, p = 8,test_number = 1e5
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	xerus::TTTensor phi,res,res_last;
 	read_from_disc("../data/eigenvector_H2O_48_3_-23.647510_benchmark.tttensor",phi);
@@ -29,7 +29,7 @@ int main(){
 	ContractionTree tree1h(phi,sample);
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample(sample,d);
-		tree1h.updatedTree(sample);
+		tree1h = tree1h.updatedTree(sample);
 	}
 	auto end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for one hop  tree based evaluation: "
@@ -52,7 +52,7 @@ int main(){
 	ContractionTree tree2h(phi,sample);
 	for (size_t i = 0; i< test_number; ++i){
 		sample = TrialSample2(sample,d);
-		tree2h.updatedTree(sample);
+		tree2h = tree2h.updatedTree(sample);
 	}
 	end = std::chrono::steady_clock::now();
 	XERUS_LOG(info, "Elapsed time in seconds for two hop  tree based evaluation: "
