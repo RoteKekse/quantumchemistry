@@ -12,6 +12,7 @@ int main(){
 	value_t alpha = 0.1,beta;
 
 	xerus::TTTensor phi,res,res_last,start;
+	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(d-1));
 	start/= start.frob_norm();
