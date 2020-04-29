@@ -79,8 +79,8 @@ int main(){
 			eHxValues[sample] = tmp;
 		}
 
-		itr = samples.find(sample);
-		if (itr == samples.end()){
+		auto itr2 = samples.find(sample);
+		if (itr2 == samples.end()){
 			samples[sample].first = 1;
 			samples[sample].second = std::pow(builder.umap_psi_tree[sample],2);
 		} else
