@@ -73,10 +73,14 @@ int main(){
 		if (random_number < acceptance_rate ){
 			sample = std::move(next);
 			probability_current = probability_next;
-			builder.reset(sample);
-			builder.preparePsiEval();
-			tmp = builder.contract_tree();
-			eHxValues[sample] = tmp;
+
+			auto itr_eHx = eHxValues.find(sample);
+			if (itr_eHx == eHxValues.end()){
+				builder.reset(sample);
+				builder.preparePsiEval();
+				tmp = builder.contract_tree();
+				eHxValues[sample] = tmp;
+			}
 		}
 
 		auto itr2 = samples.find(sample);
