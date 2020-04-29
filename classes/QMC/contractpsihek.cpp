@@ -47,8 +47,8 @@ class ContractPsiHek{
 		std::vector<size_t> idx;
 		value_t result;
 	public:
-		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap_psi; // storing evaluations of psi
-		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap2_psi; // storing evaluations of psi
+		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap_psi_line; // storing evaluations of psi
+		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> umap_psi_tree; // storing evaluations of psi
 
 	public:
 		/*
@@ -76,13 +76,13 @@ class ContractPsiHek{
 			result = 0;
 			current_sample = sample;
 			makeInvSampleAndIndex();
-			umap2_psi.clear();
 
 		}
 
 		void reset_psi(TTTensor _psi){
-			umap_psi.clear();
+			umap_psi_line.clear();
 			psi = _psi;
+			umap_psi_tree.clear();
 		}
 
 
@@ -105,10 +105,10 @@ class ContractPsiHek{
 //						XERUS_LOG(info,p << " " << q << " " << val);
 					if (std::abs(val) > 10e-12){
 						idx[p] = 1; //creation
-						auto itr = umap_psi.find(idx);
-						if (itr == umap_psi.end())
-							umap_psi[idx] = psi[idx];
-						result += signp *  val * umap_psi[idx];
+						auto itr = umap_psi_line.find(idx);
+						if (itr == umap_psi_line.end())
+							umap_psi_line[idx] = psi[idx];
+						result += signp *  val * umap_psi_line[idx];
 						idx[p] = 0; //annilation
 					}
 				}
@@ -144,11 +144,11 @@ class ContractPsiHek{
 
 							if (std::abs(val) > 10e-8){
 								idx[p] = 1;
-								auto itr = umap_psi.find(idx);
-								if (itr == umap_psi.end())
-									umap_psi[idx] = psi[idx];
+								auto itr = umap_psi_line.find(idx);
+								if (itr == umap_psi_line.end())
+									umap_psi_line[idx] = psi[idx];
 								count3++;
-								result += val * umap_psi[idx];
+								result += val * umap_psi_line[idx];
 								idx[p] = 0;
 							}
 						}
@@ -186,7 +186,7 @@ class ContractPsiHek{
 //						auto itr = umap2_psi.find(idx);
 //						if (itr == umap2_psi.end())
 //							XERUS_LOG(info,"Not Found\n" << idx);
-						result += signp *  val * umap2_psi[idx];
+						result += signp *  val * umap_psi_tree[idx];
 						idx[p] = 0; //annilation
 					}
 				}
@@ -226,7 +226,7 @@ class ContractPsiHek{
 //								if (itr == umap2_psi.end())
 //									XERUS_LOG(info,"Not Found\n" << idx);
 								count3++;
-								result += val * umap2_psi[idx];
+								result += val * umap_psi_tree[idx];
 								idx[p] = 0;
 							}
 						}
@@ -309,7 +309,7 @@ class ContractPsiHek{
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
-													umap2_psi[idx_new] = tmp[0];
+													umap_psi_tree[idx_new] = tmp[0];
 													count++;
 												}
 											}
@@ -455,10 +455,10 @@ class ContractPsiHek{
 		 * Contraction, does psi ek for current sample, NOTE: use reset first
 		 */
 		value_t psiEntry(){
-			auto itr = umap_psi.find(idx);
-			if (itr == umap_psi.end())
-				umap_psi[idx] = psi[idx];
-			return umap_psi[idx];
+			auto itr = umap_psi_line.find(idx);
+			if (itr == umap_psi_line.end())
+				umap_psi_line[idx] = psi[idx];
+			return umap_psi_line[idx];
 		}
 
 		/*
