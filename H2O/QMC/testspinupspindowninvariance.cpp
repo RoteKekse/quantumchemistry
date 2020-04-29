@@ -11,6 +11,7 @@ int main(){
 	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1,ev_app_tmp;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
+	value_t nuc = -52.4190597253;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	value_t alpha = 0.1,beta;
 
@@ -41,12 +42,12 @@ int main(){
 
 	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,phi);
 	ev = tang.get_eigenvalue();
-	XERUS_LOG(info,"Approximated Eigenvalue: " << ev);
+	XERUS_LOG(info,"Approximated Eigenvalue: " << ev- shift +nuc);
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
 	read_from_disc(name2,Hs);
-	XERUS_LOG(info,"Exact Eigenvalue: " << contract_TT(Hs,phi,phi));
+	XERUS_LOG(info,"Exact Eigenvalue: " << contract_TT(Hs,phi,phi)- shift +nuc);
 
 
 
