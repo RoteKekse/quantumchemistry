@@ -54,7 +54,7 @@ int main(){
 
 
 
-	size_t eHx_time , next_time;
+	int eHx_time , next_time;
 	std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf_sample);
