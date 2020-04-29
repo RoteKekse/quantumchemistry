@@ -62,6 +62,10 @@ int main(){
 	probability_current = std::pow(builder.umap_psi_tree[sample],2);
 	for (size_t i = 0; i < iterations2; ++i){
 		next = TrialSampleSym2(sample,d);
+		auto itr = builder.umap_psi_tree.find(next);
+		if (itr == builder.umap_psi_tree.end())
+			XERUS_LOG(info,"Sample " << next << " not found");
+
 		probability_next = std::pow(builder.umap_psi_tree[next],2);
 		random_number = ((value_t) rand() / (RAND_MAX));
 		acceptance_rate = probability_next/probability_current;
