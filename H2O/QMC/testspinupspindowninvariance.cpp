@@ -87,7 +87,7 @@ int main(){
 				tmp = builder.contract_tree();
 				eHxValues[sample] = tmp;
 				auto eHx_end = std::chrono::steady_clock::now();
-				eHx_time += std::chrono::duration_cast<std::chrono::milliseconds>(eHx_end - eHx_start).count();
+				eHx_time += std::chrono::duration_cast<std::chrono::microseconds>(eHx_end - eHx_start).count();
 			}
 		}
 
@@ -112,7 +112,7 @@ int main(){
 
 	XERUS_LOG(info, "Elapsed time in seconds for eHx: "
 			<< eHx_time
-			<< " msec");
+			<< " musec");
 
 	return 0;
 }
