@@ -94,7 +94,7 @@ std::vector<size_t> TrialSample2(std::vector<size_t> sample, size_t dim){
 std::vector<size_t> TrialSampleSym2(std::vector<size_t> sample, size_t dim){
 
 	auto sample_new = TrialSampleSym(sample, dim);
-	if  (rand() % 2 == 1) return sample_new; //!!!
+	//if  (rand() % 2 == 1) return sample_new; //!!!
 	while(true){
 		sample_new = TrialSampleSym(sample_new, dim);
 		if ( sample_new != sample)
