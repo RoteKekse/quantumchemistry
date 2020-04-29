@@ -40,9 +40,9 @@ int main(){
 	XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 	XERUS_LOG(info,phi.ranks());
 
-	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,phi);
-	ev = tang.get_eigenvalue();
-	XERUS_LOG(info,"Approximated Eigenvalue: " << ev - shift + nuc);
+//	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,phi);
+//	ev = tang.get_eigenvalue();
+//	XERUS_LOG(info,"Approximated Eigenvalue: " << ev - shift + nuc);
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
@@ -79,7 +79,7 @@ int main(){
 			eHxValues[sample] = tmp;
 		}
 
-		auto itr = samples.find(sample);
+		itr = samples.find(sample);
 		if (itr == samples.end()){
 			samples[sample].first = 1;
 			samples[sample].second = std::pow(builder.umap_psi_tree[sample],2);
