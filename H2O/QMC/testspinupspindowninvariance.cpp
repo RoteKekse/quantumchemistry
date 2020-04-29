@@ -66,14 +66,14 @@ int main(){
 	eHxValues[sample] = tmp;
 	probability_current = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
 	for (size_t i = 0; i < iterations2; ++i){
+		auto next_start = std::chrono::steady_clock::now();
 		next = TrialSampleSym2(sample,d);
-		auto itr = builder.umap_psi_tree.find(makeIndex(sample,d));
-		if (itr == builder.umap_psi_tree.end())
-			XERUS_LOG(info,"Sample " << next << " not found");
 
 		probability_next = std::pow(builder.umap_psi_tree[makeIndex(next,d)],2);
 		random_number = ((value_t) rand() / (RAND_MAX));
 		acceptance_rate = probability_next/probability_current;
+		auto next_end = std::chrono::steady_clock::now();
+		next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 		if (random_number < acceptance_rate ){
 			sample = std::move(next);
@@ -90,13 +90,16 @@ int main(){
 				eHx_time += std::chrono::duration_cast<std::chrono::microseconds>(eHx_end - eHx_start).count();
 			}
 		}
-
+		next_start = std::chrono::steady_clock::now();
 		auto itr2 = samples.find(sample);
 		if (itr2 == samples.end()){
 			samples[sample].first = 1;
 			samples[sample].second = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
 		} else
 			samples[sample].first += 1;
+		next_end = std::chrono::steady_clock::now();
+		next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
+
 	}
 
 
@@ -113,6 +116,9 @@ int main(){
 	XERUS_LOG(info, "Elapsed time in seconds for eHx: "
 			<< ((value_t) eHx_time) / 1e6
 			<< " musec");
+	XERUS_LOG(info, "Elapsed time in seconds for next: "
+				<< ((value_t) next_time) / 1e6
+				<< " musec");
 
 	return 0;
 }
