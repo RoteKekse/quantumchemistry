@@ -54,7 +54,7 @@ int main(){
 
 
 
-	int eHx_time =0, next_time=0;
+	int eHx_time =0, next_time=0, search_time;
 	std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf_sample);
@@ -69,7 +69,11 @@ int main(){
 		auto next_start = std::chrono::steady_clock::now();
 		next = TrialSampleSym2(sample,d);
 
+		auto search_start = std::chrono::steady_clock::now();
 		probability_next = std::pow(builder.umap_psi_tree[makeIndex(next,d)],2);
+		auto search_end = std::chrono::steady_clock::now();
+		search_time += std::chrono::duration_cast<std::chrono::microseconds>(search_end - search_start).count();
+
 		random_number = ((value_t) rand() / (RAND_MAX));
 		acceptance_rate = probability_next/probability_current;
 		auto next_end = std::chrono::steady_clock::now();
@@ -97,7 +101,10 @@ int main(){
 		auto itr2 = samples.find(sample);
 		if (itr2 == samples.end()){
 			samples[sample].first = 1;
+			search_start = std::chrono::steady_clock::now();
 			samples[sample].second = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
+			search_end = std::chrono::steady_clock::now();
+			search_time += std::chrono::duration_cast<std::chrono::microseconds>(search_end - search_start).count();
 		} else
 			samples[sample].first += 1;
 		next_end = std::chrono::steady_clock::now();
@@ -122,6 +129,9 @@ int main(){
 	XERUS_LOG(info, "Elapsed time in seconds for next: "
 				<< ((value_t) next_time) / 1e6
 				<< " sec");
+	XERUS_LOG(info, "Elapsed time in seconds for search: "
+					<< ((value_t) search_time) / 1e6
+					<< " sec");
 
 	return 0;
 }
