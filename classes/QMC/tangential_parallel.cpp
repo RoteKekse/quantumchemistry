@@ -23,7 +23,7 @@ class Tangential{
 		ContractPsiHek builder;
 		std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 		unitVectorProjection uvP;
-		size_t iter_factor = 10000;
+		size_t iter_factor = 100;
 
 
 		Tangential(size_t _d, size_t _p, size_t _iter, std::string _path_T, std::string _path_V, value_t _shift, std::vector<size_t> _s, TTTensor _phi) \
