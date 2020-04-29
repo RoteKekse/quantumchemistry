@@ -8,7 +8,7 @@
 
 int main(){
 	size_t d = 48,p = 8,iterations = 1e5, rank = 10;
-	value_t ev, shift = 25.0, ev_app, ev_ex, eps=0.8,ev_app_tmp;
+	value_t ev, shift = 25.0, ev_app, ev_ex, eps=0.6,ev_app_tmp;
 	std::string path_T = "../data/T_H2O_48_bench_single.tensor";
 	std::string path_V= "../data/V_H2O_48_bench_single.tensor";
 	value_t nuc = -52.4190597253;
