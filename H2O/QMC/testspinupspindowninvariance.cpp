@@ -111,7 +111,7 @@ int main(){
 	XERUS_LOG(info,"Approximated Eigenvalue2: " << ev2 - shift + nuc);
 
 	XERUS_LOG(info, "Elapsed time in seconds for eHx: "
-			<< eHx_time
+			<< ((value_t) eHx_time) / 1e6
 			<< " musec");
 
 	return 0;
