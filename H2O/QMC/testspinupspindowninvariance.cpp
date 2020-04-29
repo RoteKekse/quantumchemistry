@@ -55,7 +55,7 @@ int main(){
 
 
 	std::chrono::duration<std::chrono::milliseconds> eHx_time = std::chrono::duration<std::chrono::milliseconds>::zero(), next_time = std::chrono::duration<std::chrono::milliseconds>::zero();
-	std::chrono::time_point eHx_start, ehx_end,next_start, next_end;
+	std::chrono::time_point<std::chrono::steady_clock> eHx_start, ehx_end,next_start, next_end;
 	std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf_sample);
