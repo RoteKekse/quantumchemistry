@@ -23,21 +23,21 @@ std::vector<size_t> TrialSample(std::vector<size_t> sample, size_t dim){
 }
 
 std::vector<size_t> TrialSampleSym(std::vector<size_t> sample, size_t dim){
-	auto rand_in = rand() % sample.size();
-	bool odd = sample[rand_in] % 2 == 1  ? true : false;
+	auto rand_in = rand() % sample.size(); //randomly choose element in sample to remove
+	bool odd = sample[rand_in] % 2 == 1  ? true : false; //check if the element is ofdd or even
 	while(true){
-		size_t rand_out = rand() % (dim/2);
+		size_t rand_out = rand() % (dim/2); //choose candidate to exchange
 
-		if (odd){
+		if (odd){ // if the removed site was odd check if 2 times proposal plus 1 is already in the sample
 			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out+1)){
-				sample.erase (sample.begin()+rand_in);
-				addElementToVector(sample,  2*rand_out+1, dim);
+				sample.erase (sample.begin()+rand_in); //remove site
+				addElementToVector(sample,  2*rand_out+1, dim); //add site
 				break;
 			}
-		} else {
+		} else { // if the removed site was even check if 2 times proposal  is already in the sample
 			if(not std::binary_search (sample.begin(), sample.end(), 2*rand_out)){
-				sample.erase (sample.begin()+rand_in);
-				addElementToVector(sample,  2*rand_out, dim);
+				sample.erase (sample.begin()+rand_in); // remove site
+				addElementToVector(sample,  2*rand_out, dim); //add site
 				break;
 			}
 		}
