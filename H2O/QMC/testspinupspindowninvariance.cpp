@@ -66,49 +66,49 @@ int main(){
 	eHxValues[sample] = tmp;
 	probability_current = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
 	for (size_t i = 0; i < iterations2; ++i){
-		auto next_start = std::chrono::steady_clock::now();
+		//auto next_start = std::chrono::steady_clock::now();
 		next = TrialSampleSym2(sample,d);
 
-		auto search_start = std::chrono::steady_clock::now();
+		//auto search_start = std::chrono::steady_clock::now();
 		probability_next = std::pow(builder.umap_psi_tree[makeIndex(next,d)],2);
-		auto search_end = std::chrono::steady_clock::now();
-		search_time += std::chrono::duration_cast<std::chrono::microseconds>(search_end - search_start).count();
+		//auto search_end = std::chrono::steady_clock::now();
+		//search_time += std::chrono::duration_cast<std::chrono::microseconds>(search_end - search_start).count();
 
 		random_number = ((value_t) rand() / (RAND_MAX));
 		acceptance_rate = probability_next/probability_current;
-		auto next_end = std::chrono::steady_clock::now();
-		next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
+		//auto next_end = std::chrono::steady_clock::now();
+		//next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 		if (random_number < acceptance_rate ){
-			next_start = std::chrono::steady_clock::now();
+			//next_start = std::chrono::steady_clock::now();
 			sample = std::move(next);
 			probability_current = probability_next;
-			next_end = std::chrono::steady_clock::now();
-			next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
+			//next_end = std::chrono::steady_clock::now();
+			//next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 			auto itr_eHx = eHxValues.find(sample);
 			if (itr_eHx == eHxValues.end()){
-				auto eHx_start = std::chrono::steady_clock::now();
+				//auto eHx_start = std::chrono::steady_clock::now();
 				builder.reset(sample);
 				builder.preparePsiEval();
 				tmp = builder.contract_tree();
 				eHxValues[sample] = tmp;
-				auto eHx_end = std::chrono::steady_clock::now();
-				eHx_time += std::chrono::duration_cast<std::chrono::microseconds>(eHx_end - eHx_start).count();
+				//auto eHx_end = std::chrono::steady_clock::now();
+				//eHx_time += std::chrono::duration_cast<std::chrono::microseconds>(eHx_end - eHx_start).count();
 			}
 		}
-		next_start = std::chrono::steady_clock::now();
+		//next_start = std::chrono::steady_clock::now();
 		auto itr2 = samples.find(sample);
 		if (itr2 == samples.end()){
 			samples[sample].first = 1;
-			auto search_start2 = std::chrono::steady_clock::now();
+			//auto search_start2 = std::chrono::steady_clock::now();
 			samples[sample].second = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
-			auto search_end2 = std::chrono::steady_clock::now();
-			search_time2 += std::chrono::duration_cast<std::chrono::microseconds>(search_end2 - search_start2).count();
+			//auto search_end2 = std::chrono::steady_clock::now();
+			//search_time2 += std::chrono::duration_cast<std::chrono::microseconds>(search_end2 - search_start2).count();
 		} else
 			samples[sample].first += 1;
-		next_end = std::chrono::steady_clock::now();
-		next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
+		//next_end = std::chrono::steady_clock::now();
+		//next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 	}
 
