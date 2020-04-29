@@ -43,9 +43,9 @@ int main(){
 	XERUS_LOG(info,"Particle number down phi updated  " << std::setprecision(16) << contract_TT(Pdown,phi,phi));
 	XERUS_LOG(info,phi.ranks());
 
-	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,phi);
-	ev = tang.get_eigenvalue();
-	XERUS_LOG(info,"Approximated Eigenvalue: " << ev - shift + nuc);
+//	Tangential tang(d,p,iterations,path_T,path_V,shift,hf_sample,phi);
+//	ev = tang.get_eigenvalue();
+//	XERUS_LOG(info,"Approximated Eigenvalue: " << ev - shift + nuc);
 
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
@@ -76,8 +76,11 @@ int main(){
 		next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 		if (random_number < acceptance_rate ){
+			next_start = std::chrono::steady_clock::now();
 			sample = std::move(next);
 			probability_current = probability_next;
+			next_end = std::chrono::steady_clock::now();
+			next_time += std::chrono::duration_cast<std::chrono::microseconds>(next_end - next_start).count();
 
 			auto itr_eHx = eHxValues.find(sample);
 			if (itr_eHx == eHxValues.end()){
