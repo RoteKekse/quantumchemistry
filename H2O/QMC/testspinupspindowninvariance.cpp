@@ -1,4 +1,7 @@
 #include <xerus.h>
+#include <chrono>
+
+
 #include "../../classes/loading_tensors.cpp"
 #include "../../classes/helpers.cpp"
 #include "../../classes/QMC/trialfunctions.cpp"
@@ -50,6 +53,9 @@ int main(){
 	XERUS_LOG(info,"Exact Eigenvalue: " << contract_TT(Hs,phi,phi) - shift + nuc);
 
 
+
+	std::chrono::duration eHx_time = std::chrono::duration::zero(), next_time = std::chrono::duration::zero();
+	std::chrono::time_point eHx_start, ehx_end,next_start, next_end;
 	std::unordered_map<std::vector<size_t>,value_t,container_hash<std::vector<size_t>>> eHxValues;
 	std::unordered_map<std::vector<size_t>,std::pair<size_t,value_t>,container_hash<std::vector<size_t>>> samples;
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf_sample);
@@ -76,10 +82,12 @@ int main(){
 
 			auto itr_eHx = eHxValues.find(sample);
 			if (itr_eHx == eHxValues.end()){
+				eHx_start = std::chrono::steady_clock::now();
 				builder.reset(sample);
 				builder.preparePsiEval();
 				tmp = builder.contract_tree();
 				eHxValues[sample] = tmp;
+				eHx_time += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - eHx_start);
 			}
 		}
 
@@ -101,6 +109,10 @@ int main(){
 
 	}
 	XERUS_LOG(info,"Approximated Eigenvalue2: " << ev2 - shift + nuc);
+
+	XERUS_LOG(info, "Elapsed time in seconds for eHx: "
+			<< eHx_time.count()
+			<< " msec");
 
 	return 0;
 }
