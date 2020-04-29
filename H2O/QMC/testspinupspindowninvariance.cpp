@@ -59,14 +59,14 @@ int main(){
 	builder.preparePsiEval();
 	value_t tmp = builder.contract_tree();
 	eHxValues[sample] = tmp;
-	probability_current = std::pow(builder.umap_psi_tree[sample],2);
+	probability_current = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
 	for (size_t i = 0; i < iterations2; ++i){
 		next = TrialSampleSym2(sample,d);
-		auto itr = builder.umap_psi_tree.find(next);
+		auto itr = builder.umap_psi_tree.find(makeIndex(sample,d));
 		if (itr == builder.umap_psi_tree.end())
 			XERUS_LOG(info,"Sample " << next << " not found");
 
-		probability_next = std::pow(builder.umap_psi_tree[next],2);
+		probability_next = std::pow(builder.umap_psi_tree[makeIndex(next,d)],2);
 		random_number = ((value_t) rand() / (RAND_MAX));
 		acceptance_rate = probability_next/probability_current;
 
@@ -82,7 +82,7 @@ int main(){
 		auto itr2 = samples.find(sample);
 		if (itr2 == samples.end()){
 			samples[sample].first = 1;
-			samples[sample].second = std::pow(builder.umap_psi_tree[sample],2);
+			samples[sample].second = std::pow(builder.umap_psi_tree[makeIndex(sample,d)],2);
 		} else
 			samples[sample].first += 1;
 	}
@@ -91,7 +91,7 @@ int main(){
 	value_t ev2 = 0;
 	XERUS_LOG(info, "Number of samples for Eigenvalue " << samples.size());
 	for (std::pair<std::vector<size_t>,std::pair<size_t,value_t>> const& pair: samples) {
-		psi_ek = builder.umap_psi_tree[pair.first];
+		psi_ek = builder.umap_psi_tree[makeIndex(pair.first,d)];
 		factor = eHxValues[pair.first]*psi_ek;
 		ev2 += factor;
 
