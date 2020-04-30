@@ -28,7 +28,7 @@ int main(){
 
 	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(d-1));
 	start/= start.frob_norm();
-	for (value_t ee = 0.05; ee <= eps ; ee+=0.05){
+	for (value_t ee = 0.01; ee <= eps ; ee+=0.01){
 		start.round(ee);
 		start/= start.frob_norm();
 	}
