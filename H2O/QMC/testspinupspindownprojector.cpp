@@ -23,10 +23,11 @@ int main(){
 	auto Pup = particleNumberOperatorUp(d);
 	auto Pdown = particleNumberOperatorDown(d);
 
-	xerus::TTTensor phi,res,res_last,start,start2;
+	xerus::TTTensor phi,res,res_last,start,start2,start3;
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	read_from_disc("../data/hf_gradient_48.tttensor",start2);
+	read_from_disc("../data/hf_gradient_48.tttensor",start3);
 	start/= start.frob_norm();
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
@@ -50,6 +51,9 @@ int main(){
 	start2.round(eps);
 	start2/= start2.frob_norm();
 
+	start3/= start3.frob_norm();
+	start3.round(eps);
+	start3/= start3.frob_norm();
 
 
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
@@ -61,6 +65,11 @@ int main(){
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start2,start2));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start2,start2));
 	XERUS_LOG(info,start2.ranks());
+
+	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start3,start3));
+	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start3,start3));
+	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start3,start3));
+	XERUS_LOG(info,start3.ranks());
 
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
