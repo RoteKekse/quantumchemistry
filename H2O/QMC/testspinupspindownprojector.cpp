@@ -38,13 +38,14 @@ int main(){
 	start/= start.frob_norm();
 	for (value_t ee = 0.01; ee <= eps ; ee+=0.01){
 		start.round(ee);
-		start/= start.frob_norm();
+		//start/= start.frob_norm();
 	}
+	start/= start.frob_norm();
 
 	start2/= start2.frob_norm();
 	for (value_t ee = 0.01; ee <= eps ; ee+=0.03){
 		start2.round(ee);
-		start2/= start2.frob_norm();
+		//start2/= start2.frob_norm();
 	}
 	start2.round(eps);
 	start2/= start2.frob_norm();
