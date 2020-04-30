@@ -21,9 +21,10 @@ int main(){
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 
 
-	xerus::TTTensor phi,res,res_last,start;
+	xerus::TTTensor phi,res,res_last,start,start2;
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
+	read_from_disc("../data/hf_gradient_48.tttensor",start2);
 
 
 	XERUS_LOG(info,"Round start vector to " << eps << " keeping sing values bigger than " << eps/std::sqrt(d-1));
@@ -32,6 +33,15 @@ int main(){
 		start.round(ee);
 		start/= start.frob_norm();
 	}
+
+	start2/= start2.frob_norm();
+	for (value_t ee = 0.01; ee <= eps ; ee+=0.03){
+		start2.round(ee);
+		start2/= start2.frob_norm();
+	}
+	start2.round(eps);
+	start2/= start2.frob_norm();
+
 	auto P = particleNumberOperator(d);
 	auto Pup = particleNumberOperatorUp(d);
 	auto Pdown = particleNumberOperatorDown(d);
@@ -39,6 +49,10 @@ int main(){
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
+
+	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start2,start2));
+	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start2,start2));
+	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start2,start2));
 
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
