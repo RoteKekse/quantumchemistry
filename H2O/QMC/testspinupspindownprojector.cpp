@@ -87,7 +87,7 @@ int main(){
 	auto tang2TT = top.builtTTTensor(tang2);
 	TTTensor tang3TT;
 	Index i1,j1;
-	tang3TT(i1/2) = Hs(i1/2,j1/2)*start(j1&0);
+	tang3TT(i1&0) = Hs(i1/2,j1/2)*start(j1&0);
 
 	XERUS_LOG(info, "Norm start projected   " << tang1TT.frob_norm());
 	XERUS_LOG(info, "Norm Hsstart projected " << tang2TT.frob_norm());
