@@ -85,11 +85,16 @@ int main(){
 	auto tang2 = top.localProduct(start,Hs);
 	auto tang1TT = top.builtTTTensor(tang1);
 	auto tang2TT = top.builtTTTensor(tang2);
+	TTTensor tang3TT;
+	Index i1,j1;
+	tang3TT(i1/2) = Hs(i1/2,j1/2)*start(j1&0);
 
-	XERUS_LOG(info, "Norm start projected " << tang1TT.frob_norm());
+	XERUS_LOG(info, "Norm start projected   " << tang1TT.frob_norm());
 	XERUS_LOG(info, "Norm Hsstart projected " << tang2TT.frob_norm());
+	XERUS_LOG(info, "Norm Hsstart           " << tang3TT.frob_norm());
 	tang1TT/= tang1TT.frob_norm();
 	tang2TT/= tang2TT.frob_norm();
+	tang3TT/= tang3TT.frob_norm();
 
 	XERUS_LOG(info,"Particle number start projected       " << std::setprecision(16) << contract_TT(P,tang1TT,tang1TT));
 	XERUS_LOG(info,"Particle number up start projected    " << std::setprecision(16) << contract_TT(Pup,tang1TT,tang1TT));
@@ -98,6 +103,11 @@ int main(){
 	XERUS_LOG(info,"Particle number Hs start projected       " << std::setprecision(16) << contract_TT(P,tang2TT,tang2TT));
 	XERUS_LOG(info,"Particle number up Hs start projected    " << std::setprecision(16) << contract_TT(Pup,tang2TT,tang2TT));
 	XERUS_LOG(info,"Particle number down Hs start projected  " << std::setprecision(16) << contract_TT(Pdown,tang2TT,tang2TT));
+
+	XERUS_LOG(info,"Particle number Hs start        " << std::setprecision(16) << contract_TT(P,tang3TT,tang3TT));
+	XERUS_LOG(info,"Particle number up Hs start     " << std::setprecision(16) << contract_TT(Pup,tang3TT,tang3TT));
+	XERUS_LOG(info,"Particle number down Hs start   " << std::setprecision(16) << contract_TT(Pdown,tang3TT,tang3TT));
+
 
 	return 0;
 }
