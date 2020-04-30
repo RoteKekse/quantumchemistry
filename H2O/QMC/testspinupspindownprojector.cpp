@@ -19,7 +19,9 @@ int main(){
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
 	read_from_disc(name2,Hs);
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
-
+	auto P = particleNumberOperator(d);
+	auto Pup = particleNumberOperatorUp(d);
+	auto Pdown = particleNumberOperatorDown(d);
 
 	xerus::TTTensor phi,res,res_last,start,start2;
 	phi = makeUnitVector(hf_sample,d);
@@ -46,9 +48,7 @@ int main(){
 	start2.round(eps);
 	start2/= start2.frob_norm();
 
-	auto P = particleNumberOperator(d);
-	auto Pup = particleNumberOperatorUp(d);
-	auto Pdown = particleNumberOperatorDown(d);
+
 
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
