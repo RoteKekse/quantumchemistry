@@ -55,6 +55,11 @@ int main(){
 	auto tang1TT = top.builtTTTensor(tang1);
 	auto tang2TT = top.builtTTTensor(tang2);
 
+	XERUS_LOG(info, "Norm start projected " << tang1TT.frob_norm());
+	XERUS_LOG(info, "Norm Hsstart projected " << tang2TT.frob_norm());
+	tang1TT/= tang1TT.frob_norm();
+	tang2TT/= tang2TT.frob_norm();
+
 	XERUS_LOG(info,"Particle number start projected       " << std::setprecision(16) << contract_TT(P,tang1TT,tang1TT));
 	XERUS_LOG(info,"Particle number up start projected    " << std::setprecision(16) << contract_TT(Pup,tang1TT,tang1TT));
 	XERUS_LOG(info,"Particle number down start projected  " << std::setprecision(16) << contract_TT(Pdown,tang1TT,tang1TT));
