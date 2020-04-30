@@ -88,6 +88,7 @@ int main(){
 	TTTensor tang3TT;
 	Index i1,j1;
 	tang3TT(i1&0) = Hs(i1/2,j1/2)*start(j1&0);
+	XERUS_LOG(info,tang3TT.ranks());
 
 	auto tang4 = top.localProduct(tang3TT,id);
 	auto tang4TT = top.builtTTTensor(tang4);
