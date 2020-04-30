@@ -49,10 +49,12 @@ int main(){
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
+	XERUS_LOG(info,start.ranks());
 
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start2,start2));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start2,start2));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start2,start2));
+	XERUS_LOG(info,start2.ranks());
 
 	phi -= alpha*start;
 	phi/=phi.frob_norm();
