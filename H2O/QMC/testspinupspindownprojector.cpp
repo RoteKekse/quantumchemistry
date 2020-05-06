@@ -59,7 +59,7 @@ int main(){
 
 
 	XERUS_LOG(info,"Rounding with the help of ALS");
-	TTTensor start4_rounded = xerus::TTTensor::random(start4.dimensions,std::vector<size_t>(d-1,rank));
+	TTTensor start4_rounded = start3;
 	for (size_t i = 0; i < roundIter;++i){
 		getRes(id,start4,id,0.0,start4_rounded);
 		XERUS_LOG(info, "Run " << i);
