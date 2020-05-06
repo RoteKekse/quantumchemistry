@@ -62,9 +62,11 @@ int main(){
 	TTTensor start4_rounded = xerus::TTTensor::random(start4.dimensions,std::vector<size_t>(d-1,rank));
 	for (size_t i = 0; i < roundIter;++i){
 		getRes(id,start4,id,0.0,start4_rounded);
+		XERUS_LOG(info, "Run " << i);
 		XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start4_rounded,start4_rounded));
 		XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start4_rounded,start4_rounded));
 		XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start4_rounded,start4_rounded));
+		XERUS_LOG(info, "Error = " << (start4-start4_rounded).frob_norm());
 	}
 
 	XERUS_LOG(info,"End Rounding with the help of ALS");
