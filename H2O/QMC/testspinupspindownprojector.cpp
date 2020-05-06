@@ -62,7 +62,8 @@ int main(){
 	Index i1,j1;
 	TTTensor xk = start3,y1(start3.dimensions),y2(start3.dimensions),tmp1,tmp2;
 	value_t omega = 2/std::pow(d,2);
-	for (size_t j = 0; j < 3; ++j){
+	for (size_t k = 0; k < 3; ++k){
+		XERUS_LOG(info,"---- Step "<< k);
 		tmp1(i1&0) = (P-p*id)(i1/2,j1/2)*xk(j1&0);
 		y1 += omega*tmp1;
 		tmp2(i1&0) = (Pup-(p/2)*id)(i1/2,j1/2)*xk(j1&0);
