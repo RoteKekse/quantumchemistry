@@ -5,12 +5,13 @@
 #include "../../classes/loading_tensors.cpp"
 #include "../../classes/helpers.cpp"
 #include "../../classes/QMC/tangentialOperation.cpp"
+#include "../../classes/GradientMethods/ALSres.cpp"
 
 
 
 
 int main(){
-	size_t d = 48,p = 8,iterations = 1e6,iterations2 = 100*iterations, rank = 10;
+	size_t d = 48,p = 8,iterations = 1e6,iterations2 = 100*iterations,roundIter = 10, rank = 10;
 	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.0,ev_app_tmp;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
 	value_t alpha = 0.1,beta;
@@ -23,11 +24,12 @@ int main(){
 	auto Pup = particleNumberOperatorUp(d);
 	auto Pdown = particleNumberOperatorDown(d);
 
-	xerus::TTTensor phi,res,res_last,start,start2,start3;
+	xerus::TTTensor phi,res,res_last,start,start2,start3,start4;
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 	read_from_disc("../data/hf_gradient_48.tttensor",start2);
 	read_from_disc("../data/hf_gradient_48.tttensor",start3);
+	read_from_disc("../data/hf_gradient_48.tttensor",start4);
 	start/= start.frob_norm();
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
@@ -54,6 +56,18 @@ int main(){
 	start3/= start3.frob_norm();
 	start3.round(eps);
 	start3/= start3.frob_norm();
+
+
+	XERUS_LOG(info,"Rounding with the help of ALS");
+	TTTensor start4_rounded = xerus::TTTensor::random(start4.dimensions,std::vector<size_t>(d-1,rank));
+	for (size_t i = 0; i < roundIter;++i){
+		getRes(id,start4,id,0.0,start4_rounded);
+		XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start4_rounded,start4_rounded));
+		XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start4_rounded,start4_rounded));
+		XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start4_rounded,start4_rounded));
+	}
+
+	XERUS_LOG(info,"End Rounding with the help of ALS");
 
 
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
