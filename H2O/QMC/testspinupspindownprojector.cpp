@@ -59,16 +59,25 @@ int main(){
 
 
 	XERUS_LOG(info,"Rounding with the help of ALS");
-	TTTensor start4_rounded = start3;
-	for (size_t i = 0; i < roundIter;++i){
-		getRes(id,start4,id,0.0,start4_rounded);
-		XERUS_LOG(info, "Run " << i);
-		XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start4_rounded,start4_rounded)/contract_TT(id,start4_rounded,start4_rounded));
-		XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start4_rounded,start4_rounded)/contract_TT(id,start4_rounded,start4_rounded));
-		XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start4_rounded,start4_rounded)/contract_TT(id,start4_rounded,start4_rounded));
-		XERUS_LOG(info, "Error = " << (start4-start4_rounded).frob_norm());
-	}
+	Index i1,j1;
+	TTTensor xk = start3,y1(start3.dimensions),y2(start3.dimensions),tmp1,tmp2;
+	value_t omega = 2/std::pow(d,2);
+	for (size_t j = 0; j < 3; ++j){
+		tmp1(i1&0) = (P-p*id)(i1/2,j1/2)*xk(j1&0);
+		y1 += omega*tmp1;
+		tmp2(i1&0) = (Pup-(p/2)*id)(i1/2,j1/2)*xk(j1&0);
+		y2 += omega*tmp2;
+		tmp1(i1&0) = (P-p*id)(i1/2,j1/2)*y1(j1&0);
+		tmp2(i1&0) = (Pup-(p/2)*id)(i1/2,j1/2)*y2(j1&0);
 
+		for (size_t i = 0; i < roundIter;++i){
+			getRes(id,start4-tmp1-tmp2,id,0.0,xk);
+			XERUS_LOG(info, "Run " << i);
+			XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,xk,xk)/contract_TT(id,xk,xk));
+			XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,xk,xk)/contract_TT(id,xk,xk));
+			XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,xk,xk)/contract_TT(id,xk,xk));
+		}
+	}
 	XERUS_LOG(info,"End Rounding with the help of ALS");
 
 
