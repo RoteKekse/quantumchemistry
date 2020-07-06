@@ -65,5 +65,7 @@ int main(){
 		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit,start_first,start_first)/contract_TT(idsplit,start_first,start_first));
 	}
 
+	XERUS_LOG(info,"\n" start.get_component(1));
+
 	return 0;
 }
