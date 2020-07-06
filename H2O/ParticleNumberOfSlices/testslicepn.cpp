@@ -65,7 +65,17 @@ int main(){
 		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit,start_first,start_first)/contract_TT(idsplit,start_first,start_first));
 	}
 
-	XERUS_LOG(info,"\n" << start.get_component(1));
+	Tensor t = start.get_component(idx);
+	XERUS_LOG(info,"\n" << t);
+	for (size_t i = 0; i < t.dimensions[0];++i){
+		for (size_t j = 0; j < t.dimensions[0];++j){
+			for (size_t k = 0; k < t.dimensions[0];++k){
+				XERUS_LOG(info,i <<" " <<j<< " "<< k<<": " << t[{i,j,k}]);
+
+
+			}
+		}
+	}
 
 	return 0;
 }
