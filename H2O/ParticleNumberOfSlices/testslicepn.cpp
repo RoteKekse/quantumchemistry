@@ -34,11 +34,28 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	auto split = start.chop(10);
+	size_t idx = 10;
+	size_t slice = 2;
+	auto split = start.chop(idx);
 
 	XERUS_LOG(info, start.order());
 	XERUS_LOG(info, split.first.order());
 	XERUS_LOG(info, split.second.order());
+
+	TTTensor start_first(std::vector<size_t>(idx,2));
+	for (size_t i = 0; i < idx-1; ++i){
+		Tensor tensor(*split.first.nodes[i+1].tensorObject);
+		XERUS_LOG(info,tensor.dimensions);
+		start_first.set_component(i,tensor);
+	}
+	Tensor tensor(*split.first.nodes[idx+1].tensorObject);
+	tensor.fix_mode(2,slice);
+	start_first.set_component(idx,tensor);
+
+	auto Psplit = particleNumberOperator(idx);
+
+	XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(P,start_first,start_first)/contract_TT(id,start_first,start_first));
+
 
 	return 0;
 }
