@@ -43,14 +43,15 @@ int main(){
 	XERUS_LOG(info, split.second.order());
 
 	TTTensor start_first(std::vector<size_t>(idx,2));
-	for (size_t i = 0; i < idx-1; ++i){
+	for (size_t i = 0; i < idx-2; ++i){
 		Tensor tensor(*split.first.nodes[i+1].tensorObject);
 		XERUS_LOG(info,tensor.dimensions);
 		start_first.set_component(i,tensor);
 	}
-	Tensor tensor(*split.first.nodes[idx+1].tensorObject);
+	Tensor tensor(*split.first.nodes[idx].tensorObject);
 	tensor.fix_mode(2,slice);
 	start_first.set_component(idx,tensor);
+	XERUS_LOG(info,tensor.dimensions);
 
 	auto Psplit = particleNumberOperator(idx);
 
