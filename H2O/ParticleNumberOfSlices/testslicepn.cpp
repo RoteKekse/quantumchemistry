@@ -48,10 +48,10 @@ int main(){
 		XERUS_LOG(info,tensor.dimensions);
 		start_first.set_component(i,tensor);
 	}
-	Tensor tensor(*split.first.nodes[idx+1].tensorObject);
+	Tensor tensor(*split.first.nodes[idx].tensorObject);
 	tensor.fix_mode(2,slice);
 	XERUS_LOG(info,tensor.dimensions);
-	start_first.set_component(idx,tensor);
+	start_first.set_component(idx-1,tensor);
 
 	auto Psplit = particleNumberOperator(idx);
 
