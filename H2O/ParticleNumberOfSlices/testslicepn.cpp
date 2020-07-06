@@ -53,7 +53,7 @@ int main(){
 	for (size_t slice = 0; slice < tensor.dimensions[2]; slice++){
 		Tensor tmp = tensor;
 		tmp.fix_mode(2,slice);
-		XERUS_LOG(info,tensor.dimensions);
+		XERUS_LOG(info,tmp.dimensions);
 		tmp.reinterpret_dimensions({tmp.dimensions[0],tmp.dimensions[1],1});
 		start_first.set_component(idx-1,tmp);
 
