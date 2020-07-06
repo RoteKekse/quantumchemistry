@@ -84,7 +84,7 @@ int main(){
 				ten[j] = 0;
 		start.set_component(i,ten);
 	}
-	Tensor t = start.get_component(idx);
+	t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
