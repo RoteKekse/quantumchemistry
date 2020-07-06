@@ -37,7 +37,7 @@ int main(){
 	auto split = start.chop(10);
 
 	XERUS_LOG(info, split.first.order());
-	XERUS_LOG(info, split.first.order());
+	XERUS_LOG(info, split.second.order());
 
 	return 0;
 }
