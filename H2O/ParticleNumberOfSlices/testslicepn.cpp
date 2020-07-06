@@ -47,9 +47,9 @@ int main(){
 		XERUS_LOG(info,tensor.dimensions);
 		start_first.set_component(i,tensor);
 	}
-	Tensor tensor(*split.first.nodes[idx].tensorObject);
 
 	for (size_t slice = 0; slice < 10; slice++){
+		Tensor tensor(*split.first.nodes[idx].tensorObject);
 		tensor.fix_mode(2,slice);
 		XERUS_LOG(info,tensor.dimensions);
 		tensor.reinterpret_dimensions({tensor.dimensions[0],tensor.dimensions[1],1});
