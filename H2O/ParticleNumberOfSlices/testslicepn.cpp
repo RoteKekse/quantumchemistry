@@ -49,7 +49,7 @@ int main(){
 	}
 	Tensor tensor(*split.first.nodes[idx].tensorObject);
 
-	for (size_t slice = 0; slice < 10; slice++){
+	for (size_t slice = 0; slice < tensor.dimensions[2]; slice++){
 		Tensor tmp = tensor;
 		tmp.fix_mode(2,slice);
 		XERUS_LOG(info,tensor.dimensions);
