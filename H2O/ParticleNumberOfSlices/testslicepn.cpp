@@ -68,8 +68,8 @@ int main(){
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	for (size_t i = 0; i < t.dimensions[0];++i){
-		for (size_t j = 0; j < t.dimensions[0];++j){
-			for (size_t k = 0; k < t.dimensions[0];++k){
+		for (size_t j = 0; j < t.dimensions[1];++j){
+			for (size_t k = 0; k < t.dimensions[2];++k){
 				XERUS_LOG(info,i <<" " <<j<< " "<< k<<": " << t[{i,j,k}]);
 
 
