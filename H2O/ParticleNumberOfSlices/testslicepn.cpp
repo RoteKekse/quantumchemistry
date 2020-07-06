@@ -59,6 +59,8 @@ int main(){
 
 		auto Psplit = particleNumberOperator(idx);
 		auto idsplit = xerus::TTOperator::identity(std::vector<size_t>(2*idx,2));
+		XERUS_LOG(info,Psplit.dimensions);
+		XERUS_LOG(info,idsplit.dimensions);
 
 		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit,start_first,start_first)/contract_TT(idsplit,start_first,start_first));
 	}
