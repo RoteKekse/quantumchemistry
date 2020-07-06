@@ -34,7 +34,7 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	size_t idx = 1;
+	size_t idx = 2;
 	auto split = start.chop(idx+1);
 
 	XERUS_LOG(info, start.order());
