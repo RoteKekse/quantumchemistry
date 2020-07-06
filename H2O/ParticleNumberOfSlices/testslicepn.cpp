@@ -79,7 +79,7 @@ int main(){
 
 	for (size_t i = 0; i < d;++i){
 		Tensor ten = start.get_component(i);
-		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++J)
+		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++j)
 			if (std::abs(ten[j]) < 10e-10)
 				ten[j] = 0;
 		start.set_component(i,ten);
