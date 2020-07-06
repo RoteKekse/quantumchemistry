@@ -77,5 +77,15 @@ int main(){
 		}
 	}
 
+	for (size_t i = 0; i < d;++i){
+		Tensor ten = start.get_component(i);
+		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++J)
+			if (std::abs(ten[j]) < 10e-10)
+				ten[j] = 0;
+		start.set_component(i,ten);
+	}
+	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
+	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
+	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	return 0;
 }
