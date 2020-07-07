@@ -84,7 +84,6 @@ int main(){
 				ten[j] = 0;
 		start.set_component(i,ten);
 	}
-	t = start.get_component(idx);
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	for (size_t i = 0; i < t.dimensions[0];++i){
