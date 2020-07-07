@@ -86,8 +86,8 @@ int main(){
 	}
 	t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
-	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
-	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
-	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
+	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
+	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
+	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start)/contract_TT(id,start,start));
 	return 0;
 }
