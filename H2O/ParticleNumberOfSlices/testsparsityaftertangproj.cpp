@@ -37,6 +37,16 @@ int main(){
 	size_t comp = 2;
 	start.move_core(comp);
 	XERUS_LOG(info, start.component(comp));
+	TangentialOperation top(start);
+
+	xerus::TTOperator Hs;
+	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
+	read_from_disc(name2,Hs);
+
+	auto tang_ex = top.localProduct(start,Hs);
+	XERUS_LOG(info, tang_ex[comp]);
+
+
 
 return 0;
 }
