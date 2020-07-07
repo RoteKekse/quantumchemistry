@@ -160,7 +160,7 @@ public:
 
 
 
-	  std::vector<Tensor> localProduct(const TTTensor y, const TTOperator& F){
+	  std::vector<Tensor> localProduct(const TTTensor y, const TTOperator& F, bool proj = true){
 	 	    time_t begin_time;
 	 			std::vector<Tensor> locY;
 	 			rightAStack.clear();
@@ -191,7 +191,8 @@ public:
 	 			}
 	 			Index i,j;
 	 			begin_time = time (NULL);
-	 			projection(locY);
+	 			if(proj)
+	 				projection(locY);
 	 			rightAStack.clear();
 
 	 			return locY;
