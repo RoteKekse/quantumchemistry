@@ -34,7 +34,7 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	size_t comp = 3;
+	size_t comp = 4;
 	start.move_core(comp);
 	XERUS_LOG(info, start.component(comp).dimensions);
 	XERUS_LOG(info,  "\n" << start.component(comp));
