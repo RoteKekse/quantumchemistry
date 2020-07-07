@@ -85,6 +85,17 @@ int main(){
 		start.set_component(i,ten);
 	}
 	t = start.get_component(idx);
+	Tensor t = start.get_component(idx);
+	XERUS_LOG(info,"\n" << t);
+	for (size_t i = 0; i < t.dimensions[0];++i){
+		for (size_t j = 0; j < t.dimensions[1];++j){
+			for (size_t k = 0; k < t.dimensions[2];++k){
+				XERUS_LOG(info,i <<" " <<j<< " "<< k<<": " << t[{i,j,k}]);
+
+
+			}
+		}
+	}
 	XERUS_LOG(info,"\n" << t);
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
