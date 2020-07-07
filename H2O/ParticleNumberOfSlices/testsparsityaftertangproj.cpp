@@ -36,13 +36,13 @@ int main(){
 
 	size_t comp = 2;
 	start.move_core(comp);
-	XERUS_LOG(info, start.component(comp));
+	XERUS_LOG(info, start.component(comp).dimensions);
+	XERUS_LOG(info,  "\n" << start.component(comp));
 	TangentialOperation top(start);
 
 	auto tang_ex = top.localProduct(start,Hs);
-	XERUS_LOG(info, tang_ex[comp]);
+	XERUS_LOG(info, tang_ex[comp].dimensions);
+	XERUS_LOG(info, "\n" << tang_ex[comp]);
 
-
-
-return 0;
+	return 0;
 }
