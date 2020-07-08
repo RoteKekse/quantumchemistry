@@ -95,6 +95,9 @@ int main(){
 	test[{3,1,4}] = 1;
 	test[{3,1,5}] = 1;
 	test[{3,1,6}] = 1;
+
+	test[{3,0,6}] = 1;
+
 	start.set_component(idx,test);
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
