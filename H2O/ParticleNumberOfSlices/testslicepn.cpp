@@ -68,7 +68,7 @@ int main(){
 
 
 
-	start.move_core(idx);
+	start.move_core(0);
 	for (size_t i = 0; i < d;++i){
 		Tensor ten = start.get_component(i);
 		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++j)
