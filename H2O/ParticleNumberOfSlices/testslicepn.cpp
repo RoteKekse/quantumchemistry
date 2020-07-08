@@ -78,25 +78,25 @@ int main(){
 	}
 	Tensor test(start.get_component(idx).dimensions);
 	test[{0,0,1}] = (double)rand() / RAND_MAX;
-	test[{0,0,2}] = 1;
-	test[{0,1,0}] = 1;
-	test[{1,0,4}] = 1;
-	test[{1,0,5}] = 1;
-	test[{1,0,6}] = 1;
-	test[{1,1,1}] = 1;
-	test[{1,1,2}] = 1;
-	test[{1,1,3}] = 1;
-	test[{2,0,4}] = 1;
-	test[{2,0,5}] = 1;
-	test[{2,0,6}] = 1;
-	test[{2,1,1}] = 1;
-	test[{2,1,2}] = 1;
-	test[{2,1,3}] = 1;
-	test[{3,1,4}] = 1;
-	test[{3,1,5}] = 1;
-	test[{3,1,6}] = 1;
+	test[{0,0,2}] = (double)rand() / RAND_MAX;
+	test[{0,1,0}] = (double)rand() / RAND_MAX;
+	test[{1,0,4}] = (double)rand() / RAND_MAX;
+	test[{1,0,5}] = (double)rand() / RAND_MAX;
+	test[{1,0,6}] = (double)rand() / RAND_MAX;
+	test[{1,1,1}] = (double)rand() / RAND_MAX;
+	test[{1,1,2}] = (double)rand() / RAND_MAX;
+	test[{1,1,3}] = (double)rand() / RAND_MAX;
+	test[{2,0,4}] = (double)rand() / RAND_MAX;
+	test[{2,0,5}] = (double)rand() / RAND_MAX;
+	test[{2,0,6}] = (double)rand() / RAND_MAX;
+	test[{2,1,1}] = (double)rand() / RAND_MAX;
+	test[{2,1,2}] = (double)rand() / RAND_MAX;
+	test[{2,1,3}] = (double)rand() / RAND_MAX;
+	test[{3,1,4}] = (double)rand() / RAND_MAX;
+	test[{3,1,5}] = (double)rand() / RAND_MAX;
+	test[{3,1,6}] = (double)rand() / RAND_MAX;
 
-	test[{3,0,6}] = 1;
+#test[{3,0,6}] = 1;
 
 	start.set_component(idx,test);
 	Tensor t = start.get_component(idx);
