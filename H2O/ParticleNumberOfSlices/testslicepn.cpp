@@ -72,7 +72,7 @@ int main(){
 				ten[j] = 0;
 		start.set_component(i,ten);
 	}
-	start.component(idx)[{2,1,3}] = 1;
+	start.component(idx)[{2,1,4 }] = 1;
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	for (size_t i = 0; i < t.dimensions[0];++i){
