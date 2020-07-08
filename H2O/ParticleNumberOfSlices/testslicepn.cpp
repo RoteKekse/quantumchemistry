@@ -77,7 +77,7 @@ int main(){
 		start.set_component(i,ten);
 	}
 	Tensor test(start.get_component(idx).dimensions);
-	test[{0,0,1}] = 1;
+	test[{0,0,1}] = (double)rand() / RAND_MAX;
 	test[{0,0,2}] = 1;
 	test[{0,1,0}] = 1;
 	test[{1,0,4}] = 1;
