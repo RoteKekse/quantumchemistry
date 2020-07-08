@@ -96,7 +96,7 @@ int main(){
 	test[{3,1,5}] = (double)rand() / RAND_MAX;
 	test[{3,1,6}] = (double)rand() / RAND_MAX;
 
-#test[{3,0,6}] = 1;
+	//test[{3,0,6}] = 1;
 
 	start.set_component(idx,test);
 	Tensor t = start.get_component(idx);
