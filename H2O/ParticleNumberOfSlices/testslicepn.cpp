@@ -64,7 +64,7 @@ int main(){
 
 
 
-	//start.move_core(idx);
+	start.move_core(idx);
 	for (size_t i = 0; i < d;++i){
 		Tensor ten = start.get_component(i);
 		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++j)
@@ -72,7 +72,26 @@ int main(){
 				ten[j] = 0;
 		start.set_component(i,ten);
 	}
-	start.component(idx)[{2,1,2 }] = 1;
+	Tensor test(start.get_component(idx).dimensions);
+	test[{0,0,1}] = 1;
+	test[{0,0,2}] = 1;
+	test[{0,1,0}] = 1;
+	test[{1,0,4}] = 1;
+	test[{1,0,5}] = 1;
+	test[{1,0,6}] = 1;
+	test[{1,1,1}] = 1;
+	test[{1,1,2}] = 1;
+	test[{1,1,3}] = 1;
+	test[{2,0,4}] = 1;
+	test[{2,0,5}] = 1;
+	test[{2,0,6}] = 1;
+	test[{2,1,1}] = 1;
+	test[{2,1,2}] = 1;
+	test[{2,1,3}] = 1;
+	test[{3,1,4}] = 1;
+	test[{3,1,5}] = 1;
+	test[{3,1,6}] = 0;
+	start.set_component(idx,test);
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	for (size_t i = 0; i < t.dimensions[0];++i){
