@@ -63,7 +63,7 @@ int main(){
 	}
 
 	split = start.chop(idx-1);
-	TTTensor start_first(std::vector<size_t>(d-idx,2));
+	start_first(std::vector<size_t>(d-idx,2));
 	for (size_t i = idx+1; i < d; ++i){
 		Tensor tensor(*split.first.nodes[i+1].tensorObject);
 		XERUS_LOG(info,tensor.dimensions);
