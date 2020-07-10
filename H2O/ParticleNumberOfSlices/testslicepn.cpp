@@ -94,8 +94,8 @@ int main(){
 //	test[{2,1,2}] = (double)rand() / RAND_MAX;
 //	test[{2,1,3}] = (double)rand() / RAND_MAX;
 	test[{3,1,4}] = (double)rand() / RAND_MAX;
-	test[{3,1,5}] = (double)rand() / RAND_MAX;
-	test[{3,1,6}] = (double)rand() / RAND_MAX;
+//	test[{3,1,5}] = (double)rand() / RAND_MAX;
+//	test[{3,1,6}] = (double)rand() / RAND_MAX;
 
 	//test[{3,0,6}] = 1;
 
