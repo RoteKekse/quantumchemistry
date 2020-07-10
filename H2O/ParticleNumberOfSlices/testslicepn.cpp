@@ -87,11 +87,11 @@ int main(){
 //	test[{1,1,1}] = (double)rand() / RAND_MAX;
 //	test[{1,1,2}] = (double)rand() / RAND_MAX;
 //	test[{1,1,3}] = (double)rand() / RAND_MAX;
-//	test[{2,0,4}] = (double)rand() / RAND_MAX;
+	test[{2,0,4}] = (double)rand() / RAND_MAX;
 //	test[{2,0,5}] = (double)rand() / RAND_MAX;
 //	test[{2,0,6}] = (double)rand() / RAND_MAX;
 //	test[{2,1,1}] = (double)rand() / RAND_MAX;
-	test[{2,1,2}] = (double)rand() / RAND_MAX;
+//	test[{2,1,2}] = (double)rand() / RAND_MAX;
 //	test[{2,1,3}] = (double)rand() / RAND_MAX;
 	test[{3,1,4}] = (double)rand() / RAND_MAX;
 //	test[{3,1,5}] = (double)rand() / RAND_MAX;
