@@ -11,6 +11,7 @@
 
 
 int main(){
+	srand (time(NULL));
 	size_t d = 48,p = 8,iterations = 1e6,iterations2 = 100*iterations,roundIter = 10, rank = 10;
 	value_t ev, shift = 25.0, ev_app, ev_ex, eps=1.0,ev_app_tmp;
 	std::vector<size_t> hf_sample = {0,1,2,3,22,23,30,31};
