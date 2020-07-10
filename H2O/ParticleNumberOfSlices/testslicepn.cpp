@@ -80,7 +80,7 @@ int main(){
 	Tensor test(start.get_component(idx).dimensions);
 	test[{0,0,1}] = (double)rand() / RAND_MAX;
 	test[{0,0,2}] = (double)rand() / RAND_MAX;
-	//test[{0,1,0}] = (double)rand() / RAND_MAX;
+	test[{0,1,0}] = (double)rand() / RAND_MAX;
 	//test[{1,0,4}] = (double)rand() / RAND_MAX;
 	//test[{1,0,5}] = (double)rand() / RAND_MAX;
 	//test[{1,0,6}] = (double)rand() / RAND_MAX;
