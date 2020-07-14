@@ -36,6 +36,7 @@ int main(){
 	XERUS_LOG(info,start.ranks());
 
 	size_t idx = 4;
+	start.move_core(idx+1);
 	auto split = start.chop(idx+1);
 
 
