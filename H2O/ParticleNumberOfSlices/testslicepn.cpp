@@ -35,7 +35,7 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	size_t idx = 4;
+	size_t idx = 1;
 	start.move_core(idx+1);
 	auto split = start.chop(idx+1);
 
@@ -53,9 +53,10 @@ int main(){
 	auto Psplitdown = particleNumberOperatorDown(idx);
 	auto idsplit = xerus::TTOperator::identity(std::vector<size_t>(2*idx,2));
 	for (size_t slice = 0; slice < tensor.dimensions[2]; slice++){
+		XERUS_LOG(info,slice);
+
 		Tensor tmp = tensor;
 		tmp.fix_mode(2,slice);
-		XERUS_LOG(info,slice);
 		tmp.reinterpret_dimensions({tmp.dimensions[0],tmp.dimensions[1],1});
 		start_first.set_component(idx-1,tmp);
 
