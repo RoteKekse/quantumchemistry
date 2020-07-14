@@ -91,10 +91,10 @@ int main(){
 		tmp.reinterpret_dimensions({1,tmp.dimensions[0],tmp.dimensions[1]});
 		start_last.set_component(0,tmp);
 
-		start_first/= start_first.frob_norm();
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit2,start_first,start_first));
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitup2,start_first,start_first));
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitdown2,start_first,start_first));
+		start_last/= start_last.frob_norm();
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit2,start_last,start_last));
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitup2,start_last,start_last));
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitdown2,start_last,start_last));
 	}
 
 
