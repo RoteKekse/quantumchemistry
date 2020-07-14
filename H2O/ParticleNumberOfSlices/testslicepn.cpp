@@ -88,6 +88,7 @@ int main(){
 
 		Tensor tmp = tensor;
 		tmp.fix_mode(0,slice);
+		XERUS_LOG(info,tmp.dimensions);
 		tmp.reinterpret_dimensions({1,tmp.dimensions[1],tmp.dimensions[2]});
 		start_last.set_component(0,tmp);
 
