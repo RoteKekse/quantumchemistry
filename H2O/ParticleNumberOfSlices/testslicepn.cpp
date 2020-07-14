@@ -83,7 +83,6 @@ int main(){
 	auto Psplit2 = particleNumberOperator(d-idx);
 	auto Psplitup2 = particleNumberOperatorUp(d-idx);
 	auto Psplitdown2 = particleNumberOperatorDown(d-idx);
-	auto idsplit = xerus::TTOperator::identity(std::vector<size_t>(2*idx,2));
 	for (size_t slice = 0; slice < tensor.dimensions[0]; slice++){
 		XERUS_LOG(info,slice);
 
@@ -93,9 +92,9 @@ int main(){
 		start_last.set_component(0,tmp);
 
 		start_first/= start_first.frob_norm();
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit,start_first,start_first));
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitup,start_first,start_first));
-		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitdown,start_first,start_first));
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplit2,start_first,start_first));
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitup2,start_first,start_first));
+		XERUS_LOG(info,"Particle number split       " << std::setprecision(16) << contract_TT(Psplitdown2,start_first,start_first));
 	}
 
 
