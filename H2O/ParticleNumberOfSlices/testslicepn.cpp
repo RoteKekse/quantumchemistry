@@ -35,7 +35,7 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	size_t idx = 2;
+	size_t idx = 3;
 	auto split = start.chop(idx+1);
 
 
@@ -81,7 +81,7 @@ int main(){
 	test[{0,0,1}] = (double)rand() / RAND_MAX;
 	test[{0,0,2}] = (double)rand() / RAND_MAX;
 	test[{0,1,0}] = (double)rand() / RAND_MAX;
-	test[{1,0,4}] = (double)rand() / RAND_MAX;
+//	test[{1,0,4}] = (double)rand() / RAND_MAX;
 	//test[{1,0,5}] = (double)rand() / RAND_MAX;
 	//test[{1,0,6}] = (double)rand() / RAND_MAX;
 //	test[{1,1,1}] = (double)rand() / RAND_MAX;
