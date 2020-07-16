@@ -143,8 +143,8 @@ int main(){
 		}
 	}
 	XERUS_LOG(info, t.dimensions);
-
-	t.reinterpret_dimensions({t.dimensions[1],t.dimensions[0],t.dimensions[2]});
+	Index i1,i2,i3;
+	t(i1,i2,i3) = t(i2,i1,i3);
 	t.reinterpret_dimensions({t.dimensions[0]*t.dimensions[1],t.dimensions[2]});
 	XERUS_LOG(info,"\n" << t);
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
