@@ -130,6 +130,7 @@ int main(){
 //	//test[{3,0,6}] = 1;
 //
 //	start.set_component(idx,test);
+	t[{0,0,3}] = 1;
 	Tensor t = start.get_component(idx);
 	XERUS_LOG(info,"\n" << t);
 	for (size_t i = 0; i < t.dimensions[0];++i){
