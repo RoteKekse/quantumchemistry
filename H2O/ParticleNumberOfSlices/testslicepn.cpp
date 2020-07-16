@@ -141,6 +141,7 @@ int main(){
 			}
 		}
 	}
+	t.reinterpret_dimensions({t.dimensions[0]*t.dimensions[1],t.dimensions[2]});
 	XERUS_LOG(info,"\n" << t);
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
