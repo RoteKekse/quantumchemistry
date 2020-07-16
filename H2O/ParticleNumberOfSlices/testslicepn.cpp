@@ -135,7 +135,7 @@ int main(){
 	for (size_t i = 0; i < t.dimensions[0];++i){
 		for (size_t j = 0; j < t.dimensions[1];++j){
 			for (size_t k = 0; k < t.dimensions[2];++k){
-				if (std::abs(ten[j]) > 10e-10)
+				if (std::abs(t[{i,j,k}]) > 10e-10)
 					XERUS_LOG(info,i <<" " <<j<< " "<< k<<": " << t[{i,j,k}]);
 
 
