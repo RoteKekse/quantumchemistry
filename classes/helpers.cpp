@@ -234,7 +234,6 @@ TTOperator particleNumberOperatorUp(size_t d){
 		op.set_component(0,tmp);
 	}
 	else {
-		op.set_component(0,n);
 		return op;
 	}
 	for (size_t i = 1; i < d-1; ++i){

@@ -99,14 +99,14 @@ int main(){
 
 
 
-//	start.move_core(0);
-//	for (size_t i = 0; i < d;++i){
-//		Tensor ten = start.get_component(i);
-//		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++j)
-//			if (std::abs(ten[j]) < 10e-10)
-//				ten[j] = 0;
-//		start.set_component(i,ten);
-//	}
+	start.move_core(0);
+	for (size_t i = 0; i < d;++i){
+		Tensor ten = start.get_component(i);
+		for (size_t j = 0; j< ten.dimensions[0]*ten.dimensions[1]*ten.dimensions[2];++j)
+			if (std::abs(ten[j]) < 10e-10)
+				ten[j] = 0;
+		start.set_component(i,ten);
+	}
 //	Tensor test(start.get_component(idx).dimensions);
 //	test[{0,0,1}] = (double)rand() / RAND_MAX;
 //	test[{0,0,2}] = (double)rand() / RAND_MAX;
@@ -141,9 +141,9 @@ int main(){
 //			}
 //		}
 //	}
-//	XERUS_LOG(info,"\n" << t);
-//	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
-//	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
-//	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start)/contract_TT(id,start,start));
+	XERUS_LOG(info,"\n" << t);
+	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
+	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
+	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start)/contract_TT(id,start,start));
 	return 0;
 }
