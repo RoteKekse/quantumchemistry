@@ -96,11 +96,14 @@ int main(){
 		begin_time = clock();
 		res_tangential.clear();
 		res_tangential = Top.localProduct(Hs,Finv,xHx,true);
+		XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_tangential)));
+
 		setZero(res_tangential,1e-10);
 		if (iter == 0){
 			res = Top.builtTTTensor(res_tangential);
 		} else {
 			res_last_tangential = Top.localProduct(res,id);
+			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_last_tangential)));
 			setZero(res_last_tangential,1e-10);
 			beta = frob_norm(res_tangential)/frob_norm(res_last_tangential); //Fletcher Reeves update
 			XERUS_LOG(info,"Beta = " << beta);
