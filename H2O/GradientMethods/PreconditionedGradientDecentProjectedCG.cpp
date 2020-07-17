@@ -14,7 +14,7 @@ using xerus::misc::operator<<;
 double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, double rFx);
 void project(std::vector<Tensor>& x,std::vector<Tensor>& y,const std::vector<Tensor>& Q);
 value_t getParticleNumber(const TTTensor& x);
-
+void setZero(std::vector<Tensor> &tang, value_t eps);
 
 
 
@@ -94,14 +94,13 @@ int main(){
 
 		begin_time = clock();
 		res_tangential.clear();
-		XERUS_LOG(info,Hs.frob_norm());
-		XERUS_LOG(info,Finv.frob_norm());
-		XERUS_LOG(info,xHx);
 		res_tangential = Top.localProduct(Hs,Finv,xHx,true);
+		setZero(res_tangential,1e-10);
 		if (iter == 0){
 			res = Top.builtTTTensor(res_tangential);
 		} else {
 			res_last_tangential = Top.localProduct(res,id);
+			setZero(res_last_tangential,1e-10);
 			beta = frob_norm(res_tangential)/frob_norm(res_last_tangential); //Fletcher Reeves update
 			XERUS_LOG(info,"Beta = " << beta);
 			add(res_tangential,res_last_tangential, beta);
@@ -119,42 +118,22 @@ int main(){
 
 		begin_time = clock();
 		//project(res,num_elec,2*nob);
-		XERUS_LOG(info,"Particle Number res (after projection) " << std::setprecision(13) << getParticleNumber(res));
+		//XERUS_LOG(info,"Particle Number res (after projection) " << std::setprecision(13) << getParticleNumber(res));
 		XERUS_LOG(info,"\n" << res.ranks());
 		res2 = res;
-		//phi2 = phi;
-//		if (round2)
-//			res2.round(round_val);
-		//phi2.round(10);
+		//Calculate optimal stepsize
 		rHx = contract_TT(Hs,res2,phi);
-//		XERUS_LOG(info,"rHx" << rHx);
-//		rHx = contract_TT(Hs,res,phi);
-//		XERUS_LOG(info,"rHx" << rHx);
 		rHr = contract_TT(Hs,res2,res2);
-//		XERUS_LOG(info,"rHr" << rHr);
-//		rHr = contract_TT(Hs,res,res);
-//		XERUS_LOG(info,"rHr" << rHr);
 		rx = contract_TT(id,res2,phi);
-//		XERUS_LOG(info,"rx" << rx);
 		rr = contract_TT(id,res2,res2);
-//		XERUS_LOG(info,"rr" << rr);
 		alpha = get_stepsize(xHx,rHr,rHx,xx,rr,rx);
-//		alpha = alpha_start;
-//		while (true){
-	//{{alpha = 3.0;
-			phi_tmp = phi - alpha* res;
-			phi_tmp.round(std::vector<size_t>(2*nob-1,max_rank),eps);
-			xx_tmp = phi_tmp.frob_norm();
-			phi_tmp /= xx_tmp;
-			xHx_tmp = contract_TT(Hs,phi_tmp,phi_tmp);
-//			XERUS_LOG(info,xHx_tmp);
-//			XERUS_LOG(info,(xHx-alpha*rHx)/(1-rx*alpha));
 
-//			if (xHx_tmp < xHx - alpha*c1*residual)
-//				break;
-//			else
-//				alpha *= roh;
-//		}
+		phi_tmp = phi - alpha* res;
+		phi_tmp.round(std::vector<size_t>(2*nob-1,max_rank),eps);
+		xx_tmp = phi_tmp.frob_norm();
+		phi_tmp /= xx_tmp;
+		xHx_tmp = contract_TT(Hs,phi_tmp,phi_tmp);
+
 		stepsize_time = (value_t) (clock() - begin_time) / CLOCKS_PER_SEC;
 		XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 		phi = phi_tmp;
@@ -210,5 +189,13 @@ value_t getParticleNumber(const TTTensor& x){
 	pn() = P(ii/2,jj/2)*x(ii&0)*x(jj&0);
 	nn() = x(ii&0)*x(ii&0);
 	return pn[0]/nn[0];
+}
+
+void setZero(std::vector<Tensor> &tang, value_t eps){
+	for (Tensor t : tang){
+		for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
+			if (tang[j] < eps)
+				tang[j] = 0;
+	}
 }
 
