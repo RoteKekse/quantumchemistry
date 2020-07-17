@@ -78,6 +78,13 @@
 		std::vector<value_t> result;
 		std::vector<Tensor> res_tangential, res_last_tangential;
 		TangentialOperation Top(phi);
+		Top.xbasis.clear();
+		phi.move_core(0);
+		Top.xbasis.emplace_back(setZero(phi,1e-8));
+		phi.move_core(2*nob-1);
+		Top.xbasis.emplace_back(setZero(phi,1e-8));
+		phi.move_core(0);
+		phi = setZero(phi,1e-8);
 		std::ofstream outfile;
 
 		outfile.open(out_name);
@@ -111,7 +118,7 @@
 //			ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
 //			XERUS_LOG(info,"\n" <<1e6*tt);
 //			XERUS_LOG(info,"\n" <<1e6*ttt);
-			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(res_tangential));
+			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_tangential)));
 
 			if (iter == 0){
 				res = Top.builtTTTensor(res_tangential);
