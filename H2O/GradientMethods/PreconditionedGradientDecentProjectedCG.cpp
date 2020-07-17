@@ -78,13 +78,6 @@
 		std::vector<value_t> result;
 		std::vector<Tensor> res_tangential, res_last_tangential;
 		TangentialOperation Top(phi);
-		Top.xbasis.clear();
-		phi.move_core(0);
-		Top.xbasis.emplace_back(setZero(phi,1e-8));
-		phi.move_core(2*nob-1);
-		Top.xbasis.emplace_back(setZero(phi,1e-8));
-		phi.move_core(0);
-		phi = setZero(phi,1e-8);
 		std::ofstream outfile;
 
 		outfile.open(out_name);
@@ -103,7 +96,7 @@
 			begin_time = clock();
 			res_tangential.clear();
 			res_tangential = Top.localProduct(Hs,Finv,xHx,true);
-			res_tangential = setZero(res_tangential,1e-8);
+			//res_tangential = setZero(res_tangential,1e-8);
 
 
 //			auto test2 = Top.localProduct(Hs,Finv,xHx,true);
@@ -125,7 +118,7 @@
 			} else {
 				res_last_tangential = Top.localProduct(res,id);
 				XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_last_tangential)));
-				res_last_tangential = setZero(res_last_tangential,1e-8);
+				//res_last_tangential = setZero(res_last_tangential,1e-8);
 				beta = frob_norm(res_tangential)/frob_norm(res_last_tangential); //Fletcher Reeves update
 				XERUS_LOG(info,"Beta = " << beta);
 				add(res_tangential,res_last_tangential, beta);
@@ -163,14 +156,8 @@
 			XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 			phi = phi_tmp;
 			phi = setZero(phi,1e-8);
-			//Top.update(phi);
-			Top.xbasis.clear();
-			phi.move_core(0);
-			Top.xbasis.emplace_back(setZero(phi,1e-8));
-			phi.move_core(2*nob-1);
-			Top.xbasis.emplace_back(setZero(phi,1e-8));
-			phi.move_core(0);
-			phi = setZero(phi,1e-8);
+			Top.update(phi);
+			//phi = setZero(phi,1e-8);
 
 			res_last = res;
 
