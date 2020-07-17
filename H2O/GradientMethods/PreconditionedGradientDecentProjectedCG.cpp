@@ -96,26 +96,29 @@
 			begin_time = clock();
 			res_tangential.clear();
 			res_tangential = Top.localProduct(Hs,Finv,xHx,true);
-			auto test2 = Top.localProduct(Hs,Finv,xHx,true);
-			test2 = setZero(test2,1e-8);
+			res_tangential = setZero(res_tangential,1e-8);
 
-			auto test = Top.builtTTTensor(test2);
-			test.move_core(0);
-			test = setZero(test,1e-8);
-			Tensor tt = phi.get_component(2);
-			Tensor ttt = test2[2];
-			tt.reinterpret_dimensions({tt.dimensions[0]*tt.dimensions[1],tt.dimensions[2]});
-			ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-			XERUS_LOG(info,"\n" <<1e6*tt);
-			XERUS_LOG(info,"\n" <<1e6*ttt);
-			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(test));
+
+//			auto test2 = Top.localProduct(Hs,Finv,xHx,true);
+//			test2 = setZero(test2,1e-8);
+//
+//			auto test = Top.builtTTTensor(test2);
+//			test.move_core(0);
+//			test = setZero(test,1e-8);
+//			Tensor tt = phi.get_component(2);
+//			Tensor ttt = test2[2];
+//			tt.reinterpret_dimensions({tt.dimensions[0]*tt.dimensions[1],tt.dimensions[2]});
+//			ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
+//			XERUS_LOG(info,"\n" <<1e6*tt);
+//			XERUS_LOG(info,"\n" <<1e6*ttt);
+			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(res_tangential));
 
 			if (iter == 0){
 				res = Top.builtTTTensor(res_tangential);
 			} else {
 				res_last_tangential = Top.localProduct(res,id);
 				XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_last_tangential)));
-				res_last_tangential = setZero(res_last_tangential,1e-10);
+				res_last_tangential = setZero(res_last_tangential,1e-8);
 				beta = frob_norm(res_tangential)/frob_norm(res_last_tangential); //Fletcher Reeves update
 				XERUS_LOG(info,"Beta = " << beta);
 				add(res_tangential,res_last_tangential, beta);
