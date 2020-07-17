@@ -96,13 +96,14 @@ int main(){
 		begin_time = clock();
 		res_tangential.clear();
 		res_tangential = Top.localProduct(Hs,Finv,xHx,true);
-		auto test2 = Top.localProduct(id,id,0,true);
+		auto test2 = Top.localProduct(Hs,id,0,true);
 		setZero(test2,1e-10);
 
 		auto test = Top.builtTTTensor(test2);
 		test.move_core(0);
 		setZero(test,1e-10);
-
+		XERUS_LOG(info,phi.get_component(2));
+		XERUS_LOG(info,test2[2]);
 		XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(test));
 
 		if (iter == 0){
