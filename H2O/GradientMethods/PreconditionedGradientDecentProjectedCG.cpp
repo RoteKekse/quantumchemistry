@@ -153,7 +153,15 @@
 			XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 			phi = phi_tmp;
 			phi = setZero(phi,1e-8);
-			Top.update(phi);
+			//Top.update(phi);
+			Top.xbasis.clear();
+			phi.move_core(0);
+			Top.xbasis.emplace_back(setZero(phi,1e-8));
+			phi.move_core(2*nob-1);
+			Top.xbasis.emplace_back(setZero(phi,1e-8));
+			phi.move_core(0);
+			phi = setZero(phi,1e-8);
+
 			res_last = res;
 
 			begin_time = clock();
