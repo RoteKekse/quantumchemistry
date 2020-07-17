@@ -97,6 +97,8 @@ int main(){
 		res_tangential.clear();
 		res_tangential = Top.localProduct(Hs,Finv,xHx,true);
 		auto test2 = Top.localProduct(Hs,id,0,true);
+		setZero(test2,1e-10);
+
 		auto test = Top.builtTTTensor(test2);
 		test.move_core(0);
 		setZero(test,1e-10);
