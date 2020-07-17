@@ -51,7 +51,6 @@ int main(){
 	for (size_t i = 0; i < 2*nob;++i){
 		Finv.component(i)[{0,0,1,0}] = 0;
 		Finv.component(i)[{0,1,0,0}] = 0;
-		XERUS_LOG(info,Finv.get_component(i));
 	}
 	XERUS_LOG(info,Finv.ranks());
 
