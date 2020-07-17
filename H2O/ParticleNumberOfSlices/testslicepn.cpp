@@ -160,7 +160,7 @@ int main(){
 	Index i1,i2,i3;
 	t(i1,i2,i3) = t(i2,i1,i3);
 	t.reinterpret_dimensions({t.dimensions[0]*t.dimensions[1],t.dimensions[2]});
-	XERUS_LOG(info,"\n" << t);
+	XERUS_LOG(info,"\n" << 1e6*t);
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start)/contract_TT(id,start,start));
@@ -170,7 +170,7 @@ int main(){
 	Tensor ttt = tangcomp[idx];
 	ttt(i1,i2,i3) = ttt(i2,i1,i3);
 	ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-	XERUS_LOG(info,"\n" << ttt);
+	XERUS_LOG(info,"\n" << 1e6*ttt);
 
 	return 0;
 }
