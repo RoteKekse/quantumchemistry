@@ -153,5 +153,13 @@ int main(){
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start)/contract_TT(id,start,start));
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start)/contract_TT(id,start,start));
+
+	TangentialOperation tang(start);
+	auto tangcomp = tang.localProduct(start,Hs);
+	Tensor ttt = tangcomp[idx];
+	ttt(i1,i2,i3) = ttt(i2,i1,i3);
+	ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
+	XERUS_LOG(info,"\n" << ttt);
+
 	return 0;
 }
