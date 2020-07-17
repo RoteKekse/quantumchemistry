@@ -96,7 +96,7 @@
 			begin_time = clock();
 			res_tangential.clear();
 			res_tangential = Top.localProduct(Hs,Finv,xHx,true);
-			auto test2 = Top.localProduct(Hs,id,0,true);
+			auto test2 = Top.localProduct(Hs,Finv,xHx,true);
 			test2 = setZero(test2,1e-8);
 
 			auto test = Top.builtTTTensor(test2);
