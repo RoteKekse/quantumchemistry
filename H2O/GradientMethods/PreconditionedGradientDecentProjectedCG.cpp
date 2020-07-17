@@ -15,6 +15,7 @@ double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, 
 void project(std::vector<Tensor>& x,std::vector<Tensor>& y,const std::vector<Tensor>& Q);
 value_t getParticleNumber(const TTTensor& x);
 void setZero(std::vector<Tensor> &tang, value_t eps);
+void setZero(TTTensor &TT, value_t eps);
 
 
 
@@ -137,6 +138,7 @@ int main(){
 		stepsize_time = (value_t) (clock() - begin_time) / CLOCKS_PER_SEC;
 		XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 		phi = phi_tmp;
+		setZero(phi,1e-10);
 		Top.update(phi);
 		res_last = res;
 
@@ -194,8 +196,18 @@ value_t getParticleNumber(const TTTensor& x){
 void setZero(std::vector<Tensor> &tang, value_t eps){
 	for (Tensor t : tang){
 		for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
-			if (tang[j] < eps)
-				tang[j] = 0;
+			if (t[j] < eps)
+				t[j] = 0;
 	}
 }
+
+void setZero(TTTensor &TT, value_t eps){
+	for (size_t i = 0 ; i < TT.order();++i){
+		Tensor t = TT.component(i);
+		for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
+			if (t[j] < eps)
+				t[j] = 0;
+	}
+}
+
 
