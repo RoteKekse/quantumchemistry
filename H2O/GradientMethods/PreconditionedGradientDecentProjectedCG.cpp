@@ -97,11 +97,11 @@
 			res_tangential.clear();
 			res_tangential = Top.localProduct(Hs,Finv,xHx,true);
 			auto test2 = Top.localProduct(Hs,id,0,true);
-			test2 = setZero(test2,1e-10);
+			test2 = setZero(test2,1e-8);
 
 			auto test = Top.builtTTTensor(test2);
 			test.move_core(0);
-			test = setZero(test,1e-10);
+			test = setZero(test,1e-8);
 			Tensor tt = phi.get_component(2);
 			Tensor ttt = test2[2];
 			tt.reinterpret_dimensions({tt.dimensions[0]*tt.dimensions[1],tt.dimensions[2]});
