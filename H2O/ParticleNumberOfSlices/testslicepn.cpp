@@ -29,6 +29,9 @@ int main(){
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 
+	start.round(75);
+	start.round(70);
+	start.round(65);
 	start.round(60);
 	start.round(50);
 	start.round(40);
@@ -167,7 +170,7 @@ int main(){
 	Tensor ttt = tangcomp[idx];
 	ttt(i1,i2,i3) = ttt(i2,i1,i3);
 	ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-	XERUS_LOG(info,"\n" << 1e12*ttt);
+	XERUS_LOG(info,"\n" << ttt);
 
 	return 0;
 }
