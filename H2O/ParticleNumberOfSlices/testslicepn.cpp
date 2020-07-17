@@ -35,7 +35,7 @@ int main(){
 	XERUS_LOG(info,"Particle number down start  " << std::setprecision(16) << contract_TT(Pdown,start,start));
 	XERUS_LOG(info,start.ranks());
 
-	size_t idx = 5;
+	size_t idx = 3;
 	start.move_core(idx+1);
 	auto split = start.chop(idx+1);
 
@@ -159,7 +159,7 @@ int main(){
 	Tensor ttt = tangcomp[idx];
 	ttt(i1,i2,i3) = ttt(i2,i1,i3);
 	ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-	XERUS_LOG(info,"\n" << ttt);
+	XERUS_LOG(info,"\n" << 1e6*ttt);
 
 	return 0;
 }
