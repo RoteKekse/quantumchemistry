@@ -152,7 +152,7 @@
 			stepsize_time = (value_t) (clock() - begin_time) / CLOCKS_PER_SEC;
 			XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 			phi = phi_tmp;
-			phi = setZero(phi,1e-10);
+			phi = setZero(phi,1e-8);
 			Top.update(phi);
 			res_last = res;
 
