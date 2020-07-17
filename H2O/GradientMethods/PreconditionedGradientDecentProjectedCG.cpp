@@ -210,7 +210,7 @@
 	void setZero(std::vector<Tensor> &tang, value_t eps){
 		for (Tensor t : tang){
 			for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
-				if (t[j] < eps)
+				if (std::abs(t[j]) < eps)
 					t[j] = 0;
 		}
 	}
@@ -219,7 +219,7 @@
 		for (size_t i = 0 ; i < TT.order();++i){
 			Tensor t = TT.component(i);
 			for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
-				if (t[j] < eps)
+				if (std::abs(t[j]) < eps)
 					t[j] = 0;
 		}
 	}
