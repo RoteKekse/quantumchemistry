@@ -159,7 +159,7 @@ int main(){
 	Tensor ttt = tangcomp[idx];
 	ttt(i1,i2,i3) = ttt(i2,i1,i3);
 	ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-	XERUS_LOG(info,"\n" << 1e6*ttt);
+	XERUS_LOG(info,"\n" << 1e12*ttt);
 
 	return 0;
 }
