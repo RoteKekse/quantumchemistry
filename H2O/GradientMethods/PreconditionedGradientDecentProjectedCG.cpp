@@ -14,8 +14,8 @@
 	double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, double rFx);
 	void project(std::vector<Tensor>& x,std::vector<Tensor>& y,const std::vector<Tensor>& Q);
 	value_t getParticleNumber(const TTTensor& x);
-	void setZero(std::vector<Tensor&> &tang, value_t eps);
-	void setZero(TTTensor &TT, value_t eps);
+	std::vector<Tensor> setZero(std::vector<Tensor> tang, value_t eps);
+	TTTensor setZero(TTTensor TT, value_t eps);
 
 
 
@@ -97,11 +97,11 @@
 			res_tangential.clear();
 			res_tangential = Top.localProduct(Hs,Finv,xHx,true);
 			auto test2 = Top.localProduct(Hs,id,0,true);
-			setZero(test2,1e-10);
+			test2 = setZero(test2,1e-10);
 
 			auto test = Top.builtTTTensor(test2);
 			test.move_core(0);
-			setZero(test,1e-10);
+			test = setZero(test,1e-10);
 			Tensor tt = phi.get_component(2);
 			Tensor ttt = test2[2];
 			tt.reinterpret_dimensions({tt.dimensions[0]*tt.dimensions[1],tt.dimensions[2]});
@@ -115,7 +115,7 @@
 			} else {
 				res_last_tangential = Top.localProduct(res,id);
 				XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_last_tangential)));
-				setZero(res_last_tangential,1e-10);
+				res_last_tangential = setZero(res_last_tangential,1e-10);
 				beta = frob_norm(res_tangential)/frob_norm(res_last_tangential); //Fletcher Reeves update
 				XERUS_LOG(info,"Beta = " << beta);
 				add(res_tangential,res_last_tangential, beta);
@@ -152,7 +152,7 @@
 			stepsize_time = (value_t) (clock() - begin_time) / CLOCKS_PER_SEC;
 			XERUS_LOG(info,"---Time for alpha: " << alpha << ": "  << stepsize_time<<" sekunden");
 			phi = phi_tmp;
-			setZero(phi,1e-10);
+			phi = setZero(phi,1e-10);
 			Top.update(phi);
 			res_last = res;
 
@@ -207,21 +207,27 @@
 		return pn[0]/nn[0];
 	}
 
-	void setZero(std::vector<Tensor&> &tang, value_t eps){
+	std::vector<Tensor>  setZero(std::vector<Tensor> tang, value_t eps){
+		std::vector<Tensor> res;
 		for (Tensor t : tang){
 			for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
 				if (std::abs(t[j]) < eps)
 					t[j] = 0;
+			res.emplace_back(t);
 		}
+		return res;
 	}
 
-	void setZero(TTTensor &TT, value_t eps){
+	TTTensor setZero(TTTensor TT, value_t eps){
+		TTTensor res(TT.dimensions);
 		for (size_t i = 0 ; i < TT.order();++i){
 			Tensor t = TT.component(i);
 			for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
 				if (std::abs(t[j]) < eps)
 					t[j] = 0;
+			res.set_component(i,t);
 		}
+		return res;
 	}
 
 
