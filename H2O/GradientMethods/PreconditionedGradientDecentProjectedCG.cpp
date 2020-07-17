@@ -106,8 +106,8 @@
 			Tensor ttt = test2[2];
 			tt.reinterpret_dimensions({tt.dimensions[0]*tt.dimensions[1],tt.dimensions[2]});
 			ttt.reinterpret_dimensions({ttt.dimensions[0]*ttt.dimensions[1],ttt.dimensions[2]});
-			XERUS_LOG(info,"\n" <<1e4*tt);
-			XERUS_LOG(info,"\n" <<1e4*ttt);
+			XERUS_LOG(info,"\n" <<1e6*tt);
+			XERUS_LOG(info,"\n" <<1e6*ttt);
 			XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(test));
 
 			if (iter == 0){
