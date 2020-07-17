@@ -28,7 +28,7 @@ int main(){
 	Index ii,jj,kk,ll,mm;
 	value_t eps = 10e-6;
 	bool round = true,round2 = false;
-	size_t rank_precon = 1;
+	size_t rank_precon = 0;
 	value_t roh = 0.75, c1 = 10e-4, round_val = 0.9;
 	value_t alpha_start = 2;
 	std::string out_name = "/homes/numerik/goette/Documents/jupyter_examples/Paper/Preconditioning/data/PreconProjectedCG_rank_" + std::to_string(max_rank) +"_cpu_bench_new.csv";
