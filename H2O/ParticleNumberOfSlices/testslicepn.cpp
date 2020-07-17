@@ -29,6 +29,7 @@ int main(){
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
 
+	start.round(7);
 	start/= start.frob_norm();
 	XERUS_LOG(info,"Particle number start       " << std::setprecision(16) << contract_TT(P,start,start));
 	XERUS_LOG(info,"Particle number up start    " << std::setprecision(16) << contract_TT(Pup,start,start));
