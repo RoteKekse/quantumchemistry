@@ -26,7 +26,7 @@
 		size_t num_elec = 8;
 		double shift = 25.0;
 		size_t max_iter = 50;
-		size_t max_rank = 20;
+		size_t max_rank = 10;
 		Index ii,jj,kk,ll,mm;
 		value_t eps = 10e-6;
 		bool round = true,round2 = false;
