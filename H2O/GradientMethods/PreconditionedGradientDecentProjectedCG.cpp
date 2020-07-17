@@ -96,7 +96,7 @@ int main(){
 		begin_time = clock();
 		res_tangential.clear();
 		res_tangential = Top.localProduct(Hs,Finv,xHx,true);
-		setZero(res_tangential,1e-8);
+		setZero(res_tangential,1e-3);
 		XERUS_LOG(info,"Particle Number res " << std::setprecision(13) << getParticleNumber(Top.builtTTTensor(res_tangential)));
 
 		if (iter == 0){
