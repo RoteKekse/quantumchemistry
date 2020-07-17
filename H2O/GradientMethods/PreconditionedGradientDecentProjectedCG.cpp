@@ -14,7 +14,7 @@
 	double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, double rFx);
 	void project(std::vector<Tensor>& x,std::vector<Tensor>& y,const std::vector<Tensor>& Q);
 	value_t getParticleNumber(const TTTensor& x);
-	void setZero(std::vector<Tensor> &tang, value_t eps);
+	void setZero(std::vector<Tensor&> &tang, value_t eps);
 	void setZero(TTTensor &TT, value_t eps);
 
 
@@ -207,7 +207,7 @@
 		return pn[0]/nn[0];
 	}
 
-	void setZero(std::vector<Tensor> &tang, value_t eps){
+	void setZero(std::vector<Tensor&> &tang, value_t eps){
 		for (Tensor t : tang){
 			for (size_t j = 0; j < t.dimensions[0]*t.dimensions[1]*t.dimensions[2]; ++j)
 				if (std::abs(t[j]) < eps)
