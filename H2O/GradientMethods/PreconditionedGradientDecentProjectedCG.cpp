@@ -14,6 +14,8 @@
 	double get_stepsize(double xHx, double rHr, double rHx, double xFx, double rFr, double rFx);
 	void project(std::vector<Tensor>& x,std::vector<Tensor>& y,const std::vector<Tensor>& Q);
 	value_t getParticleNumber(const TTTensor& x);
+	value_t getParticleNumberUp(const TTTensor& x);
+	value_t getParticleNumberDown(const TTTensor& x);
 	std::vector<Tensor> setZero(std::vector<Tensor> tang, value_t eps);
 	TTTensor setZero(TTTensor TT, value_t eps);
 
@@ -91,7 +93,9 @@
 			//update phi
 			XERUS_LOG(info, "------ Iteration = " << iter);
 			XERUS_LOG(info,"Projected Gradient step with PC (non symmetric)");
-			XERUS_LOG(info,"Particle Number phi " << std::setprecision(13) << getParticleNumber(phi));
+			XERUS_LOG(info,"Particle Number Up   phi " << std::setprecision(13) << getParticleNumberUp(phi));
+			XERUS_LOG(info,"Particle Number Down phi " << std::setprecision(13) << getParticleNumberDown(phi));
+			XERUS_LOG(info,"Particle Number      phi " << std::setprecision(13) << getParticleNumber(phi));
 
 			begin_time = clock();
 			res_tangential.clear();
@@ -211,6 +215,28 @@
 		nn() = x(ii&0)*x(ii&0);
 		return pn[0]/nn[0];
 	}
+
+	value_t getParticleNumberUp(const TTTensor& x){
+			Index ii,jj;
+			size_t d = x.order();
+			auto P = particleNumberOperatorUp(d);
+
+			Tensor pn,nn;
+			pn() = P(ii/2,jj/2)*x(ii&0)*x(jj&0);
+			nn() = x(ii&0)*x(ii&0);
+			return pn[0]/nn[0];
+		}
+
+	value_t getParticleNumberDown(const TTTensor& x){
+			Index ii,jj;
+			size_t d = x.order();
+			auto P = particleNumberOperatorDown(d);
+
+			Tensor pn,nn;
+			pn() = P(ii/2,jj/2)*x(ii&0)*x(jj&0);
+			nn() = x(ii&0)*x(ii&0);
+			return pn[0]/nn[0];
+		}
 
 	std::vector<Tensor>  setZero(std::vector<Tensor> tang, value_t eps){
 		std::vector<Tensor> res;
