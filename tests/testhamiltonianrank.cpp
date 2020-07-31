@@ -32,7 +32,7 @@ int main(){
 			for (size_t l = idx; l < d; ++l){
 				double number = distribution(generator);
 				//double number = 1;
-				res += number*return_one_e_ac(k,l,d);
+				res2 += number*return_one_e_ac(k,l,d);
 
 
 			}
