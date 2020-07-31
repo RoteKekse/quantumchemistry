@@ -29,21 +29,22 @@ int main(){
 			}
 		}
 		for (size_t i = 0; i < d; ++i){
-					for (size_t j = 0; j < d; ++j){
-						for (size_t k = 0; k < d; ++k){
-							for (size_t l = 0; l < d; ++l){
-								double number = distribution(generator);
-								//double number = 1;
-								res2 += number*return_two_e_ac(i,j,k,l,d);
+			for (size_t j = 0; j < d; ++j){
+				for (size_t k = 0; k < d; ++k){
+					for (size_t l = 0; l < d; ++l){
+						double number = distribution(generator);
+						//double number = 1;
+						res2 += number*return_two_e_ac(i,j,k,l,d);
 
 
-							}
-						}
 					}
-				}2
-		XERUS_LOG(info,res.ranks());
+				}
+			}
+		}
 		res.round(1e-8);
+		res2.round(1e-8);
 		XERUS_LOG(info,res.ranks());
+		XERUS_LOG(info,res2.ranks());
 	}
 
 
