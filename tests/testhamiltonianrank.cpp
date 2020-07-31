@@ -7,7 +7,7 @@ using xerus::misc::operator<<;
 
 int main(){
 
-	for (size_t d = 8; d < 20; d=d+2){
+	for (size_t d = 8; d < 24; d=d+2){
 		XERUS_LOG(info,d);
 		size_t idx = d/2;
 
@@ -18,8 +18,8 @@ int main(){
 			for (size_t j = 0; j < idx; ++j){
 				for (size_t k = idx/2; k < d; ++k){
 					for (size_t l = idx/2; l < d; ++l){
-						//double number = distribution(generator);
-						double number = 1;
+						double number = distribution(generator);
+						//double number = 1;
 						res += number*return_two_e_ac(i,j,k,l,d);
 
 
@@ -28,7 +28,7 @@ int main(){
 			}
 		}
 		XERUS_LOG(info,res.ranks());
-		res.round(1e-10);
+		res.round(1e-8);
 		XERUS_LOG(info,res.ranks());
 	}
 
