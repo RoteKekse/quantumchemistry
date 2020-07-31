@@ -18,7 +18,8 @@ int main(){
 			for (size_t j = 0; j < idx; ++j){
 				for (size_t k = idx/2; k < d; ++k){
 					for (size_t l = idx/2; l < d; ++l){
-						double number = distribution(generator);
+						//double number = distribution(generator);
+						double number = 1;
 						res += number*return_two_e_ac(i,j,k,l,d);
 
 
