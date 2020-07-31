@@ -7,7 +7,7 @@ using xerus::misc::operator<<;
 
 int main(){
 
-	for (size_t d = 8; d < 16; d=d+2){
+	for (size_t d = 8; d < 22; d=d+2){
 		XERUS_LOG(info,d);
 		size_t idx = d/2;
 
