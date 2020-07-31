@@ -28,17 +28,13 @@ int main(){
 				}
 			}
 		}
-		for (size_t i = 0; i < d; ++i){
-			for (size_t j = 0; j < d; ++j){
-				for (size_t k = 0; k < d; ++k){
-					for (size_t l = 0; l < d; ++l){
-						double number = distribution(generator);
-						//double number = 1;
-						res2 += number*return_two_e_ac(i,j,k,l,d);
+		for (size_t k = 0; k < idx; ++k){
+			for (size_t l = idx; l < d; ++l){
+				double number = distribution(generator);
+				//double number = 1;
+				res += number*return_one_e_ac(k,l,d);
 
 
-					}
-				}
 			}
 		}
 		res.round(1e-8);
