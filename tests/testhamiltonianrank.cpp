@@ -16,8 +16,8 @@ int main(){
 		TTOperator res(std::vector<size_t>(2*d,2));
 		for (size_t i = 0; i < idx; ++i){
 			for (size_t j = 0; j < idx; ++j){
-				for (size_t k = idx/2; k < d; ++k){
-					for (size_t l = idx/2; l < d; ++l){
+				for (size_t k = idx; k < d; ++k){
+					for (size_t l = idx; l < d; ++l){
 						double number = distribution(generator);
 						//double number = 1;
 						res += number*return_two_e_ac(i,j,k,l,d);
