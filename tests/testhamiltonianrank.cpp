@@ -8,7 +8,7 @@ using xerus::misc::operator<<;
 int main(){
 
 	for (size_t d = 8; d < 20; d=d+2){
-		Xerus_log(info,d);
+		XERUS_LOG(info,d);
 		size_t idx = d/2;
 
 		std::default_random_engine generator;
