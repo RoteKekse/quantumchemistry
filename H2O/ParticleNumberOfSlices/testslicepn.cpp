@@ -20,7 +20,7 @@ int main(){
 	xerus::TTOperator Hs;
 	std::string name2 = "../data/hamiltonian_H2O_" + std::to_string(d)  +"_full_shifted_benchmark.ttoperator";
 	read_from_disc(name2,Hs);
-	XERUS_LOG(info,Hs.ranks);
+	XERUS_LOG(info,Hs.ranks());
 	auto id = xerus::TTOperator::identity(std::vector<size_t>(2*d,2));
 	auto P = particleNumberOperator(d);
 	auto Pup = particleNumberOperatorUp(d);
