@@ -34,7 +34,7 @@ int main(){
 //
 //			}
 //		}
-		res.round(1e-8);
+		res.round(1e-6);
 //		res2.round(1e-8);
 		XERUS_LOG(info,res.ranks());
 //		XERUS_LOG(info,res2.ranks());
