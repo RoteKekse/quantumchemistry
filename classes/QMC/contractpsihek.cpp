@@ -245,7 +245,7 @@ class ContractPsiHek{
 		}
 
 
-		void preparePsiEval(){ 			// TODO can one keep the lower contractions for different e_ks??
+		size_t preparePsiEval(){ 			// TODO can one keep the lower contractions for different e_ks??
 			Index r1,r2,r3;
 			// a queue containing a pair of the position and a vector containing of the data pairs index and Tensor
 			// the index of the data vector is the linearized version of an order 4 Tensor for the number of
@@ -270,7 +270,7 @@ class ContractPsiHek{
 			}
 
 			bool finished = false;
-			size_t count = 0;
+			size_t multiplications = 0;
 			while (not finished){
 				finished = queue.size() == 2 ? true : false;
 				auto elm1 = queue.front();
@@ -284,7 +284,6 @@ class ContractPsiHek{
 					queue.pop();
 				}
 				size_t pos = elm1.first;
-
 				auto data = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
@@ -300,6 +299,7 @@ class ContractPsiHek{
 															std::vector<size_t> idx_new(tuple1.first);
 															idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 															Tensor tmp;
+															multiplications += tuple1.second.dimensions[0]*tuple1.second.dimensions[1]*tuple2.second.dimensions[1];
 															tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
 															data[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 											}}}}
@@ -308,6 +308,7 @@ class ContractPsiHek{
 													std::vector<size_t> idx_new(tuple1.first);
 													idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 													Tensor tmp;
+													multiplications += tuple1.second.dimensions[0]*tuple1.second.dimensions[1]*tuple2.second.dimensions[1];
 													tmp(r1,r3) = tuple1.second(r1,r2)*tuple2.second(r2,r3);
 													umap_psi_tree[idx_new] = tmp[0];
 													count++;
@@ -319,6 +320,7 @@ class ContractPsiHek{
 					queue.push(std::pair<size_t,std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>>>(pos,data));
 
 			}
+			return multiplications;
 			//XERUS_LOG(info, "count " << count);
 		}
 
