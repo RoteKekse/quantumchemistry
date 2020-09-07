@@ -17,7 +17,7 @@ int main(){
 
 	std::vector<size_t> linear;
 	std::vector<size_t> tree;
-	for (size_t rank : {5,10,20,40,80,150}){
+	for (size_t rank : {5,10,20,40,80,150,300}){
 	TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
 
 		ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf);
