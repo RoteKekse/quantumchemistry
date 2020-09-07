@@ -15,8 +15,8 @@ int main(){
 	std::vector<size_t> hf = {0,1,2,3,22,23,30,31};
 
 
-	std::vector<size_t> linear;
-	std::vector<size_t> tree;
+	std::valarray<size_t> linear;
+	std::valarray<size_t> tree;
 	for (size_t rank : {5,10,20,40,80,150}){
 	TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
 
@@ -29,6 +29,7 @@ int main(){
 	}
 	XERUS_LOG(info, "tree " << tree);
 	XERUS_LOG(info, "line " << linear);
+	XERUS_LOG(info, "ratio " << tree/linear);
 
 
 	return 0;
