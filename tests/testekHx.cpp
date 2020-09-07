@@ -11,7 +11,7 @@ int main(){
 
 	size_t rank = 5,d = 48, p = 8;
 
-	TTTensor phi = TTTensor::random(std::vector<size_t>(2,d),std::vector<size_t>(rank,d-1));
+	TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
 
 
 
