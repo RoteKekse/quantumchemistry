@@ -30,7 +30,7 @@ int main(){
 	XERUS_LOG(info, "tree " << tree);
 	XERUS_LOG(info, "line " << linear);
 	for (size_t i = 0; i < tree.size(); ++i)
-		XERUS_LOG(info, tree[i] / linear[i]);
+		XERUS_LOG(info, value_t (tree[i]) / value_t (linear[i]));
 
 
 	return 0;
