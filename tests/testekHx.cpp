@@ -13,9 +13,11 @@ int main(){
 	size_t d = 48, p = 8;
 	value_t shift = 25;
 	std::vector<size_t> hf = {0,1,2,3,22,23,30,31};
+	auto hf_idx = std::vector<size_t>(d,0);
+	for (size_t i : hf)
+		hf_idx[i] = 1;
 
-
-	TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,5));
+	TTTensor phi = TTTensor::dirac(std::vector<size_t>(d,2),hf_idx);
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf);
 
 	builder.reset(hf);
