@@ -376,7 +376,6 @@ class ContractPsiHek{
 														Tensor tmp;
 														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[1];
 														tmp(r2) = tuple1.second(r1)*tuple2.second(r1,r2);
-														XERUS_LOG(info,idx_new << ": " << i1+i2 << j1+j2<<k1+k2<<l1+l2);
 														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 				}}}}}}}}}}
 				data1 = datai;
@@ -400,7 +399,7 @@ class ContractPsiHek{
 				psi1.fix_mode(1,1);
 				auto data_tmp = data_tmpl;
 				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
-				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,(i+1)%2,i%2)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 				auto datai = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
