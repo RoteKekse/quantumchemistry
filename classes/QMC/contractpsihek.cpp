@@ -362,7 +362,7 @@ class ContractPsiHek{
 				auto data_tmp = data_tmpl;
 				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
 				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
-				auto datai = data_tmp;
+				auto datai = data_tmpl;
 				XERUS_LOG(info,datai);
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
@@ -378,24 +378,10 @@ class ContractPsiHek{
 														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 														Tensor tmp;
 														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[1];
-														XERUS_LOG(info,tuple1.second);
-														XERUS_LOG(info,tuple2.second);
 														tmp(r2) = tuple1.second(r1)*tuple2.second(r1,r2);
-														XERUS_LOG(info,tmp.dimensions);
-
 														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 				}}}}}}}}}}
 				data1 = datai;
-				XERUS_LOG(info,data1);
-				for (size_t i1 = 0; i1 < 3; ++i1){
-					for (size_t j1 = 0; j1 < 3; ++j1){
-						for (size_t k1 = 0; k1 <= p_up; ++k1){
-							for (size_t l1 = 0; l1 <= p_down; ++l1){
-								for (auto const& tuple1 : data1[getIndex(i1,j1,k1,l1)]){
-									XERUS_LOG(info,i1 << j1 << k1 << l1);
-									XERUS_LOG(info,tuple1.first);
-									XERUS_LOG(info,tuple1.second.dimensions);
-				}}}}}
 			}
 
 			// Then go from the end to the middle
@@ -417,7 +403,7 @@ class ContractPsiHek{
 				auto data_tmp = data_tmpl;
 				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
 				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
-				auto datai = data_tmp;
+				auto datai = data_tmpl;
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
 						for (size_t k1 = 0; k1 <= p_up; ++k1){
