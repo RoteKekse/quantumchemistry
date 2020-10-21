@@ -435,6 +435,7 @@ class ContractPsiHek{
 											Tensor tmp;
 											multiplications += tuple1.second.dimensions[0];
 											tmp() = tuple1.second(r1)*tuple2.second(r1);
+											XERUS_LOG(info, tmp[0]);
 											umap_psi_tree[idx_new] = tmp[0];
 
 			}}}}}}}}
