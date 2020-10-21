@@ -17,7 +17,9 @@ int main(){
 	for (size_t i : hf)
 		hf_idx[i] = 1;
 
-	TTTensor phi = TTTensor::dirac(std::vector<size_t>(d,2),hf_idx);
+	//TTTensor phi = TTTensor::dirac(std::vector<size_t>(d,2),hf_idx);
+	TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,5));
+
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf);
 
 	builder.reset(hf);
@@ -30,7 +32,8 @@ int main(){
 	XERUS_LOG(info, "tree " << builder.contract_tree());
 
 
-//	std::vector<size_t> linear;
+//	std::vector<size_t> linear1;
+//	std::vector<size_t> linear2;
 //	std::vector<size_t> tree;
 //	for (size_t rank : {5,10,20,40,80,150,300,600}){
 //		TTTensor phi = TTTensor::random(std::vector<size_t>(d,2),std::vector<size_t>(d-1,rank));
@@ -40,12 +43,14 @@ int main(){
 //
 //		builder.reset(hf);
 //		tree.emplace_back(builder.preparePsiEval());
-//		linear.emplace_back(p*(d-p)*(3*d*p-2*d-3*p*p+4)/32*d*rank*rank);
+//		linear1.emplace_back(p*(d-p)*(3*d*p-2*d-3*p*p+4)/32*d*rank*rank);
+//		linear2.emplace_back(builder.preparePsiEval_linear());
 //	}
 //	XERUS_LOG(info, "tree " << tree);
-//	XERUS_LOG(info, "line " << linear);
+//	XERUS_LOG(info, "line1 " << linear1);
+//	XERUS_LOG(info, "line2 " << linear2);
 //	for (size_t i = 0; i < tree.size(); ++i)
-//		XERUS_LOG(info, value_t (tree[i]) / value_t (linear[i]));
+//		XERUS_LOG(info, value_t (tree[i]) / value_t (linear1[i]));
 
 
 	return 0;
