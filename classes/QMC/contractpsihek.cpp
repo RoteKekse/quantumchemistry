@@ -61,8 +61,8 @@ class ContractPsiHek{
 			N = loadNuclear();
 //			read_from_disc("../data/T_H2O_48_bench.tensor",T2);
 //			read_from_disc("../data/V_H2O_48_bench.tensor",V2);
-			XERUS_LOG(info, "T sparse? " << T.is_sparse());
-			XERUS_LOG(info, "V sparse? " << V.is_sparse());
+			//XERUS_LOG(info, "T sparse? " << T.is_sparse());
+			//XERUS_LOG(info, "V sparse? " << V.is_sparse());
 		}
 
 		ContractPsiHek( const ContractPsiHek&  _other ) = default;
