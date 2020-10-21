@@ -20,9 +20,9 @@ int main(){
 	TTTensor phi = TTTensor::dirac(std::vector<size_t>(d,2),hf_idx);
 	ContractPsiHek builder(phi,d,p,path_T,path_V,0.0, shift,hf);
 
-	builder.reset(hf);
-	builder.preparePsiEval();
-	XERUS_LOG(info, "tree " << builder.contract_tree());
+//	builder.reset(hf);
+//	builder.preparePsiEval();
+//	XERUS_LOG(info, "tree " << builder.contract_tree());
 
 	builder.reset(hf);
 	builder.reset_psi(phi);
