@@ -385,6 +385,7 @@ class ContractPsiHek{
 														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 				}}}}}}}}}}
 				data1 = datai;
+				XERUS_LOG(info,data1);
 			}
 
 			// Then go from the end to the middle
