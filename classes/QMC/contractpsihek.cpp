@@ -351,7 +351,6 @@ class ContractPsiHek{
 
 
 			for (size_t i = 1; i < d/2; ++i){
-				XERUS_LOG(info,i);
 				psi0 = psi.get_component(i);
 				psi1 = psi.get_component(i);
 				psi0.fix_mode(1,0);
@@ -394,7 +393,6 @@ class ContractPsiHek{
 			data2[getIndex(0,idx[d-1] == 1 ? 0 : 1,0,1)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 
 			for (size_t i = d-2; i >= d/2; --i){
-				XERUS_LOG(info,i);
 				psi0 = psi.get_component(i);
 				psi1 = psi.get_component(i);
 				psi0.fix_mode(1,0);
@@ -437,9 +435,6 @@ class ContractPsiHek{
 											Tensor tmp;
 											multiplications += tuple1.second.dimensions[0];
 											tmp() = tuple1.second(r1)*tuple2.second(r1);
-											if (tmp[0 != 0.0])
-												XERUS_LOG(info,idx_new << ": " << i1+i2 << j1+j2<<p_up<<p_down);
-
 											umap_psi_tree[idx_new] = tmp[0];
 
 			}}}}}}}}
