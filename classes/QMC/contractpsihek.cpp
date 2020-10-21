@@ -413,8 +413,8 @@ class ContractPsiHek{
 											for (size_t k2 = 0; k2 <= p_up-k1; ++k2){
 												for (size_t l2 = 0; l2 <= p_down-l1; ++l2){
 													for (auto const& tuple2 : data_tmp[getIndex(i2,j2,k2,l2)]){
-														std::vector<size_t> idx_new(tuple1.first);
-														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+														std::vector<size_t> idx_new(tuple2.first);
+														idx_new.insert(idx_new.end(),tuple1.first.begin(),tuple1.first.end());
 														Tensor tmp;
 														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[0];
 														tmp(r1) = tuple2.second(r1,r2)*tuple1.second(r2);
