@@ -356,14 +356,11 @@ class ContractPsiHek{
 				psi1 = psi.get_component(i);
 				psi0.fix_mode(1,0);
 				psi1.fix_mode(1,1);
-				XERUS_LOG(info,psi0.dimensions);
-				XERUS_LOG(info,psi1.dimensions);
 
 				auto data_tmp = data_tmpl;
 				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
 				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 				auto datai = data_tmpl;
-				XERUS_LOG(info,datai);
 				for (size_t i1 = 0; i1 < 3; ++i1){
 					for (size_t j1 = 0; j1 < 3; ++j1){
 						for (size_t k1 = 0; k1 <= p_up; ++k1){
@@ -396,6 +393,7 @@ class ContractPsiHek{
 			data2[getIndex(0,idx[d-1] == 1 ? 0 : 1,0,1)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 
 			for (size_t i = d-2; i >= d/2; --i){
+				XERUS_LOG(info,i);
 				psi0 = psi.get_component(i);
 				psi1 = psi.get_component(i);
 				psi0.fix_mode(1,0);
