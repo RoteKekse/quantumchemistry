@@ -199,40 +199,40 @@ public:
 	 		}
 
 	  std::vector<Tensor> localProduct(const TTTensor y, bool proj = true){
-	  	 	    time_t begin_time;
-	  	 			std::vector<Tensor> locY;
-	  	 			rightAStack.clear();
+		time_t begin_time;
+		std::vector<Tensor> locY;
+		rightAStack.clear();
 
-	  	 	    leftAStack = Tensor::ones({1,1});
-	  	 			rightAStack.emplace_back(Tensor::ones({1,1}));
-	  	 			begin_time = time (NULL);
-	  	 			for (size_t pos=d-1; pos>0;pos--){
-	  	 	    	push_right_stack(pos,y);
-	  	 			}
-	  	 			begin_time = time (NULL);
-	  	 			for (size_t corePosition=0;corePosition<d;corePosition++){
-	  	 	      Tensor rhs;
-	  	 				const Tensor &yi = y.get_component(corePosition);
+		leftAStack = Tensor::ones({1,1});
+		rightAStack.emplace_back(Tensor::ones({1,1}));
+		begin_time = time (NULL);
+		for (size_t pos=d-1; pos>0;pos--){
+			push_right_stack(pos,y);
+		}
+		begin_time = time (NULL);
+		for (size_t corePosition=0;corePosition<d;corePosition++){
+			Tensor rhs;
+			const Tensor &yi = y.get_component(corePosition);
 
-	  	 				Index i1,i2,i3,A1,A2,A3,A4,k1,k2,j1,j2,j3,j4,j5,j6;
-	  	 				rhs(i1, i2, i3) = leftAStack(i1, k1)  *yi(k1, i2, k2) * rightAStack.back()(i3, k2);
+			Index i1,i2,i3,A1,A2,A3,A4,k1,k2,j1,j2,j3,j4,j5,j6;
+			rhs(i1, i2, i3) = leftAStack(i1, k1)  *yi(k1, i2, k2) * rightAStack.back()(i3, k2);
 
 
-	  	 				locY.emplace_back(rhs);
+			locY.emplace_back(rhs);
 
-	  	 				if (corePosition+1 < d) {
-	  	 					push_left(corePosition,y);
-	  	 					rightAStack.pop_back();
-	  	 	      }
-	  	 			}
-	  	 			Index i,j;
-	  	 			begin_time = time (NULL);
-	  	 			if(proj)
-	  	 				projection(locY);
-	  	 			rightAStack.clear();
+			if (corePosition+1 < d) {
+				push_left(corePosition,y);
+				rightAStack.pop_back();
+			}
+		}
+		Index i,j;
+		begin_time = time (NULL);
+		if(proj)
+			projection(locY);
+		rightAStack.clear();
 
-	  	 			return locY;
-	  	 		}
+		return locY;
+	}
 
 private:
 	//projection onto fixed rank  tangentialspace

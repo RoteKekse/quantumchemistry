@@ -325,6 +325,120 @@ class ContractPsiHek{
 			//XERUS_LOG(info, "count " << count);
 		}
 
+		size_t preparePsiEval_linear(){ 			// TODO can one keep the lower contractions for different e_ks??
+			Index r1,r2,r3;
+			size_t multiplications = 0;
+			// a queue containing a pair of the position and a vector containing of the data pairs index and Tensor
+			// the index of the data vector is the linearized version of an order 4 Tensor for the number of
+			// annihilated (max. 2), created (max 2.), spin up (max. p//2) and, spin down (max. p//2) particles
+			std::vector<std::vector<std::pair<std::vector<size_t>,Tensor>>> data_tmpl;
+			for (size_t i = 0; i < 3*3*(p_up+1)*(p_down+1); ++i){
+				std::vector<std::pair<std::vector<size_t>,Tensor>> tmp;
+				data_tmpl.emplace_back(tmp);
+			}
+
+			// initialize queue with slices of TT Tensor
+			//First go from left to the middle
+			auto psi0 = psi.get_component(0);
+			auto psi1 = psi.get_component(0);
+			psi0.fix_mode(1,0);
+			psi0.reinterpret_dimensions({psi0.dimensions[1]});
+			psi1.fix_mode(1,1);
+			psi1.reinterpret_dimensions({psi1.dimensions[1]});
+			auto data1 = data_tmpl;
+			data1[getIndex(idx[0] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
+			data1[getIndex(0,idx[0] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+
+
+			for (size_t i = 1; i < d/2; ++i){
+				psi0 = psi.get_component(i);
+				psi1 = psi.get_component(i);
+				psi0.fix_mode(1,0);
+				psi1.fix_mode(1,1);
+				auto data_tmp = data_tmpl;
+				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
+				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+				auto datai = data_tmp;
+				for (size_t i1 = 0; i1 < 3; ++i1){
+					for (size_t j1 = 0; j1 < 3; ++j1){
+						for (size_t k1 = 0; k1 <= p_up; ++k1){
+							for (size_t l1 = 0; l1 <= p_down; ++l1){
+								for (auto const& tuple1 : data1[getIndex(i1,j1,k1,l1)]){
+									for (size_t i2 = 0; i2 < 3-i1; ++i2){
+										for (size_t j2 = 0; j2 < 3-j1; ++j2){
+											for (size_t k2 = 0; k2 <= p_up-k1; ++k2){
+												for (size_t l2 = 0; l2 <= p_down-l1; ++l2){
+													for (auto const& tuple2 : data_tmp[getIndex(i2,j2,k2,l2)]){
+														std::vector<size_t> idx_new(tuple1.first);
+														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+														Tensor tmp;
+														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[1];
+														tmp(r2) = tuple1.second(r1)*tuple2.second(r1,r2);
+														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
+				}}}}}}}}}}
+				data1 = datai;
+			}
+
+			// Then go from the end to the middle
+			psi0 = psi.get_component(d-1);
+			psi1 = psi.get_component(d-1);
+			psi0.fix_mode(1,0);
+			psi0.reinterpret_dimensions({psi0.dimensions[0]});
+			psi1.fix_mode(1,1);
+			psi1.reinterpret_dimensions({psi1.dimensions[0]});
+			auto data2 = data_tmpl;
+			data2[getIndex(idx[d-1] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
+			data2[getIndex(0,idx[d-1] == 1 ? 0 : 1,0,1)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+
+			for (size_t i = d-2; i >= d/2; --i){
+				psi0 = psi.get_component(i);
+				psi1 = psi.get_component(i);
+				psi0.fix_mode(1,0);
+				psi1.fix_mode(1,1);
+				auto data_tmp = data_tmpl;
+				data_tmp[getIndex(idx[i] == 1 ? 1 : 0,0,0,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({0},psi0));
+				data_tmp[getIndex(0,idx[i] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
+				auto datai = data_tmp;
+				for (size_t i1 = 0; i1 < 3; ++i1){
+					for (size_t j1 = 0; j1 < 3; ++j1){
+						for (size_t k1 = 0; k1 <= p_up; ++k1){
+							for (size_t l1 = 0; l1 <= p_down; ++l1){
+								for (auto const& tuple1 : data2[getIndex(i1,j1,k1,l1)]){
+									for (size_t i2 = 0; i2 < 3-i1; ++i2){
+										for (size_t j2 = 0; j2 < 3-j1; ++j2){
+											for (size_t k2 = 0; k2 <= p_up-k1; ++k2){
+												for (size_t l2 = 0; l2 <= p_down-l1; ++l2){
+													for (auto const& tuple2 : data_tmp[getIndex(i2,j2,k2,l2)]){
+														std::vector<size_t> idx_new(tuple1.first);
+														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+														Tensor tmp;
+														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[0];
+														tmp(r1) = tuple1.second(r1,r2)*tuple2.second(r2);
+														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
+				}}}}}}}}}}
+				data2 = datai;
+			}
+			//Finally join the left and the right part
+			for (size_t i1 = 0; i1 < 3; ++i1){
+				for (size_t j1 = 0; j1 < 3; ++j1){
+					for (size_t k1 = 0; k1 <= p_up; ++k1){
+						for (size_t l1 = 0; l1 <= p_down; ++l1){
+							for (auto const& tuple1 : data1[getIndex(i1,j1,k1,l1)]){
+								for (size_t i2 = 0; i2 < 3-i1; ++i2){
+									for (size_t j2 = 0; j2 < 3-j1; ++j2){
+										for (auto const& tuple2 : data2[getIndex(i2,j2,p_up-k1,p_down-l1)]){
+											std::vector<size_t> idx_new(tuple1.first);
+											idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
+											Tensor tmp;
+											multiplications += tuple1.second.dimensions[0];
+											tmp() = tuple1.second(r1)*tuple2.second(r1);
+											umap_psi_tree[idx_new] = tmp[0];
+
+			}}}}}}}}
+			return multiplications;
+			//XERUS_LOG(info, "count " << count);
+		}
+
 		// The first index is the number of annihilated particles compared to the sample
 		// The second index is the number of created particles compared to the sample
 		// The third index is the number of spin up particles contained
