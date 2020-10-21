@@ -20,12 +20,12 @@ int main(){
 
 	builder.reset(hf);
 	builder.preparePsiEval();
-	XERUS_LOG(info, "tree " << contract_tree());
+	XERUS_LOG(info, "tree " << builder.contract_tree());
 
 	builder.reset(hf);
 	builder.reset_psi(phi);
 	builder.preparePsiEval_linear();
-	XERUS_LOG(info, "linear " << contract_tree());
+	XERUS_LOG(info, "linear " << builder.contract_tree());
 
 
 //	std::vector<size_t> linear;
