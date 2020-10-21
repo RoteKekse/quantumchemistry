@@ -420,8 +420,7 @@ class ContractPsiHek{
 				}}}}}}}}}}
 				data2 = datai;
 			}
-			XERUS_LOG(info,data1);
-			XERUS_LOG(info,data2);
+
 			//Finally join the left and the right part
 			for (size_t i1 = 0; i1 < 3; ++i1){
 				for (size_t j1 = 0; j1 < 3; ++j1){
@@ -437,6 +436,7 @@ class ContractPsiHek{
 											multiplications += tuple1.second.dimensions[0];
 											tmp() = tuple1.second(r1)*tuple2.second(r1);
 											umap_psi_tree[idx_new] = tmp[0];
+											XERUS_LOG(info,idx_new << ": " << tmp[0]);
 
 			}}}}}}}}
 			return multiplications;
