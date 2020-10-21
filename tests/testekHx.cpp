@@ -11,7 +11,7 @@ int main(){
 	std::string path_T = "../H2O/data/T_H2O_48_bench_single.tensor";
 	std::string path_V = "../H2O/data/V_H2O_48_bench_single.tensor";
 	size_t d = 48, p = 8;
-	value_t shift = 0;
+	value_t shift = 25;
 	std::vector<size_t> hf = {0,1,2,3,22,23,30,31};
 	auto hf_idx = std::vector<size_t>(d,0);
 	for (size_t i : hf)

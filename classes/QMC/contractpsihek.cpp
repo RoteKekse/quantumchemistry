@@ -373,6 +373,8 @@ class ContractPsiHek{
 														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 														Tensor tmp;
 														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[1];
+														XERUS_LOG(info,tuple1.second.dimensions);
+														XERUS_LOG(info,tuple2.second.dimensions)
 														tmp(r2) = tuple1.second(r1)*tuple2.second(r1,r2);
 														datai[getIndex(i1+i2,j1+j2,k1+k2,l1+l2)].emplace_back(std::pair<std::vector<size_t>,Tensor>(idx_new,std::move(tmp)));
 				}}}}}}}}}}
