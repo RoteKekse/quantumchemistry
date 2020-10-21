@@ -27,7 +27,7 @@ int main(){
 	builder.reset(hf);
 	builder.reset_psi(phi);
 	builder.preparePsiEval_linear();
-	XERUS_LOG(info, builder.umap_psi_tree[hf_idx]);
+	XERUS_LOG(info, builder.umap_psi_tree[hf]);
 	XERUS_LOG(info, "linear " << builder.contract_tree());
 
 
