@@ -350,7 +350,7 @@ class ContractPsiHek{
 			data1[getIndex(0,idx[0] == 1 ? 0 : 1,1,0)].emplace_back(std::pair<std::vector<size_t>,Tensor>({1},psi1));
 
 
-			for (size_t i = 1; i < 5; ++i){
+			for (size_t i = 1; i < 15; ++i){
 				XERUS_LOG(info,i);
 				psi0 = psi.get_component(i);
 				psi1 = psi.get_component(i);
