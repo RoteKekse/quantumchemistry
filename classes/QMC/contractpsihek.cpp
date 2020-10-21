@@ -351,6 +351,7 @@ class ContractPsiHek{
 
 
 			for (size_t i = 1; i < d/2; ++i){
+				XERUS_LOG(info,i);
 				psi0 = psi.get_component(i);
 				psi1 = psi.get_component(i);
 				psi0.fix_mode(1,0);
