@@ -392,6 +392,8 @@ class ContractPsiHek{
 						for (size_t k1 = 0; k1 <= p_up; ++k1){
 							for (size_t l1 = 0; l1 <= p_down; ++l1){
 								for (auto const& tuple1 : data1[getIndex(i1,j1,k1,l1)]){
+									XERUS_LOG(info,i1 << j1 << k1 << l1);
+									XERUS_LOG(info,tuple1.first);
 									XERUS_LOG(info,tuple1.second.dimensions);
 				}}}}}
 			}
