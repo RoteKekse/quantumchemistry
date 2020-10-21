@@ -378,8 +378,8 @@ class ContractPsiHek{
 														idx_new.insert(idx_new.end(),tuple2.first.begin(),tuple2.first.end());
 														Tensor tmp;
 														multiplications += tuple1.second.dimensions[0]*tuple2.second.dimensions[1];
-														XERUS_LOG(info,tuple1.second.dimensions);
-														XERUS_LOG(info,tuple2.second.dimensions);
+														XERUS_LOG(info,tuple1.second);
+														XERUS_LOG(info,tuple2.second);
 														tmp(r2) = tuple1.second(r1)*tuple2.second(r1,r2);
 														XERUS_LOG(info,tmp.dimensions);
 
