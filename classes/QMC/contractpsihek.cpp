@@ -387,6 +387,13 @@ class ContractPsiHek{
 				}}}}}}}}}}
 				data1 = datai;
 				XERUS_LOG(info,data1);
+				for (size_t i1 = 0; i1 < 3; ++i1){
+					for (size_t j1 = 0; j1 < 3; ++j1){
+						for (size_t k1 = 0; k1 <= p_up; ++k1){
+							for (size_t l1 = 0; l1 <= p_down; ++l1){
+								for (auto const& tuple1 : data1[getIndex(i1,j1,k1,l1)]){
+									XERUS_LOG(info,tuple1.second);
+				}}}}}
 			}
 
 			// Then go from the end to the middle
