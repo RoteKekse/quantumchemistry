@@ -27,6 +27,7 @@ int main(){
 	xerus::TTTensor phi,res,res_last,start,start2,start3,start4;
 	phi = makeUnitVector(hf_sample,d);
 	read_from_disc("../data/hf_gradient_48.tttensor",start);
+	xerus::misc::save_to_file(start,"../data/hf_gradient_48_2.tttensor");
 	read_from_disc("../data/hf_gradient_48.tttensor",start2);
 	read_from_disc("../data/hf_gradient_48.tttensor",start3);
 	read_from_disc("../data/hf_gradient_48.tttensor",start4);

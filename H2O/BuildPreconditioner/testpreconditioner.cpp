@@ -1,5 +1,5 @@
 #include <xerus.h>
-#include <Eigen/Dense>
+//#include <Eigen/Dense>
 #include <vector>
 #include <fstream>
 #include <ctime>
@@ -9,12 +9,12 @@
 #define build_operator 0
 
 using namespace xerus;
-using namespace Eigen;
+//using namespace Eigen;
 using xerus::misc::operator<<;
 
 //typedefs
-typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
-    Mat;  // import dense, dynamically sized Matrix type from Eigen;
+//typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
+//    Mat;  // import dense, dynamically sized Matrix type from Eigen;
              // this is a matrix with row-major storage
 
 
@@ -65,12 +65,17 @@ int main() {
 	Tensor V = load_2e_int("../data/V_H2O_48_bench.tensor");
 	for(size_t j = 0; j < 2*nob; ++j){
 		value_t val = 0;
+		//XERUS_LOG(info,"j = " << j);
 		val +=T[{j,j}];
+		//XERUS_LOG(info,"T_jj = " << val);
 //		for (size_t k = 0; k < 2*nob; ++k)
 //			val +=(V[{j,k,j,k}]-V[{j,k,k,j}]);
-		for (size_t k : {0,1,2,3,22,23,30,31})
+		for (size_t k : {0,1,2,3,22,23,30,31}){
+		//	XERUS_LOG(info,"k = " << k);
+		//	XERUS_LOG(info,V[{j,k,j,k}]);
+		//	XERUS_LOG(info,V[{j,k,k,j}]);
 					val +=(V[{j,k,j,k}]-V[{j,k,k,j}]);
-
+		}
 		XERUS_LOG(info,j << " value = " <<val);
 		//XERUS_LOG(info,"T_jj  = " <<T[{j,j}]);
 		HFev.emplace_back(val);
@@ -241,7 +246,7 @@ value_t maximal_ev(std::vector<value_t> coeffs){
 	return lambda;
 }
 
-template<typename M>
+/*template<typename M>
 M load_csv (const std::string & path) {
     std::ifstream indata;
     indata.open(path);
@@ -258,7 +263,7 @@ M load_csv (const std::string & path) {
     }
     return Map<const Matrix<typename M::Scalar, M::RowsAtCompileTime, M::ColsAtCompileTime, RowMajor>>(values.data(), rows, values.size()/rows);
 }
-
+*/
 void write_to_disc(std::string name, TTOperator &op){
 	std::ofstream write(name.c_str() );
 	xerus::misc::stream_writer(write,op,xerus::misc::FileFormat::BINARY);

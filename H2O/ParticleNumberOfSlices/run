@@ -1,0 +1,5 @@
+clear
+rm $1$2.out
+g++ -g -std=c++11 -fext-numeric-literals -DARPACK_LIBRARIES -o $1$2.out $1.cpp   -lxerus -lxerus_misc -lboost_regex -fopenmp
+
+./$1$2.out
